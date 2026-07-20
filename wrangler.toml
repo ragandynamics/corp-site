@@ -1,6 +1,10 @@
 name = "ragan-dynamics"
 compatibility_date = "2026-07-20"
 
+# ✅ Add static assets configuration here instead
+[assets]
+directory = "./dist"
+
 [[r2_buckets]]
 binding = "CONTACTS"
 bucket_name = "ragan-dynamics-data"
