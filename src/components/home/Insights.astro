@@ -1,0 +1,92 @@
+---
+import Container from "../ui/Container.astro";
+
+const insights = [
+
+{
+title:"How SMEs Can Adopt AI Without Large Budgets",
+category:"AI Strategy",
+date:"July 2026"
+},
+
+{
+title:"5 Ways AI Improves Employee Productivity",
+category:"Productivity",
+date:"July 2026"
+},
+
+{
+title:"Building Secure Enterprise AI Solutions",
+category:"AI Security",
+date:"June 2026"
+}
+
+];
+---
+
+<section class="section-padding bg-slate-50">
+
+  <Container>
+
+    <div class="text-center">
+
+      <span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+        Insights
+      </span>
+
+      <h2 class="mt-6 text-4xl font-black text-slate-900">
+        Latest AI Insights
+      </h2>
+
+      <p class="mx-auto mt-5 max-w-3xl text-lg text-slate-600">
+        Explore practical guidance on Artificial Intelligence,
+        automation and digital transformation.
+      </p>
+
+    </div>
+
+    <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+      {
+        insights.map((article)=>(
+          <article class="rounded-3xl bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+
+            <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+              {article.category}
+            </span>
+
+            <h3 class="mt-6 text-2xl font-bold text-slate-900">
+              {article.title}
+            </h3>
+
+            <p class="mt-4 text-slate-500">
+              {article.date}
+            </p>
+
+            <a
+              href="/insights"
+              class="mt-8 inline-flex items-center font-semibold text-blue-600 hover:text-blue-700"
+            >
+              Read More →
+            </a>
+
+          </article>
+        ))
+      }
+
+    </div>
+
+    <div class="mt-16 text-center">
+
+      <a
+        href="/insights"
+        class="inline-flex rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700"
+      >
+        View All Insights
+      </a>
+
+    </div>
+
+  </Container>
+
+</section>

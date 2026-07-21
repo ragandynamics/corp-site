@@ -1,0 +1,40 @@
+---
+import Container from "../ui/Container.astro";
+import ProductCard from "../ProductCard.astro";
+import { products } from "../../data/products";
+---
+
+<section id="products" class="section-padding bg-white">
+
+  <Container>
+
+    <div class="text-center">
+
+      <span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+        AI Products
+      </span>
+
+      <h2 class="mt-6 text-4xl font-black text-slate-900">
+        Ready-to-Deploy AI Solutions
+      </h2>
+
+      <p class="mx-auto mt-6 max-w-3xl text-lg text-slate-600">
+        Accelerate AI adoption using our reusable products and industry
+        accelerators.
+      </p>
+
+    </div>
+
+    <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+      {
+        products.map((product) => (
+          <ProductCard product={product} />
+        ))
+      }
+
+    </div>
+
+  </Container>
+
+</section>

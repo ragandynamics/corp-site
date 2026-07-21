@@ -2,34 +2,40 @@
 import MainLayout from "../layouts/MainLayout.astro";
 
 import Hero from "../components/home/Hero.astro";
-
 import BusinessOutcomes from "../components/home/BusinessOutcomes.astro";
-
-import FeaturedServices from "../components/home/FeaturedServices.astro";
-
+import Services from "../components/home/Services.astro";
+import Products from "../components/home/Products.astro";
+import WhyRagan from "../components/home/WhyRaganDynamics.astro";
+import About from "../components/home/About.astro";
+import Insights from "../components/home/Insights.astro";
 import FAQ from "../components/home/FAQ.astro";
-
+import ContactCTA from "../components/home/ContactCTA.astro";
 ---
 
 <MainLayout
 
-title="AI Consulting Singapore"
+title="Ragan Dynamics | AI Consulting, AI Automation & Enterprise AI Solutions"
 
-description="Enterprise AI consulting, automation and digital transformation services."
+description="Ragan Dynamics helps organisations accelerate AI adoption through cost-effective AI consulting, AI automation, enterprise AI solutions and intelligent products that deliver measurable business value."
 
 >
 
+  <Hero />
 
-<Hero />
+  <BusinessOutcomes />
 
+  <Services />
 
-<BusinessOutcomes />
+  <Products />
 
+  <WhyRagan />
 
-<FeaturedServices />
+  <About />
 
+  <Insights />
 
-<FAQ />
+  <FAQ />
 
+  <ContactCTA />
 
 </MainLayout>
