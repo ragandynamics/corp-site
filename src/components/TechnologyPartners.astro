@@ -1,0 +1,107 @@
+---
+const partners = [
+  {
+    name: "Microsoft",
+    logo: "/logos/microsoft.svg",
+    description: "Azure AI, Microsoft 365 Copilot, Power Platform"
+  },
+  {
+    name: "OpenAI",
+    logo: "/logos/openai.svg",
+    description: "GPT Models, Assistants, Embeddings"
+  },
+  {
+    name: "Anthropic",
+    logo: "/logos/anthropic.svg",
+    description: "Claude Enterprise"
+  },
+  {
+    name: "Google Cloud",
+    logo: "/logos/google.svg",
+    description: "Vertex AI, Gemini"
+  },
+  {
+    name: "Amazon Web Services",
+    logo: "/logos/aws.svg",
+    description: "Bedrock, SageMaker"
+  },
+  {
+    name: "Cloudflare",
+    logo: "/logos/cloudflare.svg",
+    description: "Workers, Pages, AI Gateway, R2"
+  }
+];
+---
+
+<section class="bg-white">
+
+<div class="mx-auto max-w-7xl px-6 py-28">
+
+<div class="mx-auto max-w-3xl text-center">
+
+<span
+class="font-bold uppercase tracking-[0.35em] text-blue-600">
+
+TECHNOLOGY ECOSYSTEM
+
+</span>
+
+<h2
+class="mt-6 text-5xl font-black text-slate-900">
+
+Enterprise Platforms
+
+You Already Trust
+
+</h2>
+
+<p
+class="mt-8 text-xl leading-9 text-slate-600">
+
+Our AI solutions integrate with leading enterprise platforms,
+allowing you to maximise existing technology investments while
+accelerating AI adoption.
+
+</p>
+
+</div>
+
+<div
+class="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+{
+partners.map(partner => (
+
+<div
+class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-2 hover:border-blue-500 hover:shadow-xl">
+
+<img
+src={partner.logo}
+alt={partner.name}
+class="h-12 object-contain"
+/>
+
+<h3
+class="mt-8 text-2xl font-bold">
+
+{partner.name}
+
+</h3>
+
+<p
+class="mt-4 leading-8 text-slate-600">
+
+{partner.description}
+
+</p>
+
+</div>
+
+))
+}
+
+</div>
+
+</div>
+
+</section>

@@ -1,0 +1,238 @@
+---
+import Container from "../ui/Container.astro";
+
+import SectionTitle from "../ui/SectionTitle.astro";
+
+import Card from "../ui/Card.astro";
+
+import Badge from "../ui/Badge.astro";
+
+
+const outcomes = [
+
+{
+icon:"💰",
+
+title:"Maximise AI ROI",
+
+description:
+"Identify and prioritise AI opportunities that deliver measurable business impact. We focus on practical AI adoption with clear value, business outcomes and measurable returns.",
+
+impact:
+"ROI-driven AI transformation"
+
+},
+
+
+{
+icon:"⚡",
+
+title:"Increase Workforce Productivity",
+
+description:
+"Empower employees with AI assistants and automation tools that reduce repetitive work, accelerate daily activities and enable teams to focus on higher-value tasks.",
+
+impact:
+"More output with existing teams"
+
+},
+
+
+{
+icon:"💡",
+
+title:"Cost-Effective AI Solutioning",
+
+description:
+"Design the right AI approach based on business needs, budget and growth objectives. We optimise between cloud AI, automation and modern AI technologies to maximise value.",
+
+impact:
+"Maximum value with controlled investment"
+
+},
+
+
+{
+icon:"🤖",
+
+title:"Automate Intelligent Workflows",
+
+description:
+"Transform manual processes with AI agents and automation solutions that improve efficiency across operations, customer service and business functions.",
+
+impact:
+"Faster processes with fewer manual steps"
+
+},
+
+
+{
+icon:"📊",
+
+title:"Unlock Data-Driven Decisions",
+
+description:
+"Turn business data into actionable insights using AI analytics, intelligent recommendations and predictive capabilities.",
+
+impact:
+"Better decisions, faster execution"
+
+},
+
+
+{
+icon:"❤️",
+
+title:"Deliver Superior Customer Experiences",
+
+description:
+"Create personalised customer journeys through AI-powered engagement, intelligent support and faster response capabilities.",
+
+impact:
+"Stronger customer relationships"
+
+}
+
+];
+
+---
+
+<section
+
+class="
+section-padding
+bg-white
+"
+
+>
+
+
+<Container>
+
+
+<SectionTitle
+
+eyebrow="Measurable Business Value"
+
+title="Six Ways AI Creates Measurable Business Value"
+
+description="
+Successful AI transformation is measured by outcomes.
+Ragan Dynamics helps organisations improve ROI,
+productivity, cost efficiency, automation, decision
+making and customer experience.
+"
+
+/>
+
+
+
+<div
+
+class="
+mt-20
+grid
+gap-8
+md:grid-cols-2
+lg:grid-cols-3
+"
+
+>
+
+
+{
+
+outcomes.map((item)=>(
+
+
+<Card>
+
+
+<div
+
+class="
+flex
+h-14
+w-14
+items-center
+justify-center
+rounded-2xl
+bg-blue-100
+text-3xl
+"
+
+>
+
+{item.icon}
+
+</div>
+
+
+
+<h3
+
+class="
+mt-8
+text-2xl
+font-black
+text-slate-900
+"
+
+>
+
+{item.title}
+
+</h3>
+
+
+
+<p
+
+class="
+mt-5
+leading-8
+text-slate-600
+"
+
+>
+
+{item.description}
+
+</p>
+
+
+
+<div
+
+class="
+mt-8
+"
+
+>
+
+<Badge color="green">
+
+{item.impact}
+
+</Badge>
+
+
+</div>
+
+
+
+</Card>
+
+
+))
+
+}
+
+
+</div>
+
+
+</Container>
+
+
+</section>

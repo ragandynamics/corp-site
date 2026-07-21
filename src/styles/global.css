@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/*==================================================
+  RAGAN DYNAMICS DESIGN SYSTEM
+==================================================*/
+
+@theme {
+
+    /* Brand */
+
+    --color-primary: #2563eb;
+    --color-primary-50: #eff6ff;
+    --color-primary-100: #dbeafe;
+    --color-primary-500: #2563eb;
+    --color-primary-600: #1d4ed8;
+    --color-primary-700: #1e40af;
+
+    --color-secondary: #4f46e5;
+    --color-accent: #06b6d4;
+
+    /* Success */
+
+    --color-success: #16a34a;
+
+    /* Background */
+
+    --color-background: #ffffff;
+    --color-surface: #f8fafc;
+    --color-dark: #020617;
+
+    /* Text */
+
+    --color-heading: #0f172a;
+    --color-body: #475569;
+
+    /* Radius */
+
+    --radius-card: 1.5rem;
+
+    --radius-button: .9rem;
+
+    /* Fonts */
+
+    --font-heading:
+        Inter,
+        ui-sans-serif,
+        sans-serif;
+
+    --font-body:
+        Inter,
+        sans-serif;
+
+}

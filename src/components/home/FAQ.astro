@@ -1,0 +1,139 @@
+---
+import Container from "../ui/Container.astro";
+
+import SectionTitle from "../ui/SectionTitle.astro";
+
+import Accordion from "../ui/Accordion.astro";
+
+
+const faqItems = [
+
+{
+id:"1",
+
+category:"General",
+
+title:
+"What AI services does Ragan Dynamics provide?",
+
+content:
+"Ragan Dynamics provides AI strategy consulting, AI automation, enterprise AI assistants, AI product development and custom AI solutions."
+},
+
+
+{
+id:"2",
+
+category:"AI Strategy",
+
+title:
+"How can AI create measurable business value?",
+
+content:
+"We focus on practical AI adoption that improves ROI, productivity, operational efficiency, decision making and customer experience."
+},
+
+
+{
+id:"3",
+
+category:"AI Strategy",
+
+title:
+"Do businesses need a large AI budget?",
+
+content:
+"No. Our cost-effective AI solutioning approach helps organisations select the right AI technology based on business goals, budget and expected outcomes."
+},
+
+
+{
+id:"4",
+
+category:"AI Security",
+
+title:
+"How do you address AI security and governance?",
+
+content:
+"We design AI solutions with security, privacy, responsible AI practices and enterprise governance considerations."
+},
+
+
+{
+id:"5",
+
+category:"Implementation",
+
+title:
+"How long does AI implementation take?",
+
+content:
+"The timeline depends on complexity. We typically start with focused AI use cases and scalable implementations."
+},
+
+
+{
+id:"6",
+
+category:"Government Support",
+
+title:
+"Are there Singapore government AI grants available?",
+
+content:
+"Eligible Singapore businesses may benefit from digitalisation and AI adoption support programmes depending on requirements."
+}
+
+];
+
+---
+
+
+<section class="section-padding bg-slate-50">
+
+
+<Container>
+
+
+<SectionTitle
+
+eyebrow="FAQ"
+
+title="Frequently Asked Questions About AI Transformation"
+
+description="
+Common questions businesses ask before starting
+their AI transformation journey.
+"
+
+/>
+
+
+
+<div class="mt-16">
+
+
+<Accordion
+
+items={
+faqItems.map((item)=>({
+
+question:item.title,
+
+answer:item.content
+
+}))
+
+}
+
+/>
+
+
+</div>
+
+
+</Container>
+
+
+</section>

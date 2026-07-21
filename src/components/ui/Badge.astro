@@ -1,0 +1,38 @@
+---
+export interface Props{
+
+color?:
+"blue"|
+"green"|
+"purple"|
+"orange";
+
+}
+
+const{
+color="blue"
+}=Astro.props;
+
+const styles={
+
+blue:
+"bg-blue-100 text-blue-700",
+
+green:
+"bg-green-100 text-green-700",
+
+purple:
+"bg-purple-100 text-purple-700",
+
+orange:
+"bg-orange-100 text-orange-700"
+
+}
+---
+
+<span
+class={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${styles[color]}`}>
+
+<slot/>
+
+</span>

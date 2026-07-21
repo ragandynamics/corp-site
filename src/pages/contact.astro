@@ -1,80 +1,393 @@
-<form id="contact-form">
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+---
+
+<MainLayout
+
+title="Contact Ragan Dynamics | AI Consulting & Automation"
+
+description="
+Talk to Ragan Dynamics about AI consulting,
+AI automation, AI products and enterprise AI solutions.
+"
+
+>
+
+
+<section
+
+class="
+bg-slate-50
+py-20
+"
+
+>
+
+
+<div
+
+class="
+mx-auto
+max-w-5xl
+px-6
+"
+
+>
+
+
+<div
+
+class="
+mb-12
+text-center
+"
+
+>
+
+
+<h1
+
+class="
+text-4xl
+font-black
+text-slate-900
+md:text-5xl
+"
+
+>
+
+Start Your AI Transformation Journey
+
+</h1>
+
+
+<p
+
+class="
+mx-auto
+mt-5
+max-w-3xl
+text-lg
+leading-8
+text-slate-600
+"
+
+>
+
+Tell us about your business challenge.
+Our AI specialists will help identify
+practical and cost-effective AI solutions.
+
+</p>
+
+
+</div>
+
+
+
+<div
+
+class="
+rounded-3xl
+bg-white
+p-8
+shadow-xl
+md:p-12
+"
+
+>
+
+
+<form
+
+id="contact-form"
+
+class="
+space-y-6
+"
+
+
+>
+
+
+<div
+
+class="
+grid
+gap-6
+md:grid-cols-2
+"
+
+>
 
 
 <input
+
 name="name"
+
 placeholder="Your Name"
+
 required
+
+class="
+w-full
+rounded-xl
+border
+border-slate-300
+px-5
+py-4
+outline-none
+focus:border-blue-600
+"
+
 />
 
 
 <input
+
 name="email"
+
 type="email"
+
 placeholder="Email Address"
+
 required
+
+class="
+w-full
+rounded-xl
+border
+border-slate-300
+px-5
+py-4
+outline-none
+focus:border-blue-600
+"
+
 />
 
 
+</div>
+
+
+
+
+<div
+
+class="
+grid
+gap-6
+md:grid-cols-2
+"
+
+>
+
+
 <input
+
 name="company"
+
 placeholder="Company Name"
+
+class="
+w-full
+rounded-xl
+border
+border-slate-300
+px-5
+py-4
+outline-none
+focus:border-blue-600
+"
+
 />
 
 
 <input
+
 name="phone"
+
 placeholder="Phone Number"
+
+class="
+w-full
+rounded-xl
+border
+border-slate-300
+px-5
+py-4
+outline-none
+focus:border-blue-600
+"
+
 />
 
 
-<select name="service">
+</div>
 
-<option>
+
+
+
+<select
+
+name="service"
+
+class="
+w-full
+rounded-xl
+border
+border-slate-300
+px-5
+py-4
+outline-none
+focus:border-blue-600
+"
+
+>
+
+<option value="AI Consulting">
+
 AI Consulting
+
 </option>
 
-<option>
+
+<option value="AI Automation">
+
 AI Automation
+
 </option>
 
-<option>
+
+<option value="AI Chatbot">
+
 AI Chatbot
+
 </option>
 
-<option>
+
+<option value="AI Training">
+
 AI Training
+
 </option>
+
 
 </select>
 
 
+
+
 <textarea
+
 name="message"
+
+rows="6"
+
 placeholder="Tell us about your project"
-required>
-</textarea>
+
+required
+
+class="
+w-full
+rounded-xl
+border
+border-slate-300
+px-5
+py-4
+outline-none
+focus:border-blue-600
+"
+
+></textarea>
 
 
-<button type="submit">
+
+
+<button
+
+id="submit-button"
+
+type="submit"
+
+data-analytics="contact-form-submit"
+
+class="
+w-full
+rounded-xl
+bg-blue-600
+px-8
+py-4
+font-bold
+text-white
+transition
+hover:bg-blue-700
+"
+
+>
+
 Send Enquiry
+
 </button>
+
 
 
 </form>
 
 
-<p id="result"></p>
+
+<p
+
+id="result"
+
+class="
+mt-6
+text-center
+font-semibold
+"
+
+></p>
+
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
 
 
 <script>
 
 const form =
-document.querySelector("#contact-form");
+document.querySelector<HTMLFormElement>(
+"#contact-form"
+);
 
 
 const result =
-document.querySelector("#result");
+document.querySelector<HTMLElement>(
+"#result"
+);
+
+
+const button =
+document.querySelector<HTMLButtonElement>(
+"#submit-button"
+);
+
+
+
+if(
+form &&
+result &&
+button
+){
 
 
 form.addEventListener(
@@ -85,10 +398,25 @@ async(event)=>{
 event.preventDefault();
 
 
+button.disabled=true;
+
+button.textContent=
+"Sending...";
+
+
+
+const formData =
+new FormData(form);
+
+
 const data =
 Object.fromEntries(
-new FormData(form)
+formData
 );
+
+
+
+try{
 
 
 const response =
@@ -98,38 +426,110 @@ await fetch(
 
 method:"POST",
 
-headers:{
+headers:
+{
+
 "Content-Type":
 "application/json"
+
 },
 
 body:
 JSON.stringify(data)
 
-});
+}
+);
+
 
 
 const json =
-await response.json();
+await response.json() as {
+
+success?:boolean;
+
+error?:string;
+
+};
+
 
 
 if(json.success){
 
+
 result.textContent =
 "Thank you. We will contact you shortly.";
 
+
+result.className =
+"mt-6 text-center font-semibold text-green-600";
+
+
 form.reset();
 
+
+
+if(window.cf?.track){
+
+window.cf.track(
+"contact-form-success"
+);
+
 }
 
-else {
+
+
+}
+
+else{
+
 
 result.textContent =
+json.error ??
 "Unable to submit form.";
+
 
 }
 
 
-});
+
+}
+
+catch(error){
+
+
+result.textContent =
+"An unexpected error occurred.";
+
+
+result.className =
+"mt-6 text-center font-semibold text-red-600";
+
+
+}
+
+
+
+finally{
+
+
+button.disabled=false;
+
+button.textContent=
+"Send Enquiry";
+
+
+}
+
+
+
+}
+
+);
+
+
+}
 
 </script>
+
+
+</MainLayout>

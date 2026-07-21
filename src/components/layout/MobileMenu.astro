@@ -1,0 +1,54 @@
+<div
+id="mobileMenu"
+class="fixed inset-0 z-[100] hidden bg-white">
+
+<div
+class="flex items-center justify-between border-b p-6">
+
+<h2
+class="text-2xl font-bold">
+
+Menu
+
+</h2>
+
+<button
+id="closeMenu"
+class="text-3xl">
+
+×
+
+</button>
+
+</div>
+
+<nav
+class="flex flex-col">
+
+<a href="/services" class="border-b p-6">Services</a>
+
+<a href="/products" class="border-b p-6">Products</a>
+
+<a href="/industries" class="border-b p-6">Industries</a>
+
+<a href="/insights" class="border-b p-6">Insights</a>
+
+<a href="/about" class="border-b p-6">About</a>
+
+<a href="/contact" class="border-b p-6">Contact</a>
+
+</nav>
+
+<script>
+const menu=document.getElementById("mobileMenu");
+const open=document.getElementById("menuButton");
+const close=document.getElementById("closeMenu");
+
+open?.addEventListener("click",()=>{
+menu?.classList.remove("hidden");
+});
+
+close?.addEventListener("click",()=>{
+menu?.classList.add("hidden");
+});
+</script>

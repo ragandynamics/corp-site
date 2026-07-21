@@ -1,0 +1,142 @@
+---
+const services = [
+  {
+    icon: "🎯",
+    title: "AI Strategy & Roadmap",
+    description:
+      "Define a clear AI vision, identify high-value use cases and build a practical roadmap aligned to your business goals.",
+    link: "/services#strategy"
+  },
+  {
+    icon: "🤖",
+    title: "Generative AI",
+    description:
+      "Deploy secure AI assistants powered by enterprise knowledge to improve productivity across every department.",
+    link: "/services#genai"
+  },
+  {
+    icon: "⚡",
+    title: "AI Agents",
+    description:
+      "Build autonomous AI agents for HR, Finance, Sales, Procurement and Customer Service that automate complex workflows.",
+    link: "/services#agents"
+  },
+  {
+    icon: "💼",
+    title: "Microsoft Copilot",
+    description:
+      "Maximise your Microsoft 365 investment with Copilot, Copilot Studio, Power Platform and AI Builder.",
+    link: "/services#copilot"
+  },
+  {
+    icon: "⚙️",
+    title: "Intelligent Automation",
+    description:
+      "Reduce manual effort through workflow automation, document intelligence, approvals and AI-powered business processes.",
+    link: "/services#automation"
+  },
+  {
+    icon: "🛡️",
+    title: "Responsible AI",
+    description:
+      "Adopt AI confidently with governance, security, compliance, guardrails and enterprise risk management.",
+    link: "/services#governance"
+  }
+];
+---
+
+<section class="bg-slate-50">
+
+  <div class="mx-auto max-w-7xl px-6 py-28">
+
+    <div class="mx-auto max-w-3xl text-center">
+
+      <span class="font-semibold uppercase tracking-[0.3em] text-blue-600">
+        AI CONSULTING SERVICES
+      </span>
+
+      <h2 class="mt-6 text-5xl font-black text-slate-900">
+        Enterprise AI Expertise
+        <br />
+        Across Every Stage
+      </h2>
+
+      <p class="mt-8 text-xl leading-9 text-slate-600">
+        From AI strategy through implementation and governance,
+        we partner with organisations to accelerate transformation
+        while reducing delivery risk.
+      </p>
+
+    </div>
+
+    <div class="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+      {
+        services.map((service) => (
+
+          <article
+            class="group rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:shadow-2xl">
+
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-3xl text-white">
+
+              {service.icon}
+
+            </div>
+
+            <h3
+              class="mt-8 text-2xl font-bold text-slate-900">
+
+              {service.title}
+
+            </h3>
+
+            <p
+              class="mt-5 leading-8 text-slate-600">
+
+              {service.description}
+
+            </p>
+
+            <a
+              href={service.link}
+              class="mt-8 inline-flex items-center font-semibold text-blue-600">
+
+              Learn More
+
+              <span class="ml-2 transition group-hover:translate-x-2">
+
+                →
+
+              </span>
+
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+    <div class="mt-20 text-center">
+
+      <a
+        href="/services"
+        class="inline-flex items-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition hover:scale-105">
+
+        View All AI Services
+
+        <span class="ml-3">
+
+          →
+
+        </span>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

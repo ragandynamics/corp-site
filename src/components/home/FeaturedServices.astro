@@ -1,0 +1,331 @@
+---
+import Container from "../ui/Container.astro";
+
+import SectionTitle from "../ui/SectionTitle.astro";
+
+import Card from "../ui/Card.astro";
+
+import Badge from "../ui/Badge.astro";
+
+import Button from "../ui/Button.astro";
+
+
+const services = [
+
+{
+icon:"🧠",
+
+title:"AI Strategy Consulting",
+
+description:
+"Identify high-value AI opportunities, define your AI roadmap and create a transformation strategy aligned with business goals.",
+
+features:[
+"AI Readiness Assessment",
+"Business Case Development",
+"ROI Analysis"
+]
+
+},
+
+
+{
+icon:"🤖",
+
+title:"AI Agents & Intelligent Automation",
+
+description:
+"Build AI-powered assistants that automate tasks, improve workflows and help employees make faster decisions.",
+
+features:[
+"Enterprise AI Agents",
+"Knowledge Assistants",
+"Workflow Automation"
+]
+
+},
+
+
+{
+icon:"💼",
+
+title:"Microsoft Copilot Solutions",
+
+description:
+"Accelerate productivity with secure Microsoft Copilot adoption across your organisation.",
+
+features:[
+"Copilot Readiness",
+"Copilot Studio",
+"Power Platform Integration"
+]
+
+},
+
+
+{
+icon:"☁️",
+
+title:"Cloud AI Solutions",
+
+description:
+"Design and implement scalable AI platforms using enterprise cloud technologies.",
+
+features:[
+"Azure AI",
+"AWS AI Services",
+"Google Cloud AI"
+]
+
+},
+
+
+{
+icon:"⚙️",
+
+title:"AI Process Automation",
+
+description:
+"Transform manual processes using intelligent automation and AI-powered workflows.",
+
+features:[
+"Document Intelligence",
+"Process Automation",
+"Business Workflow AI"
+]
+
+},
+
+
+{
+icon:"📈",
+
+title:"AI Analytics & Insights",
+
+description:
+"Unlock business intelligence through AI-powered data analysis and predictive insights.",
+
+features:[
+"Data Intelligence",
+"Predictive Analytics",
+"Decision Support"
+]
+
+}
+
+];
+
+---
+
+<section
+
+class="
+section-padding
+bg-slate-50
+"
+
+>
+
+
+<Container>
+
+
+<SectionTitle
+
+eyebrow="AI Services"
+
+title="Enterprise AI Solutions Designed For Business Growth"
+
+description="
+From AI strategy to implementation,
+we help organisations adopt practical AI
+solutions that deliver measurable ROI.
+"
+
+/>
+
+
+
+<div
+
+class="
+mt-20
+grid
+gap-8
+md:grid-cols-2
+lg:grid-cols-3
+"
+
+>
+
+
+{
+
+services.map((service)=>(
+
+
+<Card>
+
+
+<div
+
+class="
+flex
+items-center
+justify-between
+"
+
+>
+
+
+<div
+
+class="
+flex
+h-14
+w-14
+items-center
+justify-center
+rounded-2xl
+bg-blue-100
+text-3xl
+"
+
+>
+
+{service.icon}
+
+</div>
+
+
+<Badge color="blue">
+
+AI Solution
+
+</Badge>
+
+
+</div>
+
+
+
+<h3
+
+class="
+mt-8
+text-2xl
+font-black
+text-slate-900
+"
+
+>
+
+{service.title}
+
+</h3>
+
+
+
+<p
+
+class="
+mt-5
+leading-8
+text-slate-600
+"
+
+>
+
+{service.description}
+
+</p>
+
+
+
+<ul
+
+class="
+mt-8
+space-y-3
+"
+
+>
+
+{
+
+service.features.map((feature)=>(
+
+<li
+
+class="
+flex
+items-center
+gap-3
+text-slate-700
+"
+
+>
+
+<span
+class="
+h-2
+w-2
+rounded-full
+bg-blue-600
+">
+
+</span>
+
+{feature}
+
+</li>
+
+))
+
+}
+
+</ul>
+
+
+
+</Card>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+<div
+
+class="
+mt-16
+text-center
+"
+
+>
+
+<Button
+
+href="/services"
+
+size="lg"
+
+>
+
+Explore All AI Services
+
+</Button>
+
+
+</div>
+
+
+</Container>
+
+
+</section>

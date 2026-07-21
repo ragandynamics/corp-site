@@ -1,125 +1,321 @@
-interface Env {
+export interface Env {
+
   CONTACTS: R2Bucket;
+
 }
 
 
+
+interface ContactRequest {
+
+  name:string;
+
+  email:string;
+
+  company?:string;
+
+  phone?:string;
+
+  service?:string;
+
+  message:string;
+
+}
+
+
+
 export const onRequestPost: PagesFunction<Env> = async ({
+  
   request,
-  env,
+
+  env
+
 }) => {
+
 
   try {
 
-    const body = await request.json();
 
+    /*
+      Validate request type
+    */
 
-    const {
-      name,
-      email,
-      company,
-      phone,
-      service,
-      message
-    } = body;
-
-
-    // Validation
-
-    if (!name || !email || !message) {
+    if(
+      request.headers.get("content-type")
+      !==
+      "application/json"
+    ){
 
       return Response.json(
+
         {
-          success: false,
-          error: "Missing required fields"
+          success:false,
+          error:"Invalid content type"
         },
+
         {
           status:400
         }
+
       );
 
     }
 
 
-    // Create unique ID
 
-    const id =
-      `${Date.now()}-${crypto.randomUUID()}`;
+    /*
+      Read request body
+    */
+
+    const body =
+      await request.json<ContactRequest>();
 
 
-    const submission = {
 
-      id,
+    const {
 
       name,
 
       email,
 
-      company: company || "",
+      company,
 
-      phone: phone || "",
+      phone,
 
-      service: service || "",
+      service,
 
-      message,
+      message
+
+    } = body;
+
+
+
+    /*
+      Required validation
+    */
+
+    if(
+      !name ||
+      !email ||
+      !message
+    ){
+
+
+      return Response.json(
+
+        {
+
+          success:false,
+
+          error:
+          "Name, email and message are required"
+
+        },
+
+        {
+          status:400
+        }
+
+      );
+
+
+    }
+
+
+
+    /*
+      Email validation
+    */
+
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if(
+      !emailRegex.test(email)
+    ){
+
+
+      return Response.json(
+
+        {
+
+          success:false,
+
+          error:
+          "Invalid email address"
+
+        },
+
+        {
+          status:400
+        }
+
+      );
+
+
+    }
+
+
+
+    /*
+      Create unique ID
+    */
+
+    const id =
+
+      `${Date.now()}-${crypto.randomUUID()}`;
+
+
+
+    /*
+      Contact object
+    */
+
+    const submission = {
+
+
+      id,
+
+
+      name:
+      name.trim(),
+
+
+      email:
+      email.trim(),
+
+
+      company:
+      company?.trim() || "",
+
+
+      phone:
+      phone?.trim() || "",
+
+
+      service:
+      service || "",
+
+
+      message:
+      message.trim(),
+
 
       createdAt:
-        new Date().toISOString()
+      new Date().toISOString(),
+
+
+      source:
+      "website-contact-form"
+
 
     };
 
 
-    // Save to R2
+
+    /*
+      Store in Cloudflare R2
+    */
 
     await env.CONTACTS.put(
 
       `contacts/${id}.json`,
 
+
       JSON.stringify(
+
         submission,
+
         null,
+
         2
+
       ),
 
+
       {
-        httpMetadata:{
+
+        httpMetadata:
+
+        {
+
           contentType:
           "application/json"
+
         }
+
       }
+
 
     );
 
 
-    return Response.json({
 
-      success:true,
+    /*
+      Success response
+    */
 
-      message:
-      "Submission received"
+    return Response.json(
 
-    });
+      {
+
+        success:true,
+
+        message:
+        "Submission received"
+
+
+      },
+
+
+      {
+
+        status:200
+
+      }
+
+
+    );
+
 
 
   }
 
+
   catch(error){
 
-    console.error(error);
+
+    console.error(
+      "Contact API Error:",
+      error
+    );
+
 
 
     return Response.json(
 
       {
+
         success:false,
-        error:"Server error"
+
+        error:
+        "Internal server error"
+
       },
 
+
       {
+
         status:500
+
       }
+
 
     );
 
+
   }
+
 
 };

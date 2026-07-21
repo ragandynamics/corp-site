@@ -1,0 +1,159 @@
+---
+import Logo from "./Logo.astro";
+
+const services=[
+"AI Strategy",
+"AI Agents",
+"Automation",
+"Cloud AI",
+"Generative AI"
+];
+
+const company=[
+"About",
+"Industries",
+"Insights",
+"Contact",
+"Careers"
+];
+---
+
+<footer
+class="bg-slate-950 text-white">
+
+<div
+class="mx-auto max-w-7xl px-6 py-20">
+
+<div
+class="grid gap-16 lg:grid-cols-4">
+
+<div>
+
+<Logo dark/>
+
+<p
+class="mt-8 leading-8 text-slate-400">
+
+Helping organisations transform with
+Enterprise AI,
+Automation,
+Cloud Engineering
+and Digital Innovation.
+
+</p>
+
+</div>
+
+<div>
+
+<h3
+class="font-bold">
+
+Services
+
+</h3>
+
+<ul
+class="mt-6 space-y-4">
+
+{
+services.map(item=>(
+
+<li>
+
+<a
+href="/services"
+class="text-slate-400 hover:text-white">
+
+{item}
+
+</a>
+
+</li>
+
+))
+}
+
+</ul>
+
+</div>
+
+<div>
+
+<h3
+class="font-bold">
+
+Company
+
+</h3>
+
+<ul
+class="mt-6 space-y-4">
+
+{
+company.map(item=>(
+
+<li>
+
+<a
+href={"/"+item.toLowerCase()}
+class="text-slate-400 hover:text-white">
+
+{item}
+
+</a>
+
+</li>
+
+))
+}
+
+</ul>
+
+</div>
+
+<div>
+
+<h3
+class="font-bold">
+
+Executive AI Assessment
+
+</h3>
+
+<p
+class="mt-6 leading-8 text-slate-400">
+
+Book a complimentary strategy session to discover AI opportunities, estimate ROI and define your transformation roadmap.
+
+</p>
+
+<div
+class="mt-8">
+
+<a
+href="/contact"
+class="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700">
+
+Book Now
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="mt-16 border-t border-slate-800 pt-8 text-center text-slate-500">
+
+© 2026 Ragan Dynamics.
+
+All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>

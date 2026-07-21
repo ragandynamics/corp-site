@@ -1,0 +1,284 @@
+---
+
+const industries = [
+
+{
+title:"Government",
+
+icon:"🏛️",
+
+description:
+"Improve citizen services, automate document processing, enable secure knowledge search and modernise public sector operations with responsible AI.",
+
+useCases:[
+"Citizen AI Assistant",
+"Policy Search",
+"Document Processing",
+"Case Management"
+],
+
+link:"/industries/government"
+
+},
+
+{
+title:"Healthcare",
+
+icon:"🏥",
+
+description:
+"Support clinicians and administrators with AI-powered document intelligence, patient engagement and operational automation.",
+
+useCases:[
+"Medical Document Search",
+"Appointment Assistant",
+"Clinical Knowledge",
+"Claims Processing"
+],
+
+link:"/industries/healthcare"
+
+},
+
+{
+title:"Financial Services",
+
+icon:"🏦",
+
+description:
+"Accelerate compliance, fraud detection, customer service and intelligent financial operations using enterprise AI.",
+
+useCases:[
+"KYC Automation",
+"AI Relationship Manager",
+"Risk Analysis",
+"Fraud Detection"
+],
+
+link:"/industries/finance"
+
+},
+
+{
+title:"Manufacturing",
+
+icon:"🏭",
+
+description:
+"Improve productivity with predictive maintenance, quality inspection, demand forecasting and supply chain optimisation.",
+
+useCases:[
+"Predictive Maintenance",
+"Computer Vision",
+"Factory Copilot",
+"Demand Forecasting"
+],
+
+link:"/industries/manufacturing"
+
+},
+
+{
+title:"Retail",
+
+icon:"🛒",
+
+description:
+"Deliver personalised shopping experiences, automate customer support and optimise inventory with AI-driven insights.",
+
+useCases:[
+"Product Recommendations",
+"Inventory Forecasting",
+"Customer Chatbot",
+"Sales Analytics"
+],
+
+link:"/industries/retail"
+
+},
+
+{
+title:"Education",
+
+icon:"🎓",
+
+description:
+"Empower educators with AI teaching assistants, curriculum support and personalised learning experiences.",
+
+useCases:[
+"Learning Assistant",
+"Course Generation",
+"Student Support",
+"Knowledge Search"
+],
+
+link:"/industries/education"
+
+}
+
+];
+
+---
+
+<section class="bg-slate-50">
+
+<div class="mx-auto max-w-7xl px-6 py-28">
+
+<div class="mx-auto max-w-4xl text-center">
+
+<span
+class="font-bold uppercase tracking-[0.3em] text-blue-600">
+
+INDUSTRY SOLUTIONS
+
+</span>
+
+<h2
+class="mt-6 text-5xl font-black text-slate-900">
+
+AI Solutions Built
+
+For Your Industry
+
+</h2>
+
+<p
+class="mt-8 text-xl leading-9 text-slate-600">
+
+Every industry faces different challenges.
+Our AI solutions are tailored to industry workflows,
+regulatory requirements and business priorities.
+
+</p>
+
+</div>
+
+<div
+class="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+
+{
+industries.map(industry=>(
+
+<article
+class="group rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-500 hover:shadow-xl">
+
+<div
+class="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-4xl text-white">
+
+{industry.icon}
+
+</div>
+
+<h3
+class="mt-8 text-2xl font-bold text-slate-900">
+
+{industry.title}
+
+</h3>
+
+<p
+class="mt-6 leading-8 text-slate-600">
+
+{industry.description}
+
+</p>
+
+<div
+class="mt-8">
+
+<p
+class="mb-4 text-sm font-bold uppercase tracking-wide text-slate-500">
+
+Popular Use Cases
+
+</p>
+
+<ul class="space-y-3">
+
+{
+industry.useCases.map(useCase=>(
+
+<li
+class="flex items-center gap-3">
+
+<span
+class="text-emerald-600">
+
+✓
+
+</span>
+
+<span>
+
+{useCase}
+
+</span>
+
+</li>
+
+))
+}
+
+</ul>
+
+</div>
+
+<a
+href={industry.link}
+class="mt-8 inline-flex items-center font-semibold text-blue-600">
+
+Explore Industry
+
+<span
+class="ml-2 transition group-hover:translate-x-2">
+
+→
+
+</span>
+
+</a>
+
+</article>
+
+))
+}
+
+</div>
+
+<div
+class="mt-20 rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 p-12 text-center text-white">
+
+<h3
+class="text-4xl font-black">
+
+Don't See Your Industry?
+
+</h3>
+
+<p
+class="mx-auto mt-6 max-w-3xl text-xl leading-9 text-blue-100">
+
+Our AI platforms are adaptable across industries.
+We'll work with you to design solutions aligned with your business processes,
+technology landscape and strategic objectives.
+
+</p>
+
+<div
+class="mt-10">
+
+<a
+href="/contact"
+class="rounded-xl bg-white px-8 py-4 font-semibold text-slate-900">
+
+Talk to an AI Consultant
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
