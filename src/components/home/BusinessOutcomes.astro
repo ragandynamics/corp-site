@@ -1,238 +1,137 @@
 ---
 import Container from "../ui/Container.astro";
 
-import SectionTitle from "../ui/SectionTitle.astro";
-
-import Card from "../ui/Card.astro";
-
-import Badge from "../ui/Badge.astro";
-
-
 const outcomes = [
 
 {
-icon:"💰",
-
-title:"Maximise AI ROI",
-
-description:
-"Identify and prioritise AI opportunities that deliver measurable business impact. We focus on practical AI adoption with clear value, business outcomes and measurable returns.",
-
-impact:
-"ROI-driven AI transformation"
-
+title:"Reduce Operating Costs",
+value:"Up to 30%",
+description:"Automate repetitive work and optimise operational efficiency."
 },
 
-
 {
-icon:"⚡",
-
-title:"Increase Workforce Productivity",
-
-description:
-"Empower employees with AI assistants and automation tools that reduce repetitive work, accelerate daily activities and enable teams to focus on higher-value tasks.",
-
-impact:
-"More output with existing teams"
-
+title:"Increase Productivity",
+value:"2x Faster",
+description:"AI assistants help employees complete work more efficiently."
 },
 
-
 {
-icon:"💡",
-
-title:"Cost-Effective AI Solutioning",
-
-description:
-"Design the right AI approach based on business needs, budget and growth objectives. We optimise between cloud AI, automation and modern AI technologies to maximise value.",
-
-impact:
-"Maximum value with controlled investment"
-
+title:"Improve Customer Experience",
+value:"24/7",
+description:"AI-powered chatbots provide instant responses around the clock."
 },
 
-
 {
-icon:"🤖",
-
-title:"Automate Intelligent Workflows",
-
-description:
-"Transform manual processes with AI agents and automation solutions that improve efficiency across operations, customer service and business functions.",
-
-impact:
-"Faster processes with fewer manual steps"
-
+title:"Faster Decision Making",
+value:"Real-Time",
+description:"AI analytics provide insights for informed business decisions."
 },
 
-
 {
-icon:"📊",
-
-title:"Unlock Data-Driven Decisions",
-
-description:
-"Turn business data into actionable insights using AI analytics, intelligent recommendations and predictive capabilities.",
-
-impact:
-"Better decisions, faster execution"
-
+title:"Scale Without Hiring",
+value:"Smarter Growth",
+description:"Handle more work without proportionally increasing headcount."
 },
 
-
 {
-icon:"❤️",
-
-title:"Deliver Superior Customer Experiences",
-
-description:
-"Create personalised customer journeys through AI-powered engagement, intelligent support and faster response capabilities.",
-
-impact:
-"Stronger customer relationships"
-
+title:"Future-Ready Business",
+value:"AI Enabled",
+description:"Build a competitive advantage with modern AI capabilities."
 }
 
 ];
-
 ---
 
-<section
+<section class="section-padding bg-white">
 
-class="
-section-padding
-bg-white
-"
+  <Container>
 
->
+    <div class="text-center">
 
+      <span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
 
-<Container>
+        Business Outcomes
 
+      </span>
 
-<SectionTitle
+      <h2 class="mt-6 text-4xl font-black text-slate-900">
 
-eyebrow="Measurable Business Value"
+        Measurable Business Value, Not Just Technology
 
-title="Six Ways AI Creates Measurable Business Value"
+      </h2>
 
-description="
-Successful AI transformation is measured by outcomes.
-Ragan Dynamics helps organisations improve ROI,
-productivity, cost efficiency, automation, decision
-making and customer experience.
-"
+      <p class="mx-auto mt-6 max-w-3xl text-lg text-slate-600">
 
-/>
+        Every AI initiative is designed to reduce costs, improve
+        productivity and deliver measurable business outcomes.
 
+      </p>
 
+    </div>
 
-<div
+    <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
 
-class="
-mt-20
-grid
-gap-8
-md:grid-cols-2
-lg:grid-cols-3
-"
+      {
+        outcomes.map((item) => (
 
->
+          <div class="rounded-3xl border border-slate-200 p-8 transition hover:-translate-y-2 hover:shadow-xl">
 
+            <div class="text-4xl font-black text-blue-600">
 
-{
+              {item.value}
 
-outcomes.map((item)=>(
+            </div>
 
+            <h3 class="mt-5 text-2xl font-bold text-slate-900">
 
-<Card>
+              {item.title}
 
+            </h3>
 
-<div
+            <p class="mt-4 leading-8 text-slate-600">
 
-class="
-flex
-h-14
-w-14
-items-center
-justify-center
-rounded-2xl
-bg-blue-100
-text-3xl
-"
+              {item.description}
 
->
+            </p>
 
-{item.icon}
+          </div>
 
-</div>
+        ))
+      }
 
+    </div>
 
+    <div class="mt-16 rounded-3xl bg-blue-50 p-10 text-center">
 
-<h3
+      <h3 class="text-3xl font-black text-slate-900">
 
-class="
-mt-8
-text-2xl
-font-black
-text-slate-900
-"
+        Start Small. Scale with Confidence.
 
->
+      </h3>
 
-{item.title}
+      <p class="mx-auto mt-6 max-w-3xl text-lg text-slate-600">
 
-</h3>
+        Our phased AI adoption approach helps Singapore SMEs realise
+        business value quickly while managing costs and implementation risk.
 
+      </p>
 
+      <a
 
-<p
+        href="/contact"
 
-class="
-mt-5
-leading-8
-text-slate-600
-"
+        data-analytics="business-outcomes-cta"
 
->
+        class="mt-8 inline-flex rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700"
 
-{item.description}
+      >
 
-</p>
+        Talk to an AI Consultant
 
+      </a>
 
+    </div>
 
-<div
-
-class="
-mt-8
-"
-
->
-
-<Badge color="green">
-
-{item.impact}
-
-</Badge>
-
-
-</div>
-
-
-
-</Card>
-
-
-))
-
-}
-
-
-</div>
-
-
-</Container>
-
+  </Container>
 
 </section>
