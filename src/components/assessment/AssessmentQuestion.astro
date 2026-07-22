@@ -1,0 +1,112 @@
+---
+export interface Props {
+
+  id: string;
+
+  title: string;
+
+  subtitle?: string;
+
+  options: string[];
+
+  multiple?: boolean;
+
+}
+
+
+const {
+
+  id,
+
+  title,
+
+  subtitle,
+
+  options,
+
+  multiple=false
+
+}=Astro.props;
+
+---
+
+<section
+
+  class="assessment-question"
+
+  data-question-id={id}
+
+>
+
+
+<h2 class="text-4xl font-bold text-slate-900">
+
+{title}
+
+</h2>
+
+
+{
+subtitle &&
+
+<p class="mt-4 text-xl text-slate-500">
+
+{subtitle}
+
+</p>
+
+}
+
+
+
+<div class="mt-10 space-y-4">
+
+
+{
+
+options.map(option => (
+
+<button
+
+type="button"
+
+data-answer={option}
+
+class="answer-option group w-full rounded-2xl border border-slate-300 bg-white px-8 py-6 text-left transition hover:border-blue-600 hover:bg-blue-50"
+
+>
+
+
+<div class="flex items-center justify-between">
+
+
+<span class="text-lg font-medium text-slate-800">
+
+{option}
+
+</span>
+
+
+<span
+
+class="answer-indicator h-6 w-6 rounded-full border-2 border-slate-300"
+
+>
+
+</span>
+
+
+</div>
+
+
+</button>
+
+))
+
+}
+
+
+</div>
+
+
+</section>

@@ -1,0 +1,219 @@
+---
+import Container from "../ui/Container.astro";
+
+const industries = [
+  {
+    icon: "🏭",
+    title: "Manufacturing",
+    subtitle: "Industry 4.0 & Smart Factory",
+    description:
+      "Improve production efficiency, reduce downtime and automate quality inspections using AI and intelligent automation.",
+    outcomes: [
+      "Predictive Maintenance",
+      "AI Quality Inspection",
+      "Production Analytics",
+      "Inventory Optimisation"
+    ]
+  },
+
+  {
+    icon: "💼",
+    title: "Professional Services",
+    subtitle: "Knowledge & Productivity",
+    description:
+      "Empower consultants and knowledge workers with AI assistants that automate document creation, research and reporting.",
+    outcomes: [
+      "Microsoft Copilot",
+      "Proposal Automation",
+      "Knowledge Search",
+      "Document Generation"
+    ]
+  },
+
+  {
+    icon: "📦",
+    title: "Wholesale & Distribution",
+    subtitle: "Inventory & Sales Intelligence",
+    description:
+      "Optimise inventory, improve sales forecasting and automate procurement processes with AI-powered insights.",
+    outcomes: [
+      "Demand Forecasting",
+      "Sales Analytics",
+      "Order Automation",
+      "Procurement Intelligence"
+    ]
+  },
+
+  {
+    icon: "🚚",
+    title: "Logistics & Supply Chain",
+    subtitle: "Warehouse & Transport AI",
+    description:
+      "Improve warehouse operations, delivery planning and shipment visibility with intelligent automation.",
+    outcomes: [
+      "Route Optimisation",
+      "Warehouse AI",
+      "Shipment Tracking",
+      "Document Processing"
+    ]
+  },
+
+  {
+    icon: "🏥",
+    title: "Healthcare",
+    subtitle: "Patient Experience & Operations",
+    description:
+      "Reduce administrative workload and improve patient engagement through secure AI-powered solutions.",
+    outcomes: [
+      "Patient Chatbot",
+      "Appointment Automation",
+      "Medical Documentation",
+      "Knowledge Assistant"
+    ]
+  },
+
+  {
+    icon: "🛒",
+    title: "Retail & eCommerce",
+    subtitle: "Customer Experience & Growth",
+    description:
+      "Increase customer engagement and optimise retail operations with AI-driven insights and automation.",
+    outcomes: [
+      "AI Shopping Assistant",
+      "Marketing Automation",
+      "Demand Forecasting",
+      "Customer Support"
+    ]
+  }
+];
+---
+
+<section id="industries" class="section-padding bg-white">
+
+  <Container>
+
+    <div class="mx-auto max-w-4xl text-center">
+
+      <span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+        Industry Solutions
+      </span>
+
+      <h2 class="mt-6 text-5xl font-black text-slate-900">
+
+        AI Solutions Designed for Singapore SMEs
+
+      </h2>
+
+      <p class="mt-8 text-xl leading-9 text-slate-600">
+
+        Every industry faces unique operational challenges.
+        We combine AI, automation and cloud technologies to
+        deliver measurable business outcomes tailored to your sector.
+
+      </p>
+
+    </div>
+
+    <div class="mt-20 grid gap-8 lg:grid-cols-2">
+
+      {
+
+        industries.map((industry) => (
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+            <div class="flex items-center gap-5">
+
+              <div class="text-5xl">
+
+                {industry.icon}
+
+              </div>
+
+              <div>
+
+                <h3 class="text-2xl font-black text-slate-900">
+
+                  {industry.title}
+
+                </h3>
+
+                <p class="font-semibold text-blue-600">
+
+                  {industry.subtitle}
+
+                </p>
+
+              </div>
+
+            </div>
+
+            <p class="mt-6 leading-8 text-slate-600">
+
+              {industry.description}
+
+            </p>
+
+            <div class="mt-8 grid grid-cols-2 gap-3">
+
+              {
+
+                industry.outcomes.map((item) => (
+
+                  <div class="rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700">
+
+                    ✓ {item}
+
+                  </div>
+
+                ))
+
+              }
+
+            </div>
+
+            <a
+              href="/contact"
+              class="mt-8 inline-flex rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+              data-analytics={`industry-${industry.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+            >
+              Discuss Your Requirements
+            </a>
+
+          </div>
+
+        ))
+
+      }
+
+    </div>
+
+    <div class="mt-16 rounded-3xl bg-slate-900 p-10 text-center text-white">
+
+      <h3 class="text-3xl font-black">
+
+        Don't See Your Industry?
+
+      </h3>
+
+      <p class="mx-auto mt-6 max-w-3xl text-lg text-slate-300">
+
+        Our AI consulting and implementation services are designed to
+        adapt to your business processes, regardless of industry.
+        We'll identify the highest-value opportunities for your organisation.
+
+      </p>
+
+      <a
+        href="/contact"
+        class="mt-8 inline-flex rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700"
+        data-analytics="industries-general-enquiry"
+      >
+        Book a AI Discovery Session
+      </a>
+
+    </div>
+
+  </Container>
+
+</section>

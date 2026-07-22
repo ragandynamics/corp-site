@@ -1,0 +1,138 @@
+---
+import Container from "../ui/Container.astro";
+
+const challenges = [
+
+{
+icon:"💸",
+title:"Operating Costs Keep Increasing",
+description:"Reduce repetitive manual work and improve operational efficiency using intelligent automation."
+},
+
+{
+icon:"⏳",
+title:"Employees Spend Too Much Time on Manual Tasks",
+description:"Free your team from repetitive work so they can focus on higher-value activities."
+},
+
+{
+icon:"📞",
+title:"Customers Expect Faster Responses",
+description:"Deliver 24/7 customer support using AI assistants and intelligent chatbots."
+},
+
+{
+icon:"📊",
+title:"Business Decisions Take Too Long",
+description:"Gain real-time insights with AI-powered dashboards and predictive analytics."
+},
+
+{
+icon:"📄",
+title:"Too Much Paperwork",
+description:"Automate document processing, approvals and reporting."
+},
+
+{
+icon:"🚀",
+title:"Unsure Where AI Fits",
+description:"Our AI Discovery Workshop identifies quick wins with measurable ROI."
+}
+
+];
+---
+
+<section class="section-padding bg-white">
+
+<Container>
+
+<div class="text-center">
+
+<span class="inline-flex rounded-full bg-red-100 px-4 py-2 text-sm font-semibold text-red-700">
+
+Business Challenges
+
+</span>
+
+<h2 class="mt-6 text-5xl font-black text-slate-900">
+
+Do These Challenges Sound Familiar?
+
+</h2>
+
+<p class="mx-auto mt-8 max-w-3xl text-xl text-slate-600">
+
+Most Singapore SMEs face similar operational challenges.
+The good news is that many can be solved quickly using practical AI.
+
+</p>
+
+</div>
+
+<div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+{
+
+challenges.map((item)=>(
+
+<div class="rounded-3xl border border-slate-200 p-8 hover:shadow-xl transition">
+
+<div class="text-5xl">
+
+{item.icon}
+
+</div>
+
+<h3 class="mt-6 text-2xl font-bold text-slate-900">
+
+{item.title}
+
+</h3>
+
+<p class="mt-4 leading-8 text-slate-600">
+
+{item.description}
+
+</p>
+
+</div>
+
+))
+
+}
+
+</div>
+
+<div class="mt-16 rounded-3xl bg-blue-50 p-10 text-center">
+
+<h3 class="text-3xl font-black">
+
+If You Answered "Yes" to Any of These...
+
+</h3>
+
+<p class="mt-6 text-lg text-slate-600">
+
+Let's identify where AI can create the biggest impact for your business.
+
+</p>
+
+<a
+
+href="/contact"
+
+data-analytics="challenge-cta"
+
+class="mt-8 inline-flex rounded-xl bg-blue-600 px-8 py-4 font-bold text-white hover:bg-blue-700 transition"
+
+>
+
+Book a AI Discovery Session
+
+</a>
+
+</div>
+
+</Container>
+
+</section>

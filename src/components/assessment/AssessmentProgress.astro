@@ -1,0 +1,668 @@
+---
+import AssessmentProgress from "./AssessmentProgress.astro";
+
+import BusinessProfileStep from "./BusinessProfileStep.astro";
+import BusinessChallengesStep from "./BusinessChallengesStep.astro";
+import TechnologyStep from "./TechnologyStep.astro";
+import AIAdoptionStep from "./AIAdoptionStep.astro";
+import GoalsStep from "./GoalsStep.astro";
+
+import LeadCaptureForm from "./LeadCaptureForm.astro";
+import AssessmentResults from "./AssessmentResults.astro";
+---
+
+<div
+  id="assessment-wizard"
+  class="mx-auto max-w-4xl"
+>
+
+
+  <!-- Progress -->
+
+  <div id="progress-container">
+
+    <AssessmentProgress
+
+      step={1}
+
+      total={7}
+
+    />
+
+  </div>
+
+
+
+  <!-- Steps -->
+
+  <div id="steps-container">
+
+
+
+    <!-- Step 1 -->
+
+    <div
+
+      class="assessment-step"
+
+      data-step="1"
+
+    >
+
+      <BusinessProfileStep />
+
+    </div>
+
+
+
+
+    <!-- Step 2 -->
+
+    <div
+
+      class="assessment-step hidden"
+
+      data-step="2"
+
+    >
+
+      <BusinessChallengesStep />
+
+    </div>
+
+
+
+
+    <!-- Step 3 -->
+
+    <div
+
+      class="assessment-step hidden"
+
+      data-step="3"
+
+    >
+
+      <TechnologyStep />
+
+    </div>
+
+
+
+
+    <!-- Step 4 -->
+
+    <div
+
+      class="assessment-step hidden"
+
+      data-step="4"
+
+    >
+
+      <AIAdoptionStep />
+
+    </div>
+
+
+
+
+    <!-- Step 5 -->
+
+    <div
+
+      class="assessment-step hidden"
+
+      data-step="5"
+
+    >
+
+      <GoalsStep />
+
+    </div>
+
+
+
+
+    <!-- Step 6 -->
+
+    <div
+
+      class="assessment-step hidden"
+
+      data-step="6"
+
+    >
+
+      <LeadCaptureForm />
+
+    </div>
+
+
+
+
+    <!-- Step 7 -->
+
+    <div
+
+      class="assessment-step hidden"
+
+      data-step="7"
+
+    >
+
+      <AssessmentResults />
+
+    </div>
+
+
+
+  </div>
+
+
+</div>
+
+
+
+<script>
+
+const STORAGE_KEY =
+"ragan_ai_assessment";
+
+
+let currentStep = 1;
+
+
+const TOTAL_STEPS = 7;
+
+
+const steps =
+document.querySelectorAll(
+
+".assessment-step"
+
+);
+
+
+const progress =
+document.getElementById(
+
+"progress-container"
+
+);
+
+
+
+/*
+---------------------------------
+Answer Storage
+---------------------------------
+*/
+
+
+function saveAnswer(
+
+questionId,
+
+answer
+
+){
+
+
+const answers = JSON.parse(
+
+localStorage.getItem(
+
+STORAGE_KEY
+
+) || "{}"
+
+);
+
+
+
+answers[questionId] = answer;
+
+
+
+localStorage.setItem(
+
+STORAGE_KEY,
+
+JSON.stringify(answers)
+
+);
+
+
+}
+
+
+
+/*
+---------------------------------
+Get Answers
+---------------------------------
+*/
+
+
+function getAnswers(){
+
+
+return JSON.parse(
+
+localStorage.getItem(
+
+STORAGE_KEY
+
+) || "{}"
+
+);
+
+
+}
+
+
+
+/*
+---------------------------------
+Show Step
+---------------------------------
+*/
+
+
+function showStep(step){
+
+
+steps.forEach(
+
+(item)=>{
+
+
+const element =
+item as HTMLElement;
+
+
+
+if(
+
+Number(element.dataset.step)
+
+=== step
+
+){
+
+
+element.classList.remove(
+
+"hidden"
+
+);
+
+
+}
+
+else{
+
+
+element.classList.add(
+
+"hidden"
+
+);
+
+
+}
+
+
+}
+
+);
+
+
+
+currentStep = step;
+
+
+updateProgress();
+
+
+}
+
+
+
+/*
+---------------------------------
+Progress
+---------------------------------
+*/
+
+
+function updateProgress(){
+
+
+if(!progress)
+
+return;
+
+
+
+const percentage =
+
+Math.round(
+
+(currentStep / TOTAL_STEPS)
+
+*
+
+100
+
+);
+
+
+
+progress.innerHTML = `
+
+
+<div class="mb-8">
+
+
+<div class="mb-3 flex justify-between">
+
+
+<span class="font-semibold text-slate-700">
+
+Step ${currentStep} of ${TOTAL_STEPS}
+
+</span>
+
+
+
+<span class="text-slate-500">
+
+${percentage}%
+
+</span>
+
+
+</div>
+
+
+
+<div class="h-3 rounded-full bg-slate-200">
+
+
+<div
+
+class="h-3 rounded-full bg-blue-600"
+
+style="width:${percentage}%"
+
+>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+`;
+
+}
+
+
+
+/*
+---------------------------------
+Capture Answers
+---------------------------------
+*/
+
+
+document.addEventListener(
+
+"click",
+
+(event)=>{
+
+
+const target =
+
+event.target as HTMLElement;
+
+
+
+/*
+Answer selection
+*/
+
+
+const answerButton =
+
+target.closest(
+
+".answer-option"
+
+);
+
+
+
+if(answerButton){
+
+
+const question =
+
+answerButton.closest(
+
+".assessment-question"
+
+);
+
+
+
+if(question){
+
+
+const questionId =
+
+question.getAttribute(
+
+"data-question-id"
+
+);
+
+
+
+const answer =
+
+answerButton.getAttribute(
+
+"data-answer"
+
+);
+
+
+
+if(
+
+questionId && answer
+
+){
+
+
+saveAnswer(
+
+questionId,
+
+answer
+
+);
+
+
+}
+
+
+
+/*
+Highlight selection
+
+*/
+
+
+question
+
+.querySelectorAll(
+
+".answer-option"
+
+)
+
+.forEach(
+
+(item)=>{
+
+
+item.classList.remove(
+
+"border-blue-600",
+
+"bg-blue-50"
+
+);
+
+
+}
+
+);
+
+
+
+answerButton.classList.add(
+
+"border-blue-600",
+
+"bg-blue-50"
+
+);
+
+
+}
+
+
+}
+
+
+
+
+
+/*
+Navigation
+
+*/
+
+
+const button =
+
+target.closest(
+
+"button"
+
+);
+
+
+
+if(!button)
+
+return;
+
+
+
+const text =
+
+button.innerText.trim();
+
+
+
+if(
+
+text === "Continue"
+
+){
+
+
+if(currentStep < TOTAL_STEPS){
+
+
+showStep(
+
+currentStep + 1
+
+);
+
+
+}
+
+
+}
+
+
+
+if(
+
+text === "Back"
+
+){
+
+
+if(currentStep > 1){
+
+
+showStep(
+
+currentStep - 1
+
+);
+
+
+}
+
+
+}
+
+
+
+if(
+
+text === "View My Results"
+
+){
+
+
+console.log(
+
+"Assessment Answers:",
+
+getAnswers()
+
+);
+
+
+
+showStep(7);
+
+
+}
+
+
+
+}
+
+);
+
+
+
+updateProgress();
+
+
+</script>

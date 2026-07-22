@@ -1,0 +1,101 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+import AssessmentHero from "../components/assessment/AssessmentHero.astro";
+
+import AssessmentCard from "../components/assessment/AssessmentCard.astro";
+
+import AssessmentWizard from "../components/assessment/AssessmentWizard.astro";
+
+---
+
+<MainLayout
+
+  title="AI Readiness Assessment | Ragan Dynamics"
+
+  description="Discover practical AI opportunities for your business with our AI Readiness Assessment. Identify areas where AI can improve productivity, automate processes and support growth."
+
+>
+
+
+  <!-- ================================================= -->
+  <!-- Assessment Hero -->
+  <!-- ================================================= -->
+
+  <AssessmentHero />
+
+
+
+  <!-- ================================================= -->
+  <!-- Assessment Wizard -->
+  <!-- ================================================= -->
+
+
+  <section class="bg-slate-50 py-20">
+
+
+    <div class="mx-auto max-w-5xl px-6">
+
+
+      <AssessmentCard>
+
+
+        <AssessmentWizard />
+
+
+      </AssessmentCard>
+
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- ================================================= -->
+  <!-- Closing Message -->
+  <!-- ================================================= -->
+
+
+  <section class="bg-white py-16">
+
+
+    <div class="mx-auto max-w-4xl px-6 text-center">
+
+
+      <h2 class="text-3xl font-bold text-slate-900">
+
+        Ready to explore your AI opportunities?
+
+      </h2>
+
+
+      <p class="mt-4 text-lg text-slate-600">
+
+        Our consultants can help you identify practical AI solutions
+        aligned with your business goals.
+
+      </p>
+
+
+      <a
+
+        href="/contact"
+
+        class="mt-8 inline-flex rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700"
+
+      >
+
+        Book an AI Consultation
+
+      </a>
+
+
+    </div>
+
+
+  </section>
+
+
+</MainLayout>

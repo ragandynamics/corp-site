@@ -1,0 +1,173 @@
+---
+import { site } from "../../config/site";
+
+const { company, contact } = site;
+---
+
+<section class="py-20">
+
+  <div class="mx-auto max-w-7xl px-6">
+
+    <div class="grid gap-16 lg:grid-cols-2">
+
+      <!-- ================================================= -->
+      <!-- Left -->
+      <!-- ================================================= -->
+
+      <div>
+
+        <span class="text-sm font-semibold uppercase tracking-widest text-blue-600">
+          Let's Talk
+        </span>
+
+        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-900">
+          Talk to an AI Consultant
+        </h2>
+
+        <p class="mt-6 text-xl text-slate-600">
+          Whether you're exploring AI for the first time or planning your next
+          transformation initiative, we're here to help.
+        </p>
+
+        <div class="mt-10 space-y-6 text-slate-600">
+
+          <p>
+            Our consultants work with SMEs to identify practical opportunities
+            to improve productivity, streamline business processes and adopt AI
+            responsibly.
+          </p>
+
+          <p>
+            Every business is different. We start by understanding your goals,
+            current challenges and technology landscape before recommending the
+            right approach.
+          </p>
+
+          <p>
+            A conversation today could be the first step towards a more
+            efficient and AI-enabled business.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- ================================================= -->
+      <!-- Right -->
+      <!-- ================================================= -->
+
+      <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+
+        <h3 class="text-2xl font-bold text-slate-900">
+          {company.name}
+        </h3>
+
+        <p class="mt-2 text-slate-500">
+          {company.tagline}
+        </p>
+
+        <div class="mt-10 space-y-8">
+
+          <!-- Phone -->
+
+          <div>
+
+            <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Office Phone
+            </div>
+
+            <a
+              href={`tel:${contact.phone.tel}`}
+              class="mt-2 inline-block text-lg font-semibold text-blue-600 hover:underline"
+            >
+              {contact.phone.display}
+            </a>
+
+          </div>
+
+          <!-- WhatsApp -->
+
+          <div>
+
+            <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              WhatsApp
+            </div>
+
+            <a
+              href={contact.whatsapp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-2 inline-block text-lg font-semibold text-blue-600 hover:underline"
+            >
+              {contact.whatsapp.display}
+            </a>
+
+          </div>
+
+          <!-- Email -->
+
+          <div>
+
+            <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Email
+            </div>
+
+            <a
+              href={`mailto:${contact.email}`}
+              class="mt-2 inline-block break-all text-lg font-semibold text-blue-600 hover:underline"
+            >
+              {contact.email}
+            </a>
+
+          </div>
+
+          <!-- Business Hours -->
+
+          <div>
+
+            <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Business Hours
+            </div>
+
+            <p class="mt-2 text-slate-600">
+              {contact.businessHours}
+            </p>
+
+          </div>
+
+          <!-- Response -->
+
+          <div>
+
+            <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Response Time
+            </div>
+
+            <p class="mt-2 text-slate-600">
+              {contact.responseTime}
+            </p>
+
+          </div>
+
+          <!-- CTA -->
+
+          <div class="pt-4">
+
+            <a
+              href={contact.enquiryForm}
+              class="inline-flex rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+            >
+              Book an AI Consultation
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

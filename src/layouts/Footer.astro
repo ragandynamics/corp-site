@@ -1,0 +1,248 @@
+---
+import { site } from "../../config/site";
+
+const year = new Date().getFullYear();
+
+const { company, contact, social } = site;
+---
+
+<footer class="border-t border-slate-200 bg-slate-950 text-slate-300">
+
+  <div class="mx-auto max-w-7xl px-6 py-16">
+
+    <div class="grid gap-12 lg:grid-cols-4">
+
+      <!-- ===================================================== -->
+      <!-- Company -->
+      <!-- ===================================================== -->
+
+      <div>
+
+        <h3 class="text-2xl font-bold text-white">
+          {company.name}
+        </h3>
+
+        <p class="mt-2 text-blue-300">
+          {company.tagline}
+        </p>
+
+        <p class="mt-6 leading-7 text-slate-400">
+          Helping Singapore SMEs improve productivity,
+          automate business processes and adopt practical AI
+          solutions that deliver measurable business outcomes.
+        </p>
+
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- Services -->
+      <!-- ===================================================== -->
+
+      <div>
+
+        <h4 class="text-lg font-semibold text-white">
+          Services
+        </h4>
+
+        <ul class="mt-6 space-y-3">
+
+          <li>
+            <a href="/services" class="hover:text-white">
+              AI Strategy
+            </a>
+          </li>
+
+          <li>
+            <a href="/services" class="hover:text-white">
+              AI Automation
+            </a>
+          </li>
+
+          <li>
+            <a href="/services" class="hover:text-white">
+              Microsoft Copilot
+            </a>
+          </li>
+
+          <li>
+            <a href="/services" class="hover:text-white">
+              AI Chatbots
+            </a>
+          </li>
+
+          <li>
+            <a href="/services" class="hover:text-white">
+              Cloud Modernisation
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- Company -->
+      <!-- ===================================================== -->
+
+      <div>
+
+        <h4 class="text-lg font-semibold text-white">
+          Company
+        </h4>
+
+        <ul class="mt-6 space-y-3">
+
+          <li><a href="/about" class="hover:text-white">About</a></li>
+
+          <li><a href="/industries" class="hover:text-white">Industries</a></li>
+
+          <li><a href="/insights" class="hover:text-white">Insights</a></li>
+
+          <li><a href="/faq" class="hover:text-white">FAQ</a></li>
+
+          <li><a href="/contact" class="hover:text-white">Contact</a></li>
+
+          <li><a href="/privacy" class="hover:text-white">Privacy Policy</a></li>
+
+        </ul>
+
+      </div>
+
+      <!-- ===================================================== -->
+      <!-- Contact -->
+      <!-- ===================================================== -->
+
+      <div>
+
+        <h4 class="text-lg font-semibold text-white">
+          Contact
+        </h4>
+
+        <div class="mt-6 space-y-5">
+
+          <!-- Phone -->
+
+          <div>
+
+            <div class="text-sm text-slate-400">
+              Office Phone
+            </div>
+
+            <a
+              href={`tel:${contact.phone.tel}`}
+              class="hover:text-white"
+            >
+              {contact.phone.display}
+            </a>
+
+          </div>
+
+          <!-- WhatsApp -->
+
+          <div>
+
+            <div class="text-sm text-slate-400">
+              WhatsApp
+            </div>
+
+            <a
+              href={contact.whatsapp.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:text-white"
+            >
+              {contact.whatsapp.display}
+            </a>
+
+          </div>
+
+          <!-- Email -->
+
+          <div>
+
+            <div class="text-sm text-slate-400">
+              Email
+            </div>
+
+            <a
+              href={`mailto:${contact.email}`}
+              class="break-all hover:text-white"
+            >
+              {contact.email}
+            </a>
+
+          </div>
+
+          <!-- Contact Form -->
+
+          <div>
+
+            <a
+              href={contact.enquiryForm}
+              class="inline-flex rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700"
+            >
+              Contact Us
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ===================================================== -->
+  <!-- Bottom -->
+  <!-- ===================================================== -->
+
+  <div class="border-t border-slate-800">
+
+    <div
+      class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 py-8 md:flex-row"
+    >
+
+      <div class="text-sm text-slate-500">
+
+        © {year} {company.name}. All rights reserved.
+
+      </div>
+
+      <div class="flex gap-5">
+
+        <a
+          href={social.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-white"
+        >
+          LinkedIn
+        </a>
+
+        <a
+          href={social.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-white"
+        >
+          Facebook
+        </a>
+
+        <a
+          href={social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-white"
+        >
+          Instagram
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</footer>

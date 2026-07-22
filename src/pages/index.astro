@@ -1,40 +1,91 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 
+import { site } from "../config/site";
+
 import Hero from "../components/home/Hero.astro";
+import BusinessChallenges from "../components/home/BusinessChallenges.astro";
 import BusinessOutcomes from "../components/home/BusinessOutcomes.astro";
 import Services from "../components/home/Services.astro";
 import Products from "../components/home/Products.astro";
-import WhyRagan from "../components/home/WhyRaganDynamics.astro";
+import WhyRaganDynamics from "../components/home/WhyRaganDynamics.astro";
+import TransformationJourney from "../components/home/TransformationJourney.astro";
 import About from "../components/home/About.astro";
 import Insights from "../components/home/Insights.astro";
 import FAQ from "../components/home/FAQ.astro";
 import ContactCTA from "../components/home/ContactCTA.astro";
+
+const { company } = site;
 ---
 
 <MainLayout
-
-title="Ragan Dynamics | AI Consulting, AI Automation & Enterprise AI Solutions"
-
-description="Ragan Dynamics helps organisations accelerate AI adoption through cost-effective AI consulting, AI automation, enterprise AI solutions and intelligent products that deliver measurable business value."
-
+  title={`${company.name} | AI Consulting & Automation for Singapore SMEs`}
+  description="Helping Singapore SMEs reduce costs, improve productivity and accelerate growth through practical, secure and cost-effective AI solutions."
 >
+
+  <!-- ====================================================== -->
+  <!-- Hero -->
+  <!-- ====================================================== -->
 
   <Hero />
 
+  <!-- ====================================================== -->
+  <!-- Business Challenges -->
+  <!-- ====================================================== -->
+
+  <BusinessChallenges />
+
+  <!-- ====================================================== -->
+  <!-- Business Outcomes -->
+  <!-- ====================================================== -->
+
   <BusinessOutcomes />
+
+  <!-- ====================================================== -->
+  <!-- AI Services -->
+  <!-- ====================================================== -->
 
   <Services />
 
+  <!-- ====================================================== -->
+  <!-- AI Products -->
+  <!-- ====================================================== -->
+
   <Products />
 
-  <WhyRagan />
+  <!-- ====================================================== -->
+  <!-- Why Choose Ragan Dynamics -->
+  <!-- ====================================================== -->
+
+  <WhyRaganDynamics />
+
+  <!-- ====================================================== -->
+  <!-- AI Transformation Journey -->
+  <!-- ====================================================== -->
+
+  <TransformationJourney />
+
+  <!-- ====================================================== -->
+  <!-- About Us -->
+  <!-- ====================================================== -->
 
   <About />
 
+  <!-- ====================================================== -->
+  <!-- Latest AI Insights -->
+  <!-- ====================================================== -->
+
   <Insights />
 
+  <!-- ====================================================== -->
+  <!-- Frequently Asked Questions -->
+  <!-- ====================================================== -->
+
   <FAQ />
+
+  <!-- ====================================================== -->
+  <!-- Final Call To Action -->
+  <!-- ====================================================== -->
 
   <ContactCTA />
 

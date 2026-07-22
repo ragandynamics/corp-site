@@ -1,0 +1,351 @@
+---
+import {
+  calculateAssessmentScore
+} from "../../lib/assessmentScoring";
+
+import {
+  getRecommendations
+} from "../../lib/assessmentRecommendations";
+
+
+const defaultResult = {
+
+score:0,
+
+maturity:"Assessment Complete",
+
+strengths:[],
+
+recommendations:[]
+
+};
+
+---
+
+<section class="bg-slate-50 py-20">
+
+
+<div class="mx-auto max-w-5xl px-6">
+
+
+<div id="results-container">
+
+
+<div class="rounded-3xl bg-white p-10 text-center shadow-sm">
+
+
+<h1 class="text-4xl font-black text-slate-900">
+
+Preparing your AI readiness results...
+
+</h1>
+
+
+<p class="mt-4 text-slate-600">
+
+Analysing your responses.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<script>
+
+import {
+calculateAssessmentScore
+}
+from "../../lib/assessmentScoring";
+
+
+import {
+getRecommendations
+}
+from "../../lib/assessmentRecommendations";
+
+
+
+const STORAGE_KEY =
+"ragan_ai_assessment";
+
+
+
+const container =
+document.getElementById(
+"results-container"
+);
+
+
+
+function loadResults(){
+
+
+const answers = JSON.parse(
+
+localStorage.getItem(
+
+STORAGE_KEY
+
+) || "{}"
+
+);
+
+
+
+const result =
+
+calculateAssessmentScore(
+
+answers
+
+);
+
+
+
+const recommendations =
+
+getRecommendations(
+
+result.recommendations
+
+);
+
+
+
+if(!container)
+
+return;
+
+
+
+container.innerHTML = `
+
+
+<div class="text-center">
+
+
+<span
+
+class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700"
+
+>
+
+AI Readiness Assessment Complete
+
+</span>
+
+
+
+<h1 class="mt-6 text-5xl font-black text-slate-900">
+
+Your AI Readiness Results
+
+</h1>
+
+
+
+<p class="mt-4 text-lg text-slate-600">
+
+Based on your responses, we identified areas where AI can create business value.
+
+</p>
+
+
+
+</div>
+
+
+
+<!-- Score -->
+
+
+<div class="mt-12 rounded-3xl bg-white p-10 text-center shadow">
+
+
+<p class="text-sm uppercase tracking-wide text-slate-500">
+
+AI Readiness Score
+
+</p>
+
+
+
+<div class="mt-4 text-7xl font-black text-blue-600">
+
+${result.score}
+
+<span class="text-3xl text-slate-400">
+
+/100
+
+</span>
+
+
+</div>
+
+
+
+<h2 class="mt-4 text-2xl font-bold text-slate-900">
+
+${result.maturity}
+
+</h2>
+
+
+</div>
+
+
+
+
+<!-- Recommendations -->
+
+
+<div class="mt-12">
+
+
+<h2 class="text-3xl font-bold text-slate-900">
+
+Recommended AI Opportunities
+
+</h2>
+
+
+
+<div class="mt-8 grid gap-6 md:grid-cols-2">
+
+
+${
+
+recommendations.map(item => `
+
+
+<div
+
+class="rounded-2xl border border-slate-200 bg-white p-8"
+
+>
+
+
+<h3 class="text-xl font-bold text-slate-900">
+
+${item.title}
+
+</h3>
+
+
+<p class="mt-3 text-slate-600">
+
+${item.description}
+
+</p>
+
+
+
+<div class="mt-5 flex gap-4 text-sm">
+
+
+<span
+
+class="rounded-full bg-green-100 px-3 py-1 text-green-700"
+
+>
+
+Impact: ${item.impact}
+
+</span>
+
+
+
+<span
+
+class="rounded-full bg-blue-100 px-3 py-1 text-blue-700"
+
+>
+
+Complexity: ${item.complexity}
+
+</span>
+
+
+</div>
+
+
+
+</div>
+
+
+`).join("")
+
+}
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- CTA -->
+
+
+<div
+
+class="mt-16 rounded-3xl bg-slate-900 p-10 text-center"
+
+>
+
+
+<h2 class="text-3xl font-bold text-white">
+
+Ready to explore these AI opportunities?
+
+</h2>
+
+
+
+<p class="mt-4 text-slate-300">
+
+Discuss your assessment results with our AI consultants.
+
+</p>
+
+
+
+<a
+
+href="/contact"
+
+class="mt-8 inline-flex rounded-xl bg-blue-600 px-8 py-4 font-bold text-white hover:bg-blue-700"
+
+>
+
+Book an AI Consultation
+
+</a>
+
+
+
+</div>
+
+
+`;
+
+}
+
+
+loadResults();
+
+
+</script>

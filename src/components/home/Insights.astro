@@ -1,77 +1,109 @@
 ---
 import Container from "../ui/Container.astro";
 
-const insights = [
+const articles = [
+  {
+    category: "AI Strategy",
+    title: "7 Practical AI Opportunities Every Singapore SME Should Explore",
+    description:
+      "Discover high-impact AI use cases that reduce costs, improve productivity and deliver measurable business value.",
+    readTime: "6 min read",
+    link: "/insights/7-ai-opportunities-singapore-smes"
+  },
 
-{
-title:"How SMEs Can Adopt AI Without Large Budgets",
-category:"AI Strategy",
-date:"July 2026"
-},
+  {
+    category: "Microsoft Copilot",
+    title: "Is Microsoft 365 Copilot Worth the Investment?",
+    description:
+      "Understand the business benefits, licensing considerations and practical use cases for Microsoft 365 Copilot.",
+    readTime: "8 min read",
+    link: "/insights/microsoft-365-copilot-guide"
+  },
 
-{
-title:"5 Ways AI Improves Employee Productivity",
-category:"Productivity",
-date:"July 2026"
-},
-
-{
-title:"Building Secure Enterprise AI Solutions",
-category:"AI Security",
-date:"June 2026"
-}
-
+  {
+    category: "Business Automation",
+    title: "10 Business Processes You Can Automate with AI",
+    description:
+      "From invoice processing to customer support, learn how automation can save time and reduce operational costs.",
+    readTime: "7 min read",
+    link: "/insights/business-process-automation"
+  }
 ];
 ---
 
-<section class="section-padding bg-slate-50">
+<section id="insights" class="section-padding bg-slate-50">
 
   <Container>
 
-    <div class="text-center">
+    <div class="mx-auto max-w-4xl text-center">
 
       <span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-        Insights
+        AI Insights
       </span>
 
-      <h2 class="mt-6 text-4xl font-black text-slate-900">
-        Latest AI Insights
+      <h2 class="mt-6 text-5xl font-black text-slate-900">
+
+        Practical AI Guides for Business Leaders
+
       </h2>
 
-      <p class="mx-auto mt-5 max-w-3xl text-lg text-slate-600">
-        Explore practical guidance on Artificial Intelligence,
-        automation and digital transformation.
+      <p class="mt-8 text-xl leading-9 text-slate-600">
+
+        Stay informed with practical insights, implementation guides and
+        best practices that help Singapore SMEs adopt AI with confidence.
+
       </p>
 
     </div>
 
-    <div class="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mt-20 grid gap-8 lg:grid-cols-3">
 
       {
-        insights.map((article)=>(
-          <article class="rounded-3xl bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl">
+
+        articles.map((article) => (
+
+          <article class="rounded-3xl bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
 
             <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+
               {article.category}
+
             </span>
 
-            <h3 class="mt-6 text-2xl font-bold text-slate-900">
+            <h3 class="mt-6 text-2xl font-black text-slate-900">
+
               {article.title}
+
             </h3>
 
-            <p class="mt-4 text-slate-500">
-              {article.date}
+            <p class="mt-5 leading-8 text-slate-600">
+
+              {article.description}
+
             </p>
 
-            <a
-              href="/insights"
-              class="mt-8 inline-flex items-center font-semibold text-blue-600 hover:text-blue-700"
-            >
-              Read More →
-            </a>
+            <div class="mt-8 flex items-center justify-between">
+
+              <span class="text-sm text-slate-500">
+
+                {article.readTime}
+
+              </span>
+
+              <a
+                href={article.link}
+                class="font-semibold text-blue-600 hover:text-blue-700"
+                data-analytics="insight-read-more"
+              >
+                Read More →
+              </a>
+
+            </div>
 
           </article>
+
         ))
+
       }
 
     </div>
@@ -80,9 +112,10 @@ date:"June 2026"
 
       <a
         href="/insights"
-        class="inline-flex rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700"
+        class="inline-flex rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700"
+        data-analytics="view-all-insights"
       >
-        View All Insights
+        View All AI Insights
       </a>
 
     </div>
