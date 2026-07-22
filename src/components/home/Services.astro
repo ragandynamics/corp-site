@@ -11,16 +11,24 @@ import { services } from "../../data/services";
     <div class="text-center">
 
       <span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-        AI Services
+
+        AI Services for Singapore SMEs
+
       </span>
 
-      <h2 class="mt-6 text-4xl font-black text-slate-900">
-        Enterprise AI Services
+      <h2 class="mt-6 text-5xl font-black text-slate-900">
+
+        Practical AI Solutions That Deliver Business Value
+
       </h2>
 
-      <p class="mx-auto mt-6 max-w-3xl text-lg text-slate-600">
-        Practical AI consulting, automation and cloud solutions that
-        deliver measurable business outcomes.
+      <p class="mx-auto mt-8 max-w-4xl text-xl text-slate-600">
+
+        Whether you're beginning your AI journey or scaling existing capabilities,
+        Ragan Dynamics helps you identify opportunities, implement secure AI
+        solutions and achieve measurable business outcomes through cost-effective
+        digital transformation.
+
       </p>
 
     </div>
@@ -28,10 +36,66 @@ import { services } from "../../data/services";
     <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
 
       {
-        services.map((service) => (
-          <ServiceCard service={service} />
+
+        services.map((service)=>(
+
+          <ServiceCard
+
+            service={service}
+
+          />
+
         ))
+
       }
+
+    </div>
+
+    <div class="mt-20 rounded-3xl bg-gradient-to-r from-blue-700 to-slate-900 p-12 text-center text-white">
+
+      <h3 class="text-4xl font-black">
+
+        Not Sure Where to Start?
+
+      </h3>
+
+      <p class="mx-auto mt-6 max-w-3xl text-xl text-blue-100">
+
+        Every business is different. We help Singapore SMEs identify the AI
+        initiatives that deliver the fastest return on investment while
+        keeping implementation practical and affordable.
+
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-5">
+
+        <a
+
+          href="/contact"
+
+          data-analytics="services-discovery"
+
+          class="rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-700 transition hover:bg-slate-100"
+
+        >
+
+          Book a Free AI Discovery Session
+
+        </a>
+
+        <a
+
+          href="/contact"
+
+          class="rounded-xl border border-white px-8 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-slate-900"
+
+        >
+
+          Request an AI Readiness Assessment
+
+        </a>
+
+      </div>
 
     </div>
 

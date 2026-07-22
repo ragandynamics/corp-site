@@ -1,0 +1,48 @@
+---
+const categories = [
+"AI Strategy",
+"Microsoft Copilot",
+"Automation",
+"Cloud",
+"Cyber Security",
+"ROI",
+"Manufacturing",
+"Retail",
+"Healthcare",
+"Logistics"
+];
+---
+
+<section class="bg-slate-50 py-20">
+
+<div class="mx-auto max-w-6xl px-6">
+
+<h2 class="text-center text-4xl font-black">
+
+Browse by Topic
+
+</h2>
+
+<div class="mt-12 flex flex-wrap justify-center gap-4">
+
+{
+
+categories.map(category => (
+
+<a
+href={`/insights/category/${category.toLowerCase().replace(/\s+/g,"-")}`}
+class="rounded-full bg-white px-6 py-3 shadow hover:bg-blue-600 hover:text-white">
+
+{category}
+
+</a>
+
+))
+
+}
+
+</div>
+
+</div>
+
+</section>

@@ -1,0 +1,117 @@
+---
+import AssessmentQuestion from "./AssessmentQuestion.astro";
+
+export interface Props {
+  onNext?: string;
+  onBack?: string;
+}
+
+const {
+  onNext = "#next",
+  onBack = "#back"
+} = Astro.props;
+---
+
+<div class="space-y-12">
+
+
+  <!-- Desired Outcomes -->
+
+  <AssessmentQuestion
+
+    title="What would you like AI to help your business achieve?"
+
+    subtitle="Select up to three outcomes."
+
+    multiple={true}
+
+    options={[
+
+      "Save time on daily tasks",
+
+      "Reduce operating costs",
+
+      "Improve customer service",
+
+      "Increase employee productivity",
+
+      "Generate better business insights",
+
+      "Automate repetitive processes",
+
+      "Support business growth",
+
+      "Improve decision making"
+
+    ]}
+
+  />
+
+
+
+  <!-- Timeline -->
+
+  <AssessmentQuestion
+
+    title="When would you like to start exploring AI opportunities?"
+
+    subtitle="There is no right or wrong answer."
+
+    options={[
+
+      "Immediately",
+
+      "Within the next 3 months",
+
+      "Within 6 months",
+
+      "Within 12 months",
+
+      "Just researching for now"
+
+    ]}
+
+  />
+
+
+
+  <!-- Navigation -->
+
+  <div class="flex justify-between pt-8">
+
+
+    <button
+
+      id={onBack.replace("#","")}
+
+      type="button"
+
+      class="rounded-xl border border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition hover:bg-slate-100"
+
+    >
+
+      Back
+
+    </button>
+
+
+
+    <button
+
+      id={onNext.replace("#","")}
+
+      type="button"
+
+      class="rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition hover:bg-blue-700"
+
+    >
+
+      View My Results
+
+    </button>
+
+
+  </div>
+
+
+</div>

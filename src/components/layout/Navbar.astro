@@ -1,90 +1,198 @@
 ---
-import Logo from "./Logo.astro";
-import Button from "../ui/Button.astro";
+import { site } from "../../config/site";
 
-const navigation=[
-{
-title:"Services",
-url:"/services"
-},
-{
-title:"Products",
-url:"/products"
-},
-{
-title:"Industries",
-url:"/industries"
-},
-{
-title:"Insights",
-url:"/insights"
-},
-{
-title:"About",
-url:"/about"
-},
-{
-title:"Contact",
-url:"/contact"
-}
+const { company, contact } = site;
+
+const navigation = [
+  {
+    label: "Home",
+    href: "/"
+  },
+  {
+    label: "Services",
+    href: "/services"
+  },
+  {
+    label: "Industries",
+    href: "/industries"
+  },
+  {
+    label: "AI Assessment",
+    href: "/assessment"
+  },
+  {
+    label: "Insights",
+    href: "/insights"
+  },
+  {
+    label: "About",
+    href: "/about"
+  },
+  {
+    label: "Contact",
+    href: "/contact"
+  }
 ];
+
+const pathname = Astro.url.pathname;
 ---
 
 <header
-class="sticky top-0 z-50 border-b border-slate-200/60 bg-white/90 backdrop-blur-xl">
+  class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur"
+>
 
-<div
-class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+  <div
+    class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6"
+  >
 
-<Logo/>
 
-<nav
-class="hidden items-center gap-8 lg:flex">
+    <!-- Logo -->
 
-{
-navigation.map(item=>(
+    <a
+      href="/"
+      class="flex items-center gap-3"
+    >
 
-<a
-href={item.url}
-class="font-medium text-slate-600 transition hover:text-blue-600">
+      <div
+        class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white"
+      >
+        RD
+      </div>
 
-{item.title}
 
-</a>
+      <div>
 
-))
-}
+        <div class="text-lg font-bold text-slate-900">
 
-</nav>
+          {company.name}
 
-<div
-class="hidden items-center gap-4 lg:flex">
+        </div>
 
-<Button
-variant="outline"
-href="/contact">
 
-Talk to Us
+        <div class="text-xs text-slate-500">
 
-</Button>
+          {company.tagline}
 
-<Button
-href="/contact">
+        </div>
 
-Book Strategy Session
 
-</Button>
+      </div>
 
-</div>
 
-<button
-id="menuButton"
-class="rounded-xl border p-3 lg:hidden">
+    </a>
 
-☰
 
-</button>
 
-</div>
+    <!-- Desktop Navigation -->
+
+
+    <nav
+      class="hidden items-center gap-7 lg:flex"
+    >
+
+      {
+        navigation.map((item) => (
+
+          <a
+
+            href={item.href}
+
+            class:list={[
+
+              "text-sm font-medium transition-colors",
+
+              pathname === item.href
+
+              ? "text-blue-600"
+
+              : "text-slate-600 hover:text-blue-600"
+
+            ]}
+
+          >
+
+            {item.label}
+
+          </a>
+
+        ))
+      }
+
+
+    </nav>
+
+
+
+    <!-- Desktop CTA -->
+
+
+    <div
+      class="hidden items-center gap-4 lg:flex"
+    >
+
+      <a
+
+        href={contact.enquiryForm}
+
+        class="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+
+      >
+
+        Book an AI Consultation
+
+      </a>
+
+
+    </div>
+
+
+
+    <!-- Mobile Button -->
+
+
+    <button
+
+      id="mobile-menu-button"
+
+      class="rounded-lg border border-slate-300 p-2 lg:hidden"
+
+      aria-label="Open menu"
+
+    >
+
+      <svg
+
+        xmlns="http://www.w3.org/2000/svg"
+
+        class="h-6 w-6"
+
+        fill="none"
+
+        viewBox="0 0 24 24"
+
+        stroke="currentColor"
+
+      >
+
+        <path
+
+          stroke-linecap="round"
+
+          stroke-linejoin="round"
+
+          stroke-width="2"
+
+          d="M4 6h16M4 12h16M4 18h16"
+
+        />
+
+      </svg>
+
+
+    </button>
+
+
+  </div>
+
 
 </header>

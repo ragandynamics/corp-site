@@ -1,0 +1,71 @@
+---
+import { insights } from "../../data/insights";
+
+const featured = insights.filter(i => i.featured);
+---
+
+<section class="py-20">
+
+<div class="mx-auto max-w-7xl px-6">
+
+<h2 class="text-4xl font-black">
+
+Featured Guides
+
+</h2>
+
+<div class="mt-10 grid gap-8 lg:grid-cols-3">
+
+{
+
+featured.map(article => (
+
+<div class="rounded-3xl border p-8 shadow-sm">
+
+<span class="rounded bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+
+{article.category}
+
+</span>
+
+<h3 class="mt-5 text-2xl font-bold">
+
+{article.title}
+
+</h3>
+
+<p class="mt-4 text-slate-600">
+
+{article.description}
+
+</p>
+
+<div class="mt-6 flex justify-between">
+
+<span>
+
+{article.readTime}
+
+</span>
+
+<a
+href={article.slug}
+class="font-semibold text-blue-600">
+
+Read Guide →
+
+</a>
+
+</div>
+
+</div>
+
+))
+
+}
+
+</div>
+
+</div>
+
+</section>
