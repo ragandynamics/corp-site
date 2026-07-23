@@ -7,580 +7,182 @@ import TechnologyStep from "./TechnologyStep.astro";
 import AIAdoptionStep from "./AIAdoptionStep.astro";
 import GoalsStep from "./GoalsStep.astro";
 
+import LeadCaptureForm from "./LeadCaptureForm.astro";
 import AssessmentResults from "./AssessmentResults.astro";
 ---
 
-<div
-  id="assessment-wizard"
-  class="mx-auto max-w-4xl"
->
+<div id="assessment-wizard" class="mx-auto max-w-4xl">
 
-
-  <!-- Progress -->
-
+  <!-- Progress Bar -->
   <div id="progress-container">
-
-    <AssessmentProgress
-
-      step={1}
-
-      total={6}
-
-    />
-
+    <AssessmentProgress step={1} total={7} />
   </div>
 
-
-
-  <!-- Steps -->
-
+  <!-- Wizard Steps -->
   <div id="steps-container">
 
-
-    <div
-      class="assessment-step"
-      data-step="1"
-    >
-
+    <!-- Step 1: Business Profile -->
+    <div class="assessment-step" data-step="1">
       <BusinessProfileStep />
-
     </div>
 
-
-
-    <div
-      class="assessment-step hidden"
-      data-step="2"
-    >
-
+    <!-- Step 2: Challenges -->
+    <div class="assessment-step hidden" data-step="2">
       <BusinessChallengesStep />
-
     </div>
 
-
-
-    <div
-      class="assessment-step hidden"
-      data-step="3"
-    >
-
+    <!-- Step 3: Technology -->
+    <div class="assessment-step hidden" data-step="3">
       <TechnologyStep />
-
     </div>
 
-
-
-    <div
-      class="assessment-step hidden"
-      data-step="4"
-    >
-
+    <!-- Step 4: AI Adoption -->
+    <div class="assessment-step hidden" data-step="4">
       <AIAdoptionStep />
-
     </div>
 
-
-
-    <div
-      class="assessment-step hidden"
-      data-step="5"
-    >
-
+    <!-- Step 5: Goals -->
+    <div class="assessment-step hidden" data-step="5">
       <GoalsStep />
-
     </div>
 
+    <!-- Step 6: Lead Capture -->
+    <div class="assessment-step hidden" data-step="6">
+      <LeadCaptureForm />
+    </div>
 
-
-    <div
-      class="assessment-step hidden"
-      data-step="6"
-    >
-
+    <!-- Step 7: Results -->
+    <div class="assessment-step hidden" data-step="7">
       <AssessmentResults />
-
     </div>
-
-
 
   </div>
 
-
 </div>
-
-
 
 <script>
-
-const STORAGE_KEY =
-"ragan_ai_assessment";
-
-
+const STORAGE_KEY = "ragan_ai_assessment";
+const TOTAL_STEPS = 7;
 let currentStep = 1;
 
-
-const steps =
-document.querySelectorAll(
-".assessment-step"
+const steps = Array.from(
+  document.querySelectorAll<HTMLElement>(".assessment-step")
 );
 
+const progress = document.getElementById("progress-container") as HTMLDivElement | null;
 
-const progress =
-document.getElementById(
-"progress-container"
-);
-
-
-
-/*
-----------------------------------
-Save Assessment Answer
-----------------------------------
-*/
-
-function saveAnswer(
-
-questionId,
-
-answer
-
-){
-
-
-const answers = JSON.parse(
-
-localStorage.getItem(
-
-STORAGE_KEY
-
-) || "{}"
-
-);
-
-
-
-answers[questionId]=answer;
-
-
-
-localStorage.setItem(
-
-STORAGE_KEY,
-
-JSON.stringify(answers)
-
-);
-
-
+/* --- Answer Persistence --- */
+function saveAnswer(questionId: string, answer: string): void {
+  const answers = getAnswers();
+  answers[questionId] = answer;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
 }
 
-
-
-/*
-----------------------------------
-Read Answers
-----------------------------------
-*/
-
-
-function getAnswers(){
-
-
-return JSON.parse(
-
-localStorage.getItem(
-
-STORAGE_KEY
-
-) || "{}"
-
-);
-
-
+function getAnswers(): Record<string, string> {
+  return JSON.parse(
+    localStorage.getItem(STORAGE_KEY) ?? "{}"
+  ) as Record<string, string>;
 }
 
+/* --- Navigation & Progress UI --- */
+function showStep(step: number): void {
+  steps.forEach((element) => {
+    const stepNumber = Number(element.dataset.step ?? "0");
+    if (stepNumber === step) {
+      element.classList.remove("hidden");
+    } else {
+      element.classList.add("hidden");
+    }
+  });
 
-
-/*
-----------------------------------
-Show Step
-----------------------------------
-*/
-
-
-function showStep(step){
-
-
-steps.forEach(item=>{
-
-
-const element =
-item;
-
-
-if(
-
-Number(
-
-element.dataset.step
-
-) === step
-
-){
-
-
-element.classList.remove(
-
-"hidden"
-
-);
-
-
+  currentStep = step;
+  updateProgress();
 }
 
-else{
+function updateProgress(): void {
+  if (!progress) return;
 
+  const percentage = Math.round((currentStep / TOTAL_STEPS) * 100);
 
-element.classList.add(
-
-"hidden"
-
-);
-
-
-}
-
-
-});
-
-
-currentStep = step;
-
-
-updateProgress();
-
-
-}
-
-
-
-/*
-----------------------------------
-Progress Bar
-----------------------------------
-*/
-
-
-function updateProgress(){
-
-
-if(!progress)
-
-return;
-
-
-
-const percentage =
-
-Math.round(
-
-(currentStep / 6) * 100
-
-);
-
-
-
-progress.innerHTML = `
-
-
+  progress.innerHTML = `
 <div class="mb-8">
-
-
-<div class="mb-3 flex justify-between">
-
-
-<span class="font-semibold text-slate-700">
-
-Step ${currentStep} of 6
-
-</span>
-
-
-
-<span class="text-slate-500">
-
-${percentage}%
-
-</span>
-
-
+  <div class="mb-3 flex justify-between">
+    <span class="font-semibold text-slate-700">
+      Step ${currentStep} of ${TOTAL_STEPS}
+    </span>
+    <span class="text-slate-500">
+      ${percentage}%
+    </span>
+  </div>
+  <div class="h-3 rounded-full bg-slate-200">
+    <div
+      class="h-3 rounded-full bg-blue-600 transition-all duration-300"
+      style="width:${percentage}%"
+    ></div>
+  </div>
 </div>
-
-
-
-<div class="h-3 rounded-full bg-slate-200">
-
-
-<div
-
-class="h-3 rounded-full bg-blue-600"
-
-style="width:${percentage}%"
-
->
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
 `;
-
 }
 
-
-
-/*
-----------------------------------
-Capture Answers
-----------------------------------
-*/
-
-
-document.addEventListener(
-
-"click",
-
-(event)=>{
-
-
-const target =
-event.target;
-
-
-
-/*
-
-Answer buttons
-
-*/
-
-
-if(
-
-target.closest(
-
-".answer-option"
-
-)
-
-){
-
-
-const button =
-
-target.closest(
-
-".answer-option"
-
-);
-
-
-
-const question =
-
-button.closest(
-
-".assessment-question"
-
-);
-
-
-
-if(question){
-
-
-const questionId =
-
-question.dataset.questionId;
-
-
-
-const answer =
-
-button.dataset.answer;
-
-
-
-saveAnswer(
-
-questionId,
-
-answer
-
-);
-
-
-
-/*
-
-Visual selection
-
-*/
-
-
-question
-
-.querySelectorAll(
-
-".answer-option"
-
-)
-
-.forEach(item=>{
-
-
-item.classList.remove(
-
-"border-blue-600",
-
-"bg-blue-50"
-
-);
-
-
+/* --- Event Delegation --- */
+document.addEventListener("click", (event: MouseEvent) => {
+  const target = event.target as HTMLElement | null;
+  if (!target) return;
+
+  const answerButton = target.closest(".answer-option") as HTMLElement | null;
+
+  if (answerButton) {
+    const question = answerButton.closest(".assessment-question") as HTMLElement | null;
+
+    if (question) {
+      const questionId = question.dataset.questionId;
+      const answer = answerButton.dataset.answer;
+
+      if (questionId && answer) {
+        saveAnswer(questionId, answer);
+      }
+
+      question
+        .querySelectorAll<HTMLElement>(".answer-option")
+        .forEach((item) => {
+          item.classList.remove("border-blue-600", "bg-blue-50");
+        });
+
+      answerButton.classList.add("border-blue-600", "bg-blue-50");
+    }
+  }
+
+  const navButton = target.closest("button") as HTMLButtonElement | null;
+  if (!navButton) return;
+
+  const buttonText = navButton.textContent?.trim() ?? "";
+
+  switch (buttonText) {
+    case "Continue":
+      if (currentStep < 6) {
+        showStep(currentStep + 1);
+      }
+      break;
+
+    case "Back":
+      if (currentStep > 1) {
+        showStep(currentStep - 1);
+      }
+      break;
+  }
 });
 
-
-
-button.classList.add(
-
-"border-blue-600",
-
-"bg-blue-50"
-
-);
-
-
-}
-
-
-}
-
-
-
-
-
-/*
-
-Navigation buttons
-
-*/
-
-
-if(
-
-target.closest("button")
-
-){
-
-
-const button =
-
-target.closest("button");
-
-
-
-const text =
-
-button.innerText.trim();
-
-
-
-if(
-
-text === "Continue"
-
-){
-
-
-if(currentStep < 5){
-
-
-showStep(
-
-currentStep + 1
-
-);
-
-
-}
-
-
-}
-
-
-
-if(
-
-text === "View My Results"
-
-){
-
-
-console.log(
-
-"Assessment Answers:",
-
-getAnswers()
-
-);
-
-
-
-showStep(6);
-
-
-}
-
-
-
-if(
-
-text === "Back"
-
-){
-
-
-if(currentStep > 1){
-
-
-showStep(
-
-currentStep - 1
-
-);
-
-
-}
-
-
-}
-
-
-
-}
-
-
+/* --- Custom Event Listeners --- */
+window.addEventListener("leadCaptured", () => {
+  showStep(7);
 });
 
+window.addEventListener("resetAssessment", () => {
+  localStorage.removeItem(STORAGE_KEY);
+  currentStep = 1;
+  showStep(1);
+});
 
-
+/* --- Init --- */
 updateProgress();
-
-
 </script>

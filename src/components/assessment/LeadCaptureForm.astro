@@ -12,22 +12,52 @@ class="rounded-3xl bg-white p-10 shadow"
 
 <h2 class="text-3xl font-bold text-slate-900">
 
-Your AI Assessment Is Ready
+Your AI Transformation Assessment Is Complete
 
 </h2>
 
 
 
-<p class="mt-4 text-slate-600">
+<p class="mt-4 text-lg leading-8 text-slate-600">
 
-Enter your details to receive your personalised AI recommendations.
+Thank you for completing your AI Transformation & ROI Assessment.
+
+Based on your responses, we've identified several opportunities where AI can improve productivity, reduce costs and accelerate business growth.
+
+Complete your details below to request a
+<strong>complimentary AI Transformation Consultation</strong>.
+During the consultation, one of our AI specialists will review your assessment results, discuss your business priorities and recommend practical AI initiatives tailored to your organisation.
 
 </p>
 
 
 </div>
 
+<div class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6">
 
+  <h3 class="text-lg font-bold text-slate-900">
+
+    During Your Complimentary Consultation
+
+  </h3>
+
+  <div class="mt-5 grid gap-4 md:grid-cols-2 text-slate-700">
+
+    <div>✓ Review your assessment results</div>
+
+    <div>✓ Discuss your business priorities</div>
+
+    <div>✓ Identify quick-win AI opportunities</div>
+
+    <div>✓ Estimate business impact and ROI</div>
+
+    <div>✓ Receive practical implementation recommendations</div>
+
+    <div>✓ Build your AI transformation roadmap</div>
+
+  </div>
+
+</div>
 
 <form
 
@@ -209,7 +239,7 @@ class="mt-1 h-5 w-5"
 
 <span class="text-sm text-slate-600">
 
-I agree to be contacted regarding AI consultation and business solutions.
+I agree that Ragan Dynamics may contact me regarding my AI Transformation Assessment, complimentary consultation and related AI business solutions.
 
 </span>
 
@@ -228,7 +258,7 @@ class="w-full rounded-xl bg-blue-600 px-8 py-4 text-lg font-bold text-white tran
 
 >
 
-View My AI Results
+Request My Complimentary Consultation
 
 </button>
 
@@ -253,310 +283,78 @@ class="hidden text-center text-sm"
 
 
 
+<!-- All HTML above remains unchanged -->
+
 <script>
 
-
-const form =
-
-document.getElementById(
-
-"lead-form"
-
-);
-
-
-
-const message =
-
-document.getElementById(
-
-"form-message"
-
-);
-
-
-
-form?.addEventListener(
-
-"submit",
-
-async(event)=>{
-
-
-event.preventDefault();
-
-
-
-const button =
-
-form.querySelector(
-
-"button"
-
-);
-
-
-
-button.disabled = true;
-
-
-button.innerText =
-"Processing...";
-
-
-
-try{
-
-
-const answers = JSON.parse(
-
-localStorage.getItem(
-
-"ragan_ai_assessment"
-
-)
-
-||
-
-"{}"
-
-);
-
-
-
-const formData = {
-
-
-name:
-
-document.getElementById(
-
-"name"
-
-).value,
-
-
-company:
-
-document.getElementById(
-
-"company"
-
-).value,
-
-
-email:
-
-document.getElementById(
-
-"email"
-
-).value,
-
-
-phone:
-
-document.getElementById(
-
-"phone"
-
-).value,
-
-
-answers
-
-};
-
-
-
-
-const response = await fetch(
-
-"/api/assessment-lead",
-
-{
-
-
-method:"POST",
-
-
-headers:
-
-{
-
-
-"Content-Type":
-
-"application/json"
-
-
-},
-
-
-body:
-
-JSON.stringify(
-
-formData
-
-)
-
-
-}
-
-);
-
-
-
-if(!response.ok)
-
-{
-
-throw new Error(
-
-"Submission failed"
-
-);
-
-}
-
-
-
-/*
-Store lead locally
-
-for reference
-
-*/
-
-localStorage.setItem(
-
-"ragan_ai_lead",
-
-JSON.stringify(
-
-formData
-
-)
-
-);
-
-
-
-/*
-Move to results
-
-*/
-
-window.dispatchEvent(
-
-new CustomEvent(
-
-"leadCaptured"
-
-)
-
-);
-
-
-
-const wizardStep =
-
-document.querySelector(
-
-'[data-step="7"]'
-
-);
-
-
-
-document
-
-.querySelectorAll(
-
-".assessment-step"
-
-)
-
-.forEach(
-
-(item)=>{
-
-
-item.classList.add(
-
-"hidden"
-
-);
-
-
-}
-
-);
-
-
-
-wizardStep?.classList.remove(
-
-"hidden"
-
-);
-
-
-
-}
-
-
-catch(error){
-
-
-console.error(
-
-error
-
-);
-
-
-
-if(message)
-
-{
-
-
-message.classList.remove(
-
-"hidden"
-
-);
-
-
-message.className =
-
-"text-center text-sm text-red-600";
-
-
-
-message.innerText =
-
-"Unable to submit your details. Please try again.";
-
-}
-
-
-
-button.disabled=false;
-
-
-button.innerText =
-
-"View My AI Results";
-
-
-}
-
-
-
+const form = document.getElementById("lead-form") as HTMLFormElement | null;
+const message = document.getElementById("form-message") as HTMLParagraphElement | null;
+
+form?.addEventListener("submit", async (event: SubmitEvent) => {
+  event.preventDefault();
+
+  const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+
+  if (!submitButton) return;
+
+  submitButton.disabled = true;
+  submitButton.innerText = "Submitting Your Request...";
+
+  try {
+    const answers = JSON.parse(
+      localStorage.getItem("ragan_ai_assessment") ?? "{}"
+    ) as Record<string, string>;
+
+    const name = (document.getElementById("name") as HTMLInputElement).value.trim();
+    const company = (document.getElementById("company") as HTMLInputElement).value.trim();
+    const email = (document.getElementById("email") as HTMLInputElement).value.trim();
+    const phone = (document.getElementById("phone") as HTMLInputElement).value.trim();
+
+    const formData = {
+      name,
+      company,
+      email,
+      phone,
+      answers
+    };
+
+    const response = await fetch("/api/assessment-lead", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (!response.ok) {
+      throw new Error("Submission failed");
+    }
+
+    /* Store locally */
+    localStorage.setItem("ragan_ai_lead", JSON.stringify(formData));
+
+    /* Notify wizard */
+    window.dispatchEvent(new CustomEvent("leadCaptured"));
+
+    const wizardStep = document.querySelector('[data-step="7"]') as HTMLElement | null;
+
+    document.querySelectorAll<HTMLElement>(".assessment-step").forEach((item) => {
+      item.classList.add("hidden");
+    });
+
+    wizardStep?.classList.remove("hidden");
+  } catch (error) {
+    console.error(error);
+
+    if (message) {
+      message.classList.remove("hidden");
+      message.className = "text-center text-sm text-red-600";
+      message.textContent = "We couldn't submit your consultation request. Please try again in a few moments.";
+    }
+
+    submitButton.disabled = false;
+    submitButton.innerText = "Request My Complimentary Consultation";
+  }
 });
-
 
 </script>

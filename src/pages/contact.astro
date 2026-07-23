@@ -1,6 +1,5 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-
 ---
 
 <MainLayout
@@ -15,55 +14,28 @@ AI automation, AI products and enterprise AI solutions.
 >
 
 
-<section
-
-class="
-bg-slate-50
-py-20
-"
-
->
+<section class="bg-slate-50 py-20">
 
 
-<div
-
-class="
-mx-auto
-max-w-5xl
-px-6
-"
-
->
+<div class="mx-auto max-w-5xl px-6">
 
 
-<div
-
-class="
-mb-12
-text-center
-"
-
->
+<div class="mb-12 text-center">
 
 
 <h1
-
 class="
 text-4xl
 font-black
 text-slate-900
 md:text-5xl
 "
-
 >
-
 Start Your AI Transformation Journey
-
 </h1>
 
 
 <p
-
 class="
 mx-auto
 mt-5
@@ -72,13 +44,10 @@ text-lg
 leading-8
 text-slate-600
 "
-
 >
-
 Tell us about your business challenge.
 Our AI specialists will help identify
 practical and cost-effective AI solutions.
-
 </p>
 
 
@@ -86,8 +55,8 @@ practical and cost-effective AI solutions.
 
 
 
-<div
 
+<div
 class="
 rounded-3xl
 bg-white
@@ -95,7 +64,6 @@ p-8
 shadow-xl
 md:p-12
 "
-
 >
 
 
@@ -103,26 +71,35 @@ md:p-12
 
 id="contact-form"
 
-class="
-space-y-6
-"
-
+class="space-y-6"
 
 >
 
 
-<div
 
+<div class="grid gap-6 md:grid-cols-2">
+
+
+
+<div>
+
+<label
+for="name"
 class="
-grid
-gap-6
-md:grid-cols-2
+mb-2
+block
+text-sm
+font-semibold
+text-slate-700
 "
-
 >
+Name
+</label>
 
 
 <input
+
+id="name"
 
 name="name"
 
@@ -143,8 +120,30 @@ focus:border-blue-600
 
 />
 
+</div>
+
+
+
+
+<div>
+
+<label
+for="email"
+class="
+mb-2
+block
+text-sm
+font-semibold
+text-slate-700
+"
+>
+Email Address
+</label>
+
 
 <input
+
+id="email"
 
 name="email"
 
@@ -167,24 +166,39 @@ focus:border-blue-600
 
 />
 
+</div>
+
 
 </div>
 
 
 
 
-<div
 
+
+<div class="grid gap-6 md:grid-cols-2">
+
+
+
+<div>
+
+<label
+for="company"
 class="
-grid
-gap-6
-md:grid-cols-2
+mb-2
+block
+text-sm
+font-semibold
+text-slate-700
 "
-
 >
+Company Name
+</label>
 
 
 <input
+
+id="company"
 
 name="company"
 
@@ -203,10 +217,34 @@ focus:border-blue-600
 
 />
 
+</div>
+
+
+
+
+<div>
+
+<label
+for="phone"
+class="
+mb-2
+block
+text-sm
+font-semibold
+text-slate-700
+"
+>
+Phone Number
+</label>
+
 
 <input
 
+id="phone"
+
 name="phone"
+
+type="tel"
 
 placeholder="Phone Number"
 
@@ -223,13 +261,40 @@ focus:border-blue-600
 
 />
 
+</div>
+
 
 </div>
 
 
 
 
+
+
+<div>
+
+
+<label
+
+for="service"
+
+class="
+mb-2
+block
+text-sm
+font-semibold
+text-slate-700
+"
+
+>
+How can we help you?
+</label>
+
+
+
 <select
+
+id="service"
 
 name="service"
 
@@ -246,46 +311,102 @@ focus:border-blue-600
 
 >
 
-<option value="AI Consulting">
 
-AI Consulting
-
+<option value="AI Strategy & Consulting">
+AI Strategy & Consulting
 </option>
 
 
 <option value="AI Automation">
-
 AI Automation
-
 </option>
 
 
-<option value="AI Chatbot">
-
-AI Chatbot
-
+<option value="Generative AI Solutions">
+Generative AI Solutions
 </option>
 
 
-<option value="AI Training">
+<option value="Microsoft Copilot">
+Microsoft Copilot
+</option>
 
-AI Training
 
+<option value="AI Chatbots & Virtual Assistants">
+AI Chatbots & Virtual Assistants
+</option>
+
+
+<option value="AI Productivity Solutions">
+AI Productivity Solutions
+</option>
+
+
+<option value="AI Governance & Security">
+AI Governance & Security
+</option>
+
+
+<option value="Cloud AI Solutions">
+Cloud AI Solutions
+</option>
+
+
+<option value="AI Training & Workshops">
+AI Training & Workshops
+</option>
+
+
+<option value="AI Product Development">
+AI Product Development
+</option>
+
+
+<option value="Other">
+Other
 </option>
 
 
 </select>
 
 
+</div>
+
+
+
+
+
+
+<div>
+
+
+<label
+
+for="message"
+
+class="
+mb-2
+block
+text-sm
+font-semibold
+text-slate-700
+"
+
+>
+Tell us about your project
+</label>
+
 
 
 <textarea
+
+id="message"
 
 name="message"
 
 rows="6"
 
-placeholder="Tell us about your project"
+placeholder="Describe your AI requirements, challenges or goals"
 
 required
 
@@ -301,6 +422,11 @@ focus:border-blue-600
 "
 
 ></textarea>
+
+
+</div>
+
+
 
 
 
@@ -326,14 +452,16 @@ hover:bg-blue-700
 "
 
 >
-
 Send Enquiry
-
 </button>
 
 
 
+
 </form>
+
+
+
 
 
 
@@ -351,6 +479,7 @@ font-semibold
 
 
 
+
 </div>
 
 
@@ -362,7 +491,11 @@ font-semibold
 
 
 
+
+
+
 <script>
+
 
 const form =
 document.querySelector<HTMLFormElement>(
@@ -383,6 +516,7 @@ document.querySelector<HTMLButtonElement>(
 
 
 
+
 if(
 form &&
 result &&
@@ -398,9 +532,10 @@ async(event)=>{
 event.preventDefault();
 
 
+
 button.disabled=true;
 
-button.textContent=
+button.textContent =
 "Sending...";
 
 
@@ -409,11 +544,13 @@ const formData =
 new FormData(form);
 
 
+
 const data =
 Object.fromEntries(
 formData
 );
 
+console.log(data);
 
 
 try{
@@ -442,6 +579,7 @@ JSON.stringify(data)
 
 
 
+
 const json =
 await response.json() as {
 
@@ -453,26 +591,32 @@ error?:string;
 
 
 
+
 if(json.success){
 
 
 result.textContent =
-"Thank you. We will contact you shortly.";
+"Thank you. Our AI specialists will contact you shortly.";
+
 
 
 result.className =
 "mt-6 text-center font-semibold text-green-600";
 
 
+
 form.reset();
+
 
 
 
 if(window.cf?.track){
 
+
 window.cf.track(
 "contact-form-success"
 );
+
 
 }
 
@@ -488,11 +632,17 @@ json.error ??
 "Unable to submit form.";
 
 
+
+result.className =
+"mt-6 text-center font-semibold text-red-600";
+
+
 }
 
 
 
 }
+
 
 catch(error){
 
@@ -514,7 +664,8 @@ finally{
 
 button.disabled=false;
 
-button.textContent=
+
+button.textContent =
 "Send Enquiry";
 
 
@@ -529,7 +680,9 @@ button.textContent=
 
 }
 
+
 </script>
+
 
 
 </MainLayout>

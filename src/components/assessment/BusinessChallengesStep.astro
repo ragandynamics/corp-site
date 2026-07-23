@@ -14,104 +14,56 @@ const {
 
 <div class="space-y-12">
 
-
   <!-- Main Challenge -->
-
   <AssessmentQuestion
-
+    id="biggest_challenges"
     title="What are your biggest business challenges today?"
-
     subtitle="Select up to three areas where you would like to improve."
-
     multiple={true}
-
     options={[
-
       "Too much manual work",
-
       "Employees spend too much time on repetitive tasks",
-
       "Customer enquiries take too long to handle",
-
       "Information is difficult to find",
-
       "Reports take too much time to prepare",
-
       "Business processes are slow",
-
       "Operating costs are increasing",
-
       "Difficult to scale business operations"
-
     ]}
-
   />
-
 
   <!-- Process Question -->
-
   <AssessmentQuestion
-
+    id="priority_improvement_area"
     title="Which area would you most like to improve?"
-
     subtitle="Choose one priority area."
-
     options={[
-
       "Customer Service",
-
       "Sales & Marketing",
-
       "Finance & Administration",
-
       "Human Resources",
-
       "Operations",
-
       "Management Reporting"
-
     ]}
-
   />
 
-
   <!-- Navigation -->
-
   <div class="flex justify-between pt-8">
-
-
     <button
-
       id={onBack.replace("#","")}
-
       type="button"
-
       class="rounded-xl border border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition hover:bg-slate-100"
-
     >
-
       Back
-
     </button>
-
-
 
     <button
-
       id={onNext.replace("#","")}
-
       type="button"
-
       class="rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition hover:bg-blue-700"
-
     >
-
       Continue
-
     </button>
-
-
   </div>
-
 
 </div>

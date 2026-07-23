@@ -14,106 +14,57 @@ const {
 
 <div class="space-y-12">
 
-
   <!-- Existing Tools -->
-
   <AssessmentQuestion
-
+    id="current_tools"
     title="Which business tools does your organisation currently use?"
-
     subtitle="Select all that apply."
-
     multiple={true}
-
     options={[
-
       "Microsoft 365",
-
       "Google Workspace",
-
       "Microsoft Teams",
-
       "SharePoint",
-
       "CRM system",
-
       "ERP system",
-
       "Accounting software",
-
       "Cloud platforms",
-
       "Custom applications",
-
       "Not sure"
-
     ]}
-
   />
-
 
   <!-- Data Question -->
-
   <AssessmentQuestion
-
+    id="data_location"
     title="Where does your business information usually live?"
-
     subtitle="Choose the closest answer."
-
     options={[
-
       "Mostly emails and documents",
-
       "Shared drives or folders",
-
       "Business applications",
-
       "Databases and systems",
-
       "A combination of different places"
-
     ]}
-
   />
 
-
   <!-- Navigation -->
-
   <div class="flex justify-between pt-8">
-
-
     <button
-
       id={onBack.replace("#","")}
-
       type="button"
-
       class="rounded-xl border border-slate-300 px-8 py-4 text-lg font-semibold text-slate-700 transition hover:bg-slate-100"
-
     >
-
       Back
-
     </button>
-
-
 
     <button
-
       id={onNext.replace("#","")}
-
       type="button"
-
       class="rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition hover:bg-blue-700"
-
     >
-
       Continue
-
     </button>
-
-
   </div>
-
 
 </div>

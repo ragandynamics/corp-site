@@ -1,0 +1,232 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+import InsightCard from "../../../components/InsightCard.astro";
+
+export async function getStaticPaths() {
+
+  const categories = [
+    "ai-strategy",
+    "ai-automation",
+    "microsoft-copilot",
+    "generative-ai",
+    "ai-governance",
+    "ai-productivity",
+    "ai-for-smes",
+    "cloud-ai",
+    "ai-security"
+  ];
+
+  return categories.map((category) => ({
+    params: { category }
+  }));
+}
+
+
+const { category } = Astro.params;
+
+
+// Category metadata
+
+const categoryData = {
+
+  "ai-strategy": {
+    title: "AI Strategy",
+    description:
+      "Business-focused AI strategy frameworks helping Singapore SMEs identify AI opportunities and build practical transformation roadmaps."
+  },
+
+  "ai-automation": {
+    title: "AI Automation",
+    description:
+      "Discover how AI automation reduces manual work, improves efficiency and creates scalable business processes."
+  },
+
+  "microsoft-copilot": {
+    title: "Microsoft Copilot",
+    description:
+      "Learn how Microsoft Copilot transforms productivity across Microsoft 365, Teams, Power Platform and enterprise workflows."
+  },
+
+  "generative-ai": {
+    title: "Generative AI",
+    description:
+      "Explore practical applications of Generative AI, LLMs, RAG systems and AI agents for businesses."
+  },
+
+  "ai-governance": {
+    title: "AI Governance",
+    description:
+      "Build responsible AI systems with security, compliance, risk management and governance frameworks."
+  },
+
+  "ai-productivity": {
+    title: "AI Productivity",
+    description:
+      "Improve employee productivity using AI assistants, automation tools and intelligent workflows."
+  },
+
+  "ai-for-smes": {
+    title: "AI for SMEs",
+    description:
+      "Affordable AI solutions designed specifically for Singapore small and medium businesses."
+  },
+
+  "cloud-ai": {
+    title: "Cloud AI",
+    description:
+      "Understand cloud AI architecture using AWS, Azure, Google Cloud and scalable AI platforms."
+  },
+
+  "ai-security": {
+    title: "AI Security",
+    description:
+      "Secure enterprise AI adoption with data protection, access controls and AI security best practices."
+  }
+
+}[category];
+
+
+if (!categoryData) {
+  throw new Error("Category not found");
+}
+
+
+// Example insight data
+const insights = [
+
+  {
+    title:"7 AI Opportunities Every Singapore SME Should Explore in 2026",
+    slug:"7-ai-opportunities-singapore-smes",
+    excerpt:
+      "Practical AI use cases that reduce costs and improve productivity.",
+    category:"ai-for-smes"
+  },
+
+  {
+    title:"Building an AI Strategy Roadmap for SMEs",
+    slug:"ai-strategy-roadmap",
+    excerpt:
+      "A step-by-step framework for successful AI adoption.",
+    category:"ai-strategy"
+  },
+
+  {
+    title:"Microsoft Copilot Enterprise Adoption Guide",
+    slug:"microsoft-copilot-guide",
+    excerpt:
+      "How organisations can maximise Microsoft Copilot.",
+    category:"microsoft-copilot"
+  }
+
+];
+
+
+// Filter articles
+
+const filteredInsights =
+  insights.filter(
+    item => item.category === category
+  );
+
+---
+
+<MainLayout
+ title={`${categoryData.title} | Ragan Dynamics`}
+ description={categoryData.description}
+>
+
+
+<section class="bg-gradient-to-r from-blue-900 to-blue-600 text-white py-20">
+
+<div class="max-w-6xl mx-auto px-6">
+
+
+<h1 class="text-5xl font-bold mb-6">
+{categoryData.title}
+</h1>
+
+
+<p class="text-xl max-w-3xl text-blue-100">
+{categoryData.description}
+</p>
+
+
+</div>
+
+</section>
+
+
+
+<section class="max-w-6xl mx-auto px-6 py-16">
+
+
+<div class="grid md:grid-cols-3 gap-8">
+
+
+{
+filteredInsights.length > 0 ?
+
+filteredInsights.map(post => (
+
+<InsightCard
+ title={post.title}
+ slug={post.slug}
+ excerpt={post.excerpt}
+/>
+
+))
+
+:
+
+<div class="col-span-3 text-center py-20">
+
+<h2 class="text-2xl font-semibold">
+Coming Soon
+</h2>
+
+<p class="text-gray-600 mt-3">
+More {categoryData.title} insights will be published soon.
+</p>
+
+</div>
+
+}
+
+
+</div>
+
+
+</section>
+
+
+
+<section class="bg-gray-50 py-16">
+
+<div class="max-w-6xl mx-auto px-6 text-center">
+
+
+<h2 class="text-3xl font-bold">
+Need help implementing AI?
+</h2>
+
+
+<p class="mt-4 text-gray-600">
+Ragan Dynamics helps Singapore SMEs design,
+implement and scale AI solutions.
+</p>
+
+
+<a
+href="/contact"
+class="inline-block mt-8 bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700"
+>
+Talk to an AI Consultant
+</a>
+
+
+</div>
+
+</section>
+
+
+</MainLayout>

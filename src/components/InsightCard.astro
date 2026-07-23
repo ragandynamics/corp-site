@@ -1,0 +1,52 @@
+---
+const {
+ title,
+ slug,
+ excerpt
+} = Astro.props;
+---
+
+
+<article
+class="
+bg-white
+rounded-xl
+shadow
+border
+p-6
+hover:shadow-lg
+transition
+">
+
+
+<h3 class="text-xl font-bold mb-3">
+
+<a
+href={`/insights/${slug}`}
+class="text-blue-700 hover:text-blue-900"
+>
+{title}
+</a>
+
+</h3>
+
+
+<p class="text-gray-600">
+{excerpt}
+</p>
+
+
+<a
+href={`/insights/${slug}`}
+class="
+inline-block
+mt-5
+text-blue-600
+font-semibold
+"
+>
+Read More →
+</a>
+
+
+</article>
