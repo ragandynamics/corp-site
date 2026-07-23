@@ -3,81 +3,136 @@ import type { APIRoute } from "astro";
 export const prerender = false;
 
 
+interface ContactForm {
+
+  name?: string;
+
+  email?: string;
+
+  company?: string;
+
+  countryCode?: string;
+
+  phone?: string;
+
+  service?: string;
+
+  message?: string;
+
+}
+
+
+
 export const POST: APIRoute = async ({ request, locals }) => {
 
 
   try {
 
 
-    const body = await request.json();
-
-
-    console.log("CONTACT BODY:", body);
-
-
-
-    const env = locals.runtime.env;
+    const body =
+      await request.json() as ContactForm;
 
 
 
     console.log(
-      "R2 Binding:",
-      env.CONTACTS
+      "CONTACT BODY:",
+      body
     );
+
+
+
+    const submission = {
+
+
+      id: crypto.randomUUID(),
+
+
+      name:
+        body.name ?? "",
+
+
+      email:
+        body.email ?? "",
+
+
+      company:
+        body.company ?? "",
+
+
+      countryCode:
+        body.countryCode ?? "+65",
+
+
+      phone:
+        body.phone ?? "",
+
+
+      service:
+        body.service ?? "",
+
+
+      message:
+        body.message ?? "",
+
+
+      createdAt:
+        new Date().toISOString()
+
+
+    };
+
+
+
+    const env =
+      locals.runtime.env;
 
 
 
     if (!env.CONTACTS) {
 
+
       throw new Error(
-        "CONTACTS R2 binding missing"
+        "R2 binding CONTACTS not available"
       );
+
 
     }
 
 
 
-    const key =
-      `contacts/${crypto.randomUUID()}.json`;
+    const objectKey =
+      `contacts/${submission.id}.json`;
 
 
 
-    console.log(
-      "Writing R2 object:",
-      key
+    await env.CONTACTS.put(
+
+      objectKey,
+
+      JSON.stringify(
+        submission,
+        null,
+        2
+      ),
+
+      {
+
+        httpMetadata: {
+
+          contentType:
+          "application/json"
+
+        }
+
+      }
+
     );
 
 
 
-    const result =
-      await env.CONTACTS.put(
-
-        key,
-
-        JSON.stringify(
-          body,
-          null,
-          2
-        ),
-
-        {
-
-          httpMetadata: {
-
-            contentType:
-            "application/json"
-
-          }
-
-        }
-
-      );
-
-
-
     console.log(
-      "R2 WRITE COMPLETE",
-      result
+      "CONTACT SAVED:",
+      objectKey
     );
 
 
@@ -88,7 +143,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         success:true,
 
-        key
+        message:
+        "Contact received"
 
       }),
 
@@ -108,7 +164,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
     );
 
 
-
   }
 
 
@@ -116,9 +171,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
 
     console.error(
-      "CONTACT ERROR:",
+      "CONTACT API ERROR:",
       error
     );
+
 
 
     return new Response(
@@ -127,7 +183,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         success:false,
 
-        error:String(error)
+        error:
+        "Unable to save contact"
 
       }),
 
@@ -136,8 +193,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
         status:500,
 
         headers:{
+
           "Content-Type":
           "application/json"
+
         }
 
       }

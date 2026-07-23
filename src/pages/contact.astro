@@ -2,6 +2,7 @@
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
+
 <MainLayout
 
 title="Contact Ragan Dynamics | AI Consulting & Automation"
@@ -29,10 +30,12 @@ text-4xl
 font-black
 text-slate-900
 md:text-5xl
-"
->
+">
+
 Start Your AI Transformation Journey
+
 </h1>
+
 
 
 <p
@@ -43,15 +46,17 @@ max-w-3xl
 text-lg
 leading-8
 text-slate-600
-"
->
+">
+
 Tell us about your business challenge.
-Our AI specialists will help identify
-practical and cost-effective AI solutions.
+Our AI specialists will help identify practical
+and cost-effective AI solutions.
+
 </p>
 
 
 </div>
+
 
 
 
@@ -63,8 +68,8 @@ bg-white
 p-8
 shadow-xl
 md:p-12
-"
->
+">
+
 
 
 <form
@@ -77,23 +82,31 @@ class="space-y-6"
 
 
 
-<div class="grid gap-6 md:grid-cols-2">
+<div
+class="
+grid
+gap-6
+md:grid-cols-2
+">
 
 
 
 <div>
 
+
 <label
+
 for="name"
+
 class="
 mb-2
 block
-text-sm
 font-semibold
 text-slate-700
-"
->
-Name
+">
+
+Full Name
+
 </label>
 
 
@@ -103,7 +116,7 @@ id="name"
 
 name="name"
 
-placeholder="Your Name"
+placeholder="Enter your full name"
 
 required
 
@@ -120,25 +133,31 @@ focus:border-blue-600
 
 />
 
+
 </div>
+
 
 
 
 
 <div>
 
+
 <label
+
 for="email"
+
 class="
 mb-2
 block
-text-sm
 font-semibold
 text-slate-700
-"
->
-Email Address
+">
+
+Business Email Address
+
 </label>
+
 
 
 <input
@@ -149,7 +168,7 @@ name="email"
 
 type="email"
 
-placeholder="Email Address"
+placeholder="name@company.com"
 
 required
 
@@ -166,34 +185,45 @@ focus:border-blue-600
 
 />
 
-</div>
-
 
 </div>
 
 
+</div>
 
 
 
 
-<div class="grid gap-6 md:grid-cols-2">
+
+
+
+<div
+class="
+grid
+gap-6
+md:grid-cols-2
+">
 
 
 
 <div>
 
+
 <label
+
 for="company"
+
 class="
 mb-2
 block
-text-sm
 font-semibold
 text-slate-700
-"
->
-Company Name
+">
+
+Organisation / Company Name
+
 </label>
+
 
 
 <input
@@ -202,7 +232,7 @@ id="company"
 
 name="company"
 
-placeholder="Company Name"
+placeholder="Your organisation name"
 
 class="
 w-full
@@ -217,25 +247,98 @@ focus:border-blue-600
 
 />
 
+
 </div>
+
+
+
 
 
 
 
 <div>
 
+
 <label
+
 for="phone"
+
 class="
 mb-2
 block
-text-sm
 font-semibold
 text-slate-700
-"
->
-Phone Number
+">
+
+Contact Number
+
 </label>
+
+
+
+<div class="flex gap-3">
+
+
+
+<select
+
+id="countryCode"
+
+name="countryCode"
+
+class="
+w-32
+rounded-xl
+border
+border-slate-300
+px-3
+py-4
+outline-none
+focus:border-blue-600
+"
+
+>
+
+
+<option value="+65" selected>
+🇸🇬 +65
+</option>
+
+
+<option value="+60">
+🇲🇾 +60
+</option>
+
+
+<option value="+91">
+🇮🇳 +91
+</option>
+
+
+<option value="+86">
+🇨🇳 +86
+</option>
+
+
+<option value="+61">
+🇦🇺 +61
+</option>
+
+
+<option value="+44">
+🇬🇧 +44
+</option>
+
+
+<option value="+1">
+🇺🇸 +1
+</option>
+
+
+</select>
+
+
+
 
 
 <input
@@ -244,12 +347,10 @@ id="phone"
 
 name="phone"
 
-type="tel"
-
-placeholder="Phone Number"
+placeholder="XXXX XXXX"
 
 class="
-w-full
+flex-1
 rounded-xl
 border
 border-slate-300
@@ -261,16 +362,16 @@ focus:border-blue-600
 
 />
 
-</div>
 
 
 </div>
 
 
 
+</div>
 
 
-
+</div>
 <div>
 
 
@@ -281,13 +382,12 @@ for="service"
 class="
 mb-2
 block
-text-sm
 font-semibold
 text-slate-700
-"
+">
 
->
-How can we help you?
+How can we support your organisation?
+
 </label>
 
 
@@ -312,58 +412,53 @@ focus:border-blue-600
 >
 
 
-<option value="AI Strategy & Consulting">
-AI Strategy & Consulting
+<option value="AI Strategy & Readiness">
+AI Strategy & Readiness
 </option>
 
 
-<option value="AI Automation">
-AI Automation
+<option value="Business Process Automation">
+Business Process Automation
 </option>
 
 
-<option value="Generative AI Solutions">
-Generative AI Solutions
+<option value="AI Customer Service">
+AI Customer Service
 </option>
 
 
-<option value="Microsoft Copilot">
-Microsoft Copilot
+<option value="AI Sales & Marketing">
+AI Sales & Marketing
 </option>
 
 
-<option value="AI Chatbots & Virtual Assistants">
-AI Chatbots & Virtual Assistants
+<option value="Business Intelligence">
+Business Intelligence
 </option>
 
 
-<option value="AI Productivity Solutions">
-AI Productivity Solutions
+<option value="Microsoft Copilot Solutions">
+Microsoft Copilot Solutions
 </option>
 
 
-<option value="AI Governance & Security">
-AI Governance & Security
+<option value="Cloud & AI Modernisation">
+Cloud & AI Modernisation
 </option>
 
 
-<option value="Cloud AI Solutions">
-Cloud AI Solutions
+<option value="AI Security & Governance">
+AI Security & Governance
 </option>
 
 
-<option value="AI Training & Workshops">
-AI Training & Workshops
+<option value="AI Training & Adoption">
+AI Training & Adoption
 </option>
 
 
-<option value="AI Product Development">
-AI Product Development
-</option>
-
-
-<option value="Other">
-Other
+<option value="Other Business Requirements">
+Other Business Requirements
 </option>
 
 
@@ -371,7 +466,6 @@ Other
 
 
 </div>
-
 
 
 
@@ -387,13 +481,12 @@ for="message"
 class="
 mb-2
 block
-text-sm
 font-semibold
 text-slate-700
-"
+">
 
->
-Tell us about your project
+Business Challenge / Requirements
+
 </label>
 
 
@@ -406,7 +499,7 @@ name="message"
 
 rows="6"
 
-placeholder="Describe your AI requirements, challenges or goals"
+placeholder="Describe your business challenge, objectives or AI requirements"
 
 required
 
@@ -452,14 +545,14 @@ hover:bg-blue-700
 "
 
 >
-Send Enquiry
+
+Submit Request
+
 </button>
 
 
 
-
 </form>
-
 
 
 
@@ -492,10 +585,7 @@ font-semibold
 
 
 
-
-
-<script>
-
+<script is:inline>
 
 const form =
 document.querySelector<HTMLFormElement>(
@@ -513,7 +603,6 @@ const button =
 document.querySelector<HTMLButtonElement>(
 "#submit-button"
 );
-
 
 
 
@@ -535,8 +624,9 @@ event.preventDefault();
 
 button.disabled=true;
 
+
 button.textContent =
-"Sending...";
+"Submitting...";
 
 
 
@@ -550,7 +640,6 @@ Object.fromEntries(
 formData
 );
 
-console.log(data);
 
 
 try{
@@ -575,8 +664,8 @@ body:
 JSON.stringify(data)
 
 }
-);
 
+);
 
 
 
@@ -591,12 +680,11 @@ error?:string;
 
 
 
-
 if(json.success){
 
 
 result.textContent =
-"Thank you. Our AI specialists will contact you shortly.";
+"Thank you. We will contact you shortly.";
 
 
 
@@ -606,7 +694,6 @@ result.className =
 
 
 form.reset();
-
 
 
 
@@ -621,7 +708,6 @@ window.cf.track(
 }
 
 
-
 }
 
 else{
@@ -629,7 +715,7 @@ else{
 
 result.textContent =
 json.error ??
-"Unable to submit form.";
+"Unable to submit request.";
 
 
 
@@ -643,12 +729,18 @@ result.className =
 
 }
 
-
 catch(error){
+
+
+console.error(
+error
+);
+
 
 
 result.textContent =
 "An unexpected error occurred.";
+
 
 
 result.className =
@@ -666,7 +758,7 @@ button.disabled=false;
 
 
 button.textContent =
-"Send Enquiry";
+"Submit Request";
 
 
 }

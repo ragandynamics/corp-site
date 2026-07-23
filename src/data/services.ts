@@ -176,20 +176,32 @@ features:[
 
 {
 id:"training",
+
 title:"AI Training & Adoption",
+
 icon:"🎓",
-tagline:"Empower your workforce.",
-description:"Practical AI training that accelerates user adoption.",
-businessValue:"Increase productivity through confident AI usage.",
+
+tagline:"Build AI-ready teams.",
+
+description:
+"Practical AI training programs that help employees adopt generative AI, Microsoft Copilot and AI productivity tools effectively.",
+
+businessValue:
+"Accelerate AI adoption, improve workforce productivity and maximise your AI investments.",
+
 cta:"Train My Team",
+
 features:[
-"Executive Workshops",
-"Prompt Engineering",
-"Copilot Training",
-"AI Awareness",
-"AI Adoption",
+"Executive AI Strategy Workshops",
+"Generative AI Fundamentals",
+"Prompt Engineering Skills",
+"Microsoft Copilot Training",
+"AI Productivity Workshops",
+"Responsible AI Practices",
+"AI Adoption Roadmaps",
 "Change Management"
 ]
+
 }
 
 ];
