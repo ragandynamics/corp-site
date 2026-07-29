@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { env } from "cloudflare:workers";
 import { site } from "../../config/site";
 
-export const prerender = false;
+export const prerender = true;
 
 interface AssessmentSubmission {
   name: string;

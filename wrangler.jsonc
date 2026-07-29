@@ -3,10 +3,14 @@
   "name": "ragan-dynamics",
   "compatibility_date": "2026-07-28",
   "compatibility_flags": [
-    "global_fetch_strictly_public"
+    "global_fetch_strictly_public",
+    "nodejs_compat"
   ],
 
-  "pages_build_output_dir": "./dist",
+  // Replace pages_build_output_dir with the Workers static assets syntax:
+  "assets": {
+    "directory": "./dist"
+  },
 
   "r2_buckets": [
     {
