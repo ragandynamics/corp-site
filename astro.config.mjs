@@ -3,7 +3,7 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  output: "static", // Prerenders HTML pages by default
+  output: "server", // Allows server execution for API routes + static prerendering
 
   adapter: cloudflare({
     imageService: "compile",
