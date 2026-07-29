@@ -3,11 +3,9 @@
   "name": "ragan-dynamics",
   "compatibility_date": "2026-07-28",
   "compatibility_flags": [
-    "global_fetch_strictly_public",
     "nodejs_compat"
   ],
 
-  // Replace pages_build_output_dir with the Workers static assets syntax:
   "assets": {
     "directory": "./dist"
   },
@@ -17,9 +15,5 @@
       "binding": "CONTACTS",
       "bucket_name": "ragan-dynamics-data"
     }
-  ],
-
-  "observability": {
-    "enabled": true
-  }
+  ]
 }

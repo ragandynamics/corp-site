@@ -2,7 +2,8 @@ import type { APIRoute } from "astro";
 import { env } from "cloudflare:workers";
 import { site } from "../../config/site";
 
-export const prerender = true;
+// Must be FALSE so it runs on-demand at edge runtime
+export const prerender = false;
 
 interface AssessmentSubmission {
   name: string;
@@ -18,7 +19,7 @@ interface AssessmentSubmission {
   };
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const body = (await request.json()) as AssessmentSubmission;
     const { name, company, email, phone, answers } = body;
@@ -78,9 +79,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
       results
     };
 
-    // 4. Store in Cloudflare R2 Bucket (Astro v6 compatible)
-    // Access R2 binding directly from cloudflare:workers or locals fallback
-    const bucket = (env as Record<string, any>)?.CONTACTS || (locals as Record<string, any>)?.runtime?.env?.CONTACTS;
+    // 4. Store in Cloudflare R2 Bucket (Astro v6 standard)
+    // Access R2 binding via 'cloudflare:workers'
+    const bucket = (env as Record<string, any>)?.CONTACTS;
 
     if (bucket) {
       const datePath = leadRecord.createdAt.substring(0, 10);

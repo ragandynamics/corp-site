@@ -3,13 +3,10 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  output: "static", // or "hybrid"
+  output: "static", // Prerenders HTML pages by default
 
   adapter: cloudflare({
     imageService: "compile",
-    platformProxy: {
-      enabled: true,
-    },
   }),
 
   vite: {
