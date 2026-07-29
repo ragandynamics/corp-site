@@ -1,0 +1,78 @@
+---
+import AssessmentQuestion from "./AssessmentQuestion.astro";
+import type { QuestionConfig } from "../../lib/assessment/questions";
+
+interface Props {
+  title: string;
+  description?: string;
+  questions: QuestionConfig[];
+  showBack?: boolean;
+  nextLabel?: string;
+  backLabel?: string;
+}
+
+const {
+  title,
+  description,
+  questions,
+  showBack = true,
+  nextLabel = "Continue",
+  backLabel = "Back"
+} = Astro.props;
+---
+
+<div class="space-y-8">
+
+  <header class="space-y-2">
+    <h2 class="text-3xl font-bold text-slate-900">
+      {title}
+    </h2>
+
+    {
+      description && (
+        <p class="text-slate-600 max-w-3xl">
+          {description}
+        </p>
+      )
+    }
+  </header>
+
+  <div class="space-y-6">
+    {
+      questions.map((question) => (
+        <div
+          class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+        >
+          <AssessmentQuestion question={question} />
+        </div>
+      ))
+    }
+  </div>
+
+  <footer class="flex justify-between pt-6">
+
+    <div>
+      {
+        showBack && (
+          <button
+            type="button"
+            data-action="back"
+            class="rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-100"
+          >
+            {backLabel}
+          </button>
+        )
+      }
+    </div>
+
+    <button
+      type="button"
+      data-action="next"
+      class="rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white shadow hover:bg-blue-700"
+    >
+      {nextLabel}
+    </button>
+
+  </footer>
+
+</div>

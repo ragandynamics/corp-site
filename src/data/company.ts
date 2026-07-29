@@ -1,8 +1,8 @@
 export const company = {
 
-    name: "Ragan Dynamics",
+    name: "RaganDynamics",
 
-    legalName: "Ragan Dynamics Pte. Ltd.",
+    legalName: "RaganDynamics Pte. Ltd.",
 
     tagline: "Enterprise AI Transformation",
 

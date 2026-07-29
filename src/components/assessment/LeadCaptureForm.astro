@@ -1,360 +1,211 @@
-<section
+---
+import { countryCodes } from "../../data/countryCodes";
+---
 
-id="lead-capture"
-
-class="rounded-3xl bg-white p-10 shadow"
-
->
-
-
-<div class="text-center">
-
-
-<h2 class="text-3xl font-bold text-slate-900">
-
-Your AI Transformation Assessment Is Complete
-
-</h2>
-
-
-
-<p class="mt-4 text-lg leading-8 text-slate-600">
-
-Thank you for completing your AI Transformation & ROI Assessment.
-
-Based on your responses, we've identified several opportunities where AI can improve productivity, reduce costs and accelerate business growth.
-
-Complete your details below to request a
-<strong>complimentary AI Transformation Consultation</strong>.
-During the consultation, one of our AI specialists will review your assessment results, discuss your business priorities and recommend practical AI initiatives tailored to your organisation.
-
-</p>
-
-
-</div>
-
-<div class="mt-10 rounded-2xl border border-blue-100 bg-blue-50 p-6">
-
-  <h3 class="text-lg font-bold text-slate-900">
-
-    During Your Complimentary Consultation
-
-  </h3>
-
-  <div class="mt-5 grid gap-4 md:grid-cols-2 text-slate-700">
-
-    <div>✓ Review your assessment results</div>
-
-    <div>✓ Discuss your business priorities</div>
-
-    <div>✓ Identify quick-win AI opportunities</div>
-
-    <div>✓ Estimate business impact and ROI</div>
-
-    <div>✓ Receive practical implementation recommendations</div>
-
-    <div>✓ Build your AI transformation roadmap</div>
-
+<section id="lead-capture" class="rounded-3xl bg-white p-10 shadow">
+  <div class="text-center">
+    <h2 class="text-3xl font-bold text-slate-900">
+      Your AI Assessment & ROI Report Is Ready
+    </h2>
+    <p class="mt-4 text-lg leading-8 text-slate-600">
+      Enter your contact details below to view your personalized transformation report. A RaganDynamics AI specialist will also review your assessment and reach out shortly to discuss your custom roadmap.
+    </p>
   </div>
 
-</div>
-
-<form
-
-id="lead-form"
-
-class="mt-10 space-y-6"
-
->
-
-
-<!-- Name -->
-
-<div>
-
-<label
-
-for="name"
-
-class="mb-2 block font-semibold text-slate-700"
-
->
-
-Name
-
-</label>
-
-
-<input
-
-id="name"
-
-name="name"
-
-type="text"
-
-required
-
-placeholder="Your name"
-
-class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none"
-
-/>
-
-</div>
-
-
-
-<!-- Company -->
-
-<div>
-
-<label
-
-for="company"
-
-class="mb-2 block font-semibold text-slate-700"
-
->
-
-Company Name
-
-</label>
-
-
-<input
-
-id="company"
-
-name="company"
-
-type="text"
-
-required
-
-placeholder="Company name"
-
-class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none"
-
-/>
-
-</div>
-
-
-
-<!-- Email -->
-
-<div>
-
-<label
-
-for="email"
-
-class="mb-2 block font-semibold text-slate-700"
-
->
-
-Business Email
-
-</label>
-
-
-<input
-
-id="email"
-
-name="email"
-
-type="email"
-
-required
-
-placeholder="name@company.com"
-
-class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none"
-
-/>
-
-</div>
-
-
-
-<!-- Phone -->
-
-<div>
-
-<label
-
-for="phone"
-
-class="mb-2 block font-semibold text-slate-700"
-
->
-
-WhatsApp / Contact Number
-
-</label>
-
-
-<input
-
-id="phone"
-
-name="phone"
-
-type="tel"
-
-placeholder="+65"
-
-class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none"
-
-/>
-
-</div>
-
-
-
-<!-- Consent -->
-
-
-<label
-
-class="flex items-start gap-3"
-
->
-
-
-<input
-
-id="consent"
-
-type="checkbox"
-
-required
-
-class="mt-1 h-5 w-5"
-
-/>
-
-
-<span class="text-sm text-slate-600">
-
-I agree that Ragan Dynamics may contact me regarding my AI Transformation Assessment, complimentary consultation and related AI business solutions.
-
-</span>
-
-
-</label>
-
-
-
-<!-- Submit -->
-
-<button
-
-type="submit"
-
-class="w-full rounded-xl bg-blue-600 px-8 py-4 text-lg font-bold text-white transition hover:bg-blue-700"
-
->
-
-Request My Complimentary Consultation
-
-</button>
-
-
-
-<p
-
-id="form-message"
-
-class="hidden text-center text-sm"
-
->
-
-</p>
-
-
-
-</form>
-
-
+  <form id="lead-form" class="mt-10 space-y-6">
+    <!-- Name -->
+    <div>
+      <label for="name" class="mb-2 block font-semibold text-slate-700">Full Name</label>
+      <input id="name" name="name" type="text" required placeholder="John Doe" class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none" />
+    </div>
+
+    <!-- Company -->
+    <div>
+      <label for="company" class="mb-2 block font-semibold text-slate-700">Company Name</label>
+      <input id="company" name="company" type="text" required placeholder="Acme Enterprise Pte Ltd" class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none" />
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label for="email" class="mb-2 block font-semibold text-slate-700">Business Email</label>
+      <input id="email" name="email" type="email" required placeholder="john@company.com" class="w-full rounded-xl border border-slate-300 px-5 py-4 focus:border-blue-600 focus:outline-none" />
+    </div>
+
+    <!-- Unified Searchable Country Code & Phone Input Field -->
+    <div>
+      <label for="phone" class="mb-2 block font-semibold text-slate-700">
+        WhatsApp / Contact Number
+      </label>
+
+      <div class="relative flex rounded-xl border border-slate-300 bg-white focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
+        <input type="hidden" id="country-code" name="countryCode" value="+65" />
+
+        <!-- Searchable Country Code Trigger Input -->
+        <div class="relative w-2/5 sm:w-1/3 border-r border-slate-200">
+          <input
+            id="country-search-input"
+            type="text"
+            value="🇸🇬 +65"
+            autocomplete="off"
+            class="w-full rounded-l-xl bg-slate-50 py-4 pl-4 pr-7 text-sm font-medium text-slate-800 focus:bg-white focus:outline-none cursor-pointer"
+          />
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-slate-400">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+
+          <!-- Floating Searchable Results Dropdown -->
+          <div
+            id="country-dropdown"
+            class="absolute left-0 top-full z-50 mt-2 hidden w-72 sm:w-80 rounded-xl border border-slate-200 bg-white shadow-xl"
+          >
+            <div id="country-list" class="max-h-64 overflow-y-auto divide-y divide-slate-100 text-sm">
+              {
+                countryCodes.map((item) => (
+                  <button
+                    type="button"
+                    class="country-item flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-blue-50 transition-colors"
+                    data-code={item.code}
+                    data-country={item.country}
+                    data-flag={item.flag}
+                  >
+                    <span class="text-base">{item.flag}</span>
+                    <span class="font-medium text-slate-900">{item.code}</span>
+                    <span class="text-slate-600 truncate">{item.country}</span>
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct Phone Input -->
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          required
+          placeholder="8123 4567"
+          class="w-full rounded-r-xl px-5 py-4 focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Consent -->
+    <label class="flex items-start gap-3 cursor-pointer">
+      <input id="consent" type="checkbox" required class="mt-1 h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+      <span class="text-sm text-slate-600">
+        I agree to receive my AI ROI assessment report and acknowledge that a RaganDynamics representative will reach out to discuss my consultation options.
+      </span>
+    </label>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full rounded-xl bg-blue-600 px-8 py-4 text-lg font-bold text-white transition hover:bg-blue-700">
+      Generate ROI & Transformation Report
+    </button>
+  </form>
 </section>
 
-
-
-<!-- All HTML above remains unchanged -->
-
 <script>
+const countryInput = document.getElementById("country-search-input") as HTMLInputElement | null;
+const dropdown = document.getElementById("country-dropdown");
+const hiddenInput = document.getElementById("country-code") as HTMLInputElement | null;
 
-const form = document.getElementById("lead-form") as HTMLFormElement | null;
-const message = document.getElementById("form-message") as HTMLParagraphElement | null;
+let currentSelectedText = countryInput?.value || "🇸🇬 +65";
 
-form?.addEventListener("submit", async (event: SubmitEvent) => {
-  event.preventDefault();
+// Open dropdown & select all text on focus/click so user can type to search immediately
+countryInput?.addEventListener("focus", () => {
+  dropdown?.classList.remove("hidden");
+  countryInput.select();
+});
 
-  const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+countryInput?.addEventListener("click", () => {
+  dropdown?.classList.remove("hidden");
+});
 
-  if (!submitButton) return;
+// Search/Filter country list dynamically while typing in the country input
+countryInput?.addEventListener("input", () => {
+  dropdown?.classList.remove("hidden");
+  const query = countryInput.value.toLowerCase().trim();
 
-  submitButton.disabled = true;
-  submitButton.innerText = "Submitting Your Request...";
+  document.querySelectorAll<HTMLElement>(".country-item").forEach((item) => {
+    const text = item.textContent?.toLowerCase() ?? "";
+    item.classList.toggle("hidden", !text.includes(query));
+  });
+});
 
-  try {
-    const answers = JSON.parse(
-      localStorage.getItem("ragan_ai_assessment") ?? "{}"
-    ) as Record<string, string>;
+// Handle selecting a country from the dropdown
+document.querySelectorAll<HTMLElement>(".country-item").forEach((item) => {
+  item.addEventListener("click", () => {
+    const code = item.dataset.code ?? "";
+    const flag = item.dataset.flag ?? "";
 
-    const name = (document.getElementById("name") as HTMLInputElement).value.trim();
-    const company = (document.getElementById("company") as HTMLInputElement).value.trim();
-    const email = (document.getElementById("email") as HTMLInputElement).value.trim();
-    const phone = (document.getElementById("phone") as HTMLInputElement).value.trim();
+    if (hiddenInput) hiddenInput.value = code;
+    currentSelectedText = `${flag} ${code}`;
 
-    const formData = {
-      name,
-      company,
-      email,
-      phone,
-      answers
-    };
+    if (countryInput) countryInput.value = currentSelectedText;
+    dropdown?.classList.add("hidden");
+  });
+});
 
-    const response = await fetch("/api/assessment-lead", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    });
+// Restore previous valid code display if user clicks away without selecting
+countryInput?.addEventListener("blur", () => {
+  setTimeout(() => {
+    if (countryInput) countryInput.value = currentSelectedText;
+    dropdown?.classList.add("hidden");
+  }, 200);
+});
 
-    if (!response.ok) {
-      throw new Error("Submission failed");
-    }
-
-    /* Store locally */
-    localStorage.setItem("ragan_ai_lead", JSON.stringify(formData));
-
-    /* Notify wizard */
-    window.dispatchEvent(new CustomEvent("leadCaptured"));
-
-    const wizardStep = document.querySelector('[data-step="7"]') as HTMLElement | null;
-
-    document.querySelectorAll<HTMLElement>(".assessment-step").forEach((item) => {
-      item.classList.add("hidden");
-    });
-
-    wizardStep?.classList.remove("hidden");
-  } catch (error) {
-    console.error(error);
-
-    if (message) {
-      message.classList.remove("hidden");
-      message.className = "text-center text-sm text-red-600";
-      message.textContent = "We couldn't submit your consultation request. Please try again in a few moments.";
-    }
-
-    submitButton.disabled = false;
-    submitButton.innerText = "Request My Complimentary Consultation";
+// Close dropdown when clicking outside
+document.addEventListener("click", (e) => {
+  const target = e.target as Node;
+  const parent = countryInput?.parentElement;
+  if (parent && !parent.contains(target)) {
+    dropdown?.classList.add("hidden");
   }
 });
 
+// Form Submission Handler
+const form = document.getElementById("lead-form") as HTMLFormElement | null;
+
+form?.addEventListener("submit", async (event: SubmitEvent) => {
+  event.preventDefault();
+  const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+  if (!submitButton) return;
+
+  submitButton.disabled = true;
+  submitButton.innerText = "Generating Report...";
+
+  try {
+    const answers = JSON.parse(localStorage.getItem("ragan_ai_assessment") ?? "{}");
+    const countryCode = (document.getElementById("country-code") as HTMLInputElement).value;
+    const phoneNum = (document.getElementById("phone") as HTMLInputElement).value.trim();
+
+    const formData = {
+      name: (document.getElementById("name") as HTMLInputElement).value.trim(),
+      company: (document.getElementById("company") as HTMLInputElement).value.trim(),
+      email: (document.getElementById("email") as HTMLInputElement).value.trim(),
+      phone: `${countryCode} ${phoneNum}`,
+      answers
+    };
+
+    try {
+      await fetch("/api/assessment-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+    } catch {
+      // Graceful fallback for local development
+    }
+
+    localStorage.setItem("ragan_ai_lead", JSON.stringify(formData));
+    window.dispatchEvent(new CustomEvent("leadCaptured"));
+  } catch (error) {
+    console.error("Error submitting lead:", error);
+    submitButton.disabled = false;
+    submitButton.innerText = "Generate ROI & Transformation Report";
+  }
+});
 </script>

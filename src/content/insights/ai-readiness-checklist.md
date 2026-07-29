@@ -11,7 +11,7 @@ tags:
   - Singapore
   - Digital Transformation
 
-author: "Ragan Dynamics"
+author: "RaganDynamics"
 
 publishedDate: 2026-07-22
 

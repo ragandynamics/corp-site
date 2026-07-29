@@ -13,7 +13,7 @@ return {
 
 
 "name":
-"Ragan Dynamics",
+"RaganDynamics",
 
 
 "description":

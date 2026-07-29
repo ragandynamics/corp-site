@@ -1,188 +1,261 @@
 ---
 import AssessmentProgress from "./AssessmentProgress.astro";
-
-import BusinessProfileStep from "./BusinessProfileStep.astro";
-import BusinessChallengesStep from "./BusinessChallengesStep.astro";
-import TechnologyStep from "./TechnologyStep.astro";
-import AIAdoptionStep from "./AIAdoptionStep.astro";
-import GoalsStep from "./GoalsStep.astro";
-
+import AssessmentStep from "./AssessmentStep.astro";
 import LeadCaptureForm from "./LeadCaptureForm.astro";
 import AssessmentResults from "./AssessmentResults.astro";
+
+import { assessmentSteps } from "../../lib/assessment/questions";
 ---
 
-<div id="assessment-wizard" class="mx-auto max-w-4xl">
+<div id="assessment-wizard" class="mx-auto max-w-5xl">
 
-  <!-- Progress Bar -->
-  <div id="progress-container">
+  <div id="progress">
     <AssessmentProgress step={1} total={7} />
   </div>
 
-  <!-- Wizard Steps -->
-  <div id="steps-container">
+  <div id="wizard-steps" class="mt-10">
 
-    <!-- Step 1: Business Profile -->
-    <div class="assessment-step" data-step="1">
-      <BusinessProfileStep />
-    </div>
+    {
+      assessmentSteps.map((step) => (
+        <section
+          class:list={["wizard-step", step.id !== 1 && "hidden"]}
+          data-step={step.id}
+        >
+          <AssessmentStep
+            title={step.title}
+            description={step.description}
+            questions={step.questions}
+            showBack={step.id > 1}
+          />
+        </section>
+      ))
+    }
 
-    <!-- Step 2: Challenges -->
-    <div class="assessment-step hidden" data-step="2">
-      <BusinessChallengesStep />
-    </div>
-
-    <!-- Step 3: Technology -->
-    <div class="assessment-step hidden" data-step="3">
-      <TechnologyStep />
-    </div>
-
-    <!-- Step 4: AI Adoption -->
-    <div class="assessment-step hidden" data-step="4">
-      <AIAdoptionStep />
-    </div>
-
-    <!-- Step 5: Goals -->
-    <div class="assessment-step hidden" data-step="5">
-      <GoalsStep />
-    </div>
-
-    <!-- Step 6: Lead Capture -->
-    <div class="assessment-step hidden" data-step="6">
+    <section class="wizard-step hidden" data-step="6">
       <LeadCaptureForm />
-    </div>
+    </section>
 
-    <!-- Step 7: Results -->
-    <div class="assessment-step hidden" data-step="7">
+    <section class="wizard-step hidden" data-step="7">
       <AssessmentResults />
-    </div>
+    </section>
 
   </div>
 
 </div>
 
 <script>
+import { updateProgress } from "../../lib/assessment/progress";
+
 const STORAGE_KEY = "ragan_ai_assessment";
 const TOTAL_STEPS = 7;
 let currentStep = 1;
 
-const steps = Array.from(
-  document.querySelectorAll<HTMLElement>(".assessment-step")
-);
-
-const progress = document.getElementById("progress-container") as HTMLDivElement | null;
-
-/* --- Answer Persistence --- */
-function saveAnswer(questionId: string, answer: string): void {
-  const answers = getAnswers();
-  answers[questionId] = answer;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+function getAnswers(): Record<string, any> {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
 }
 
-function getAnswers(): Record<string, string> {
-  return JSON.parse(
-    localStorage.getItem(STORAGE_KEY) ?? "{}"
-  ) as Record<string, string>;
+function saveSingleAnswer(id: string, value: string) {
+  const data = getAnswers();
+  data[id] = value;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-/* --- Navigation & Progress UI --- */
-function showStep(step: number): void {
-  steps.forEach((element) => {
-    const stepNumber = Number(element.dataset.step ?? "0");
-    if (stepNumber === step) {
-      element.classList.remove("hidden");
+function toggleMultipleAnswer(id: string, value: string) {
+  const data = getAnswers();
+  let current: string[] = Array.isArray(data[id]) ? data[id] : [];
+
+  if (current.includes(value)) {
+    current = current.filter((item) => item !== value);
+  } else {
+    current.push(value);
+  }
+
+  data[id] = current;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+// Validation helper for mandatory questions on the active step
+function validateCurrentStep(): boolean {
+  const currentStepEl = document.querySelector(`.wizard-step[data-step="${currentStep}"]`);
+  if (!currentStepEl) return true;
+
+  const questions = currentStepEl.querySelectorAll(".assessment-question");
+  const data = getAnswers();
+  let isValid = true;
+
+  questions.forEach((q) => {
+    const el = q as HTMLElement;
+    const id = el.dataset.questionId;
+    const isRequired = el.dataset.required === "true";
+    const errorMsg = el.querySelector(".error-msg");
+
+    if (!id || !isRequired) return;
+
+    const val = data[id];
+    const isOtherSelected = val === "Other" || (Array.isArray(val) && val.includes("Other"));
+    const otherVal = data[`${id}_other`]?.trim();
+
+    // Check missing answer OR missing text when "Other" is selected
+    const isMissingAnswer = !val || (Array.isArray(val) && val.length === 0);
+    const isMissingOtherText = isOtherSelected && !otherVal;
+
+    if (isMissingAnswer || isMissingOtherText) {
+      isValid = false;
+      errorMsg?.classList.remove("hidden");
     } else {
-      element.classList.add("hidden");
+      errorMsg?.classList.add("hidden");
     }
   });
 
-  currentStep = step;
-  updateProgress();
+  return isValid;
 }
 
-function updateProgress(): void {
-  if (!progress) return;
+// Restores state for both option buttons and "Other" inputs
+function syncAssessmentUI() {
+  const data = getAnswers();
 
-  const percentage = Math.round((currentStep / TOTAL_STEPS) * 100);
+  document.querySelectorAll(".assessment-question").forEach((q) => {
+    const el = q as HTMLElement;
+    const id = el.dataset.questionId;
+    if (!id) return;
 
-  progress.innerHTML = `
-<div class="mb-8">
-  <div class="mb-3 flex justify-between">
-    <span class="font-semibold text-slate-700">
-      Step ${currentStep} of ${TOTAL_STEPS}
-    </span>
-    <span class="text-slate-500">
-      ${percentage}%
-    </span>
-  </div>
-  <div class="h-3 rounded-full bg-slate-200">
-    <div
-      class="h-3 rounded-full bg-blue-600 transition-all duration-300"
-      style="width:${percentage}%"
-    ></div>
-  </div>
-</div>
-`;
-}
+    const val = data[id];
+    const options = el.querySelectorAll(".answer-option");
+    const otherContainer = el.querySelector(".other-input-container");
+    const otherInput = el.querySelector(".other-text-input") as HTMLInputElement | null;
 
-/* --- Event Delegation --- */
-document.addEventListener("click", (event: MouseEvent) => {
-  const target = event.target as HTMLElement | null;
-  if (!target) return;
+    let isOtherSelected = false;
 
-  const answerButton = target.closest(".answer-option") as HTMLElement | null;
+    options.forEach((opt) => {
+      const optEl = opt as HTMLElement;
+      const optVal = optEl.dataset.answer;
 
-  if (answerButton) {
-    const question = answerButton.closest(".assessment-question") as HTMLElement | null;
-
-    if (question) {
-      const questionId = question.dataset.questionId;
-      const answer = answerButton.dataset.answer;
-
-      if (questionId && answer) {
-        saveAnswer(questionId, answer);
+      const isSelected = Array.isArray(val) ? val.includes(optVal) : val === optVal;
+      
+      if (isSelected) {
+        optEl.classList.add("border-blue-600", "bg-blue-50", "text-blue-700");
+      } else {
+        optEl.classList.remove("border-blue-600", "bg-blue-50", "text-blue-700");
       }
 
-      question
-        .querySelectorAll<HTMLElement>(".answer-option")
-        .forEach((item) => {
-          item.classList.remove("border-blue-600", "bg-blue-50");
-        });
+      if (optVal === "Other" && isSelected) {
+        isOtherSelected = true;
+      }
+    });
 
-      answerButton.classList.add("border-blue-600", "bg-blue-50");
+    // Toggle and populate "Other" input field
+    if (otherContainer) {
+      if (isOtherSelected) {
+        otherContainer.classList.remove("hidden");
+        if (otherInput) {
+          otherInput.value = data[`${id}_other`] || "";
+        }
+      } else {
+        otherContainer.classList.add("hidden");
+      }
     }
-  }
+  });
+}
 
-  const navButton = target.closest("button") as HTMLButtonElement | null;
-  if (!navButton) return;
+function showStep(step: number) {
+  document.querySelectorAll(".wizard-step").forEach((section) => {
+    section.classList.add("hidden");
+  });
 
-  const buttonText = navButton.textContent?.trim() ?? "";
+  const active = document.querySelector(`.wizard-step[data-step="${step}"]`);
+  active?.classList.remove("hidden");
 
-  switch (buttonText) {
-    case "Continue":
-      if (currentStep < 6) {
-        showStep(currentStep + 1);
-      }
-      break;
+  currentStep = step;
+  updateProgress(currentStep, TOTAL_STEPS);
+  
+  syncAssessmentUI();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-    case "Back":
-      if (currentStep > 1) {
-        showStep(currentStep - 1);
-      }
-      break;
+// Handle Navigation (Prevents advancing if required questions fail validation)
+document.addEventListener("click", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+
+  const button = target.closest("[data-action]");
+  if (!button) return;
+
+  const action = (button as HTMLElement).dataset.action;
+
+  if (action === "next" && currentStep < TOTAL_STEPS) {
+    if (validateCurrentStep()) {
+      showStep(currentStep + 1);
+    }
+  } else if (action === "back" && currentStep > 1) {
+    showStep(currentStep - 1);
   }
 });
 
-/* --- Custom Event Listeners --- */
+// Handle Option Button Clicks
+document.addEventListener("click", (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) return;
+
+  const option = target.closest(".answer-option") as HTMLElement | null;
+  if (!option) return;
+
+  const question = option.closest(".assessment-question") as HTMLElement | null;
+  if (!question) return;
+
+  const id = question.dataset.questionId;
+  const value = option.dataset.answer;
+  const isMultiple = question.dataset.multiple === "true";
+
+  if (!id || !value) return;
+
+  if (isMultiple) {
+    toggleMultipleAnswer(id, value);
+  } else {
+    saveSingleAnswer(id, value);
+  }
+
+  // Clear validation message when option clicked
+  question.querySelector(".error-msg")?.classList.add("hidden");
+
+  syncAssessmentUI();
+});
+
+// Listen for custom "Other" text input changes
+document.addEventListener("input", (event) => {
+  const target = event.target as HTMLInputElement;
+  if (!target || !target.classList.contains("other-text-input")) return;
+
+  const id = target.dataset.questionId;
+  if (!id) return;
+
+  const data = getAnswers();
+  data[`${id}_other`] = target.value;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+  // Hide error message if user provided input
+  const question = target.closest(".assessment-question");
+  if (target.value.trim().length > 0) {
+    question?.querySelector(".error-msg")?.classList.add("hidden");
+  }
+});
+
+window.addEventListener("syncAssessmentUI", syncAssessmentUI);
+
 window.addEventListener("leadCaptured", () => {
   showStep(7);
+  window.dispatchEvent(new CustomEvent("renderResults"));
 });
 
 window.addEventListener("resetAssessment", () => {
   localStorage.removeItem(STORAGE_KEY);
-  currentStep = 1;
   showStep(1);
 });
 
-/* --- Init --- */
-updateProgress();
+// Initial Render
+updateProgress(1, TOTAL_STEPS);
+syncAssessmentUI();
 </script>

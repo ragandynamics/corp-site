@@ -1,7 +1,7 @@
 export const site = {
   company: {
-    name: "Ragan Dynamics",
-    tagline: "Practical AI Solutions for Singapore SMEs",
+    name: "RaganDynamics",
+    tagline: "AI Solutions for Singapore SMEs",
   },
 
   contact: {
@@ -12,7 +12,7 @@ export const site = {
 
     whatsapp: {
       display: "Chat on WhatsApp",
-      url: "https://wa.me/6566xxxxxx",
+      url: "https://wa.me/6588764080",
     },
 
     email: {
@@ -38,6 +38,6 @@ export const site = {
 
     notificationEmail: "sales@ragandynamics.com",
 
-    emailFrom: "noreply@ragandynamics.com",
+    emailFrom: "contact@ragandynamics.com",
   },
 };
