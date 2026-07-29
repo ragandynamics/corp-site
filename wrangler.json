@@ -5,11 +5,9 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-
   "assets": {
     "directory": "./dist"
   },
-
   "r2_buckets": [
     {
       "binding": "CONTACTS",
