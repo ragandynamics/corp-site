@@ -5,14 +5,16 @@
   "compatibility_flags": [
     "global_fetch_strictly_public"
   ],
+
   "pages_build_output_dir": "./dist",
-  "main": "@astrojs/cloudflare/entrypoints/server",
+
   "r2_buckets": [
     {
       "binding": "CONTACTS",
       "bucket_name": "ragan-dynamics-data"
     }
   ],
+
   "observability": {
     "enabled": true
   }
