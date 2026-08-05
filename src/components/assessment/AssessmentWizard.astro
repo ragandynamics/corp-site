@@ -1,261 +1,145 @@
 ---
-import AssessmentProgress from "./AssessmentProgress.astro";
-import AssessmentStep from "./AssessmentStep.astro";
-import LeadCaptureForm from "./LeadCaptureForm.astro";
-import AssessmentResults from "./AssessmentResults.astro";
-
-import { assessmentSteps } from "../../lib/assessment/questions";
+// AssessmentWizard.astro
+import AssessmentResults from './AssessmentResults.astro';
 ---
 
-<div id="assessment-wizard" class="mx-auto max-w-5xl">
+<div class="w-full max-w-4xl mx-auto py-8">
+  <!-- Wizard Form Steps -->
+  <div id="assessment-wizard-container">
+    <form id="wizard-form" class="space-y-6">
+      
+      <!-- Step 1: Company Context -->
+      <div class="wizard-step" data-step="1">
+        <h3 class="text-xl font-semibold text-white mb-4">Step 1: Organization Size</h3>
+        <label class="block text-sm text-slate-300 mb-2">Select your team size:</label>
+        <select name="company_size" class="w-full p-3 rounded-lg bg-slate-800 text-white border border-slate-700">
+          <option value="1-10">1–10 employees</option>
+          <option value="11-50">11–50 employees</option>
+          <option value="51-100">51–100 employees</option>
+          <option value="100+">100+ employees</option>
+        </select>
+      </div>
 
-  <div id="progress">
-    <AssessmentProgress step={1} total={7} />
-  </div>
+      <!-- Step 2: Implementation Timeline -->
+      <div class="wizard-step hidden" data-step="2">
+        <h3 class="text-xl font-semibold text-white mb-4">Step 2: Target Timeline</h3>
+        <label class="block text-sm text-slate-300 mb-2">When are you looking to deploy?</label>
+        <select name="timeline" class="w-full p-3 rounded-lg bg-slate-800 text-white border border-slate-700">
+          <option value="immediate">Immediate / Next 30 Days</option>
+          <option value="1-3 months">1–3 Months</option>
+          <option value="3-6 months">3–6 Months</option>
+          <option value="exploring">6+ Months / Planning</option>
+        </select>
+      </div>
 
-  <div id="wizard-steps" class="mt-10">
+      <!-- Step 3: Estimated Budget -->
+      <div class="wizard-step hidden" data-step="3">
+        <h3 class="text-xl font-semibold text-white mb-4">Step 3: Estimated Budget</h3>
+        <label class="block text-sm text-slate-300 mb-2">Select allocated budget range:</label>
+        <select name="budget" class="w-full p-3 rounded-lg bg-slate-800 text-white border border-slate-700">
+          <option value="under-10k">Under $10k</option>
+          <option value="10k-50k">$10k – $50k</option>
+          <option value="50k-100k">$50k – $100k</option>
+          <option value="100k+">$100k+</option>
+        </select>
+      </div>
 
-    {
-      assessmentSteps.map((step) => (
-        <section
-          class:list={["wizard-step", step.id !== 1 && "hidden"]}
-          data-step={step.id}
+      <!-- Navigation Controls -->
+      <div class="flex justify-between items-center pt-6 border-t border-slate-800">
+        <button 
+          type="button" 
+          id="prev-btn" 
+          class="hidden px-5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium"
         >
-          <AssessmentStep
-            title={step.title}
-            description={step.description}
-            questions={step.questions}
-            showBack={step.id > 1}
-          />
-        </section>
-      ))
-    }
-
-    <section class="wizard-step hidden" data-step="6">
-      <LeadCaptureForm />
-    </section>
-
-    <section class="wizard-step hidden" data-step="7">
-      <AssessmentResults />
-    </section>
-
+          Previous
+        </button>
+        <button 
+          type="button" 
+          id="next-btn" 
+          class="ml-auto px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
+        >
+          Next
+        </button>
+      </div>
+    </form>
   </div>
 
+  <!-- Step 4: Results Display Container -->
+  <div id="results-container" class="hidden">
+    <AssessmentResults />
+  </div>
 </div>
 
 <script>
-import { updateProgress } from "../../lib/assessment/progress";
+  function setupWizard() {
+    const form = document.getElementById('wizard-form') as HTMLFormElement;
+    const steps = Array.from(document.querySelectorAll('.wizard-step')) as HTMLElement[];
+    const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
+    const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
+    const wizardContainer = document.getElementById('assessment-wizard-container');
+    const resultsContainer = document.getElementById('results-container');
 
-const STORAGE_KEY = "ragan_ai_assessment";
-const TOTAL_STEPS = 7;
-let currentStep = 1;
+    if (!form || steps.length === 0) return;
 
-function getAnswers(): Record<string, any> {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
-  } catch {
-    return {};
-  }
-}
+    let currentStep = 0;
 
-function saveSingleAnswer(id: string, value: string) {
-  const data = getAnswers();
-  data[id] = value;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+    function updateStepVisibility() {
+      steps.forEach((step, index) => {
+        step.classList.toggle('hidden', index !== currentStep);
+      });
 
-function toggleMultipleAnswer(id: string, value: string) {
-  const data = getAnswers();
-  let current: string[] = Array.isArray(data[id]) ? data[id] : [];
+      if (prevBtn) {
+        prevBtn.classList.toggle('hidden', currentStep === 0);
+      }
 
-  if (current.includes(value)) {
-    current = current.filter((item) => item !== value);
-  } else {
-    current.push(value);
-  }
-
-  data[id] = current;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-// Validation helper for mandatory questions on the active step
-function validateCurrentStep(): boolean {
-  const currentStepEl = document.querySelector(`.wizard-step[data-step="${currentStep}"]`);
-  if (!currentStepEl) return true;
-
-  const questions = currentStepEl.querySelectorAll(".assessment-question");
-  const data = getAnswers();
-  let isValid = true;
-
-  questions.forEach((q) => {
-    const el = q as HTMLElement;
-    const id = el.dataset.questionId;
-    const isRequired = el.dataset.required === "true";
-    const errorMsg = el.querySelector(".error-msg");
-
-    if (!id || !isRequired) return;
-
-    const val = data[id];
-    const isOtherSelected = val === "Other" || (Array.isArray(val) && val.includes("Other"));
-    const otherVal = data[`${id}_other`]?.trim();
-
-    // Check missing answer OR missing text when "Other" is selected
-    const isMissingAnswer = !val || (Array.isArray(val) && val.length === 0);
-    const isMissingOtherText = isOtherSelected && !otherVal;
-
-    if (isMissingAnswer || isMissingOtherText) {
-      isValid = false;
-      errorMsg?.classList.remove("hidden");
-    } else {
-      errorMsg?.classList.add("hidden");
+      if (nextBtn) {
+        nextBtn.textContent = currentStep === steps.length - 1 ? 'View Results' : 'Next';
+      }
     }
-  });
 
-  return isValid;
-}
-
-// Restores state for both option buttons and "Other" inputs
-function syncAssessmentUI() {
-  const data = getAnswers();
-
-  document.querySelectorAll(".assessment-question").forEach((q) => {
-    const el = q as HTMLElement;
-    const id = el.dataset.questionId;
-    if (!id) return;
-
-    const val = data[id];
-    const options = el.querySelectorAll(".answer-option");
-    const otherContainer = el.querySelector(".other-input-container");
-    const otherInput = el.querySelector(".other-text-input") as HTMLInputElement | null;
-
-    let isOtherSelected = false;
-
-    options.forEach((opt) => {
-      const optEl = opt as HTMLElement;
-      const optVal = optEl.dataset.answer;
-
-      const isSelected = Array.isArray(val) ? val.includes(optVal) : val === optVal;
+    function saveCurrentStepData() {
+      const formData = new FormData(form);
+      const existingData = JSON.parse(localStorage.getItem('assessment_data') || '{}');
       
-      if (isSelected) {
-        optEl.classList.add("border-blue-600", "bg-blue-50", "text-blue-700");
-      } else {
-        optEl.classList.remove("border-blue-600", "bg-blue-50", "text-blue-700");
-      }
+      formData.forEach((value, key) => {
+        existingData[key] = value;
+      });
 
-      if (optVal === "Other" && isSelected) {
-        isOtherSelected = true;
-      }
-    });
+      localStorage.setItem('assessment_data', JSON.stringify(existingData));
+    }
 
-    // Toggle and populate "Other" input field
-    if (otherContainer) {
-      if (isOtherSelected) {
-        otherContainer.classList.remove("hidden");
-        if (otherInput) {
-          otherInput.value = data[`${id}_other`] || "";
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        saveCurrentStepData();
+
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          updateStepVisibility();
+        } else {
+          // Final step completed: show results container
+          if (wizardContainer) wizardContainer.classList.add('hidden');
+          if (resultsContainer) resultsContainer.classList.remove('hidden');
+
+          // Trigger update in AssessmentResults component
+          window.dispatchEvent(new CustomEvent('renderResults'));
         }
-      } else {
-        otherContainer.classList.add("hidden");
-      }
+      });
     }
-  });
-}
 
-function showStep(step: number) {
-  document.querySelectorAll(".wizard-step").forEach((section) => {
-    section.classList.add("hidden");
-  });
-
-  const active = document.querySelector(`.wizard-step[data-step="${step}"]`);
-  active?.classList.remove("hidden");
-
-  currentStep = step;
-  updateProgress(currentStep, TOTAL_STEPS);
-  
-  syncAssessmentUI();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-// Handle Navigation (Prevents advancing if required questions fail validation)
-document.addEventListener("click", (event) => {
-  const target = event.target;
-  if (!(target instanceof HTMLElement)) return;
-
-  const button = target.closest("[data-action]");
-  if (!button) return;
-
-  const action = (button as HTMLElement).dataset.action;
-
-  if (action === "next" && currentStep < TOTAL_STEPS) {
-    if (validateCurrentStep()) {
-      showStep(currentStep + 1);
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) {
+          currentStep--;
+          updateStepVisibility();
+        }
+      });
     }
-  } else if (action === "back" && currentStep > 1) {
-    showStep(currentStep - 1);
-  }
-});
 
-// Handle Option Button Clicks
-document.addEventListener("click", (event) => {
-  const target = event.target;
-  if (!(target instanceof HTMLElement)) return;
-
-  const option = target.closest(".answer-option") as HTMLElement | null;
-  if (!option) return;
-
-  const question = option.closest(".assessment-question") as HTMLElement | null;
-  if (!question) return;
-
-  const id = question.dataset.questionId;
-  const value = option.dataset.answer;
-  const isMultiple = question.dataset.multiple === "true";
-
-  if (!id || !value) return;
-
-  if (isMultiple) {
-    toggleMultipleAnswer(id, value);
-  } else {
-    saveSingleAnswer(id, value);
+    updateStepVisibility();
   }
 
-  // Clear validation message when option clicked
-  question.querySelector(".error-msg")?.classList.add("hidden");
-
-  syncAssessmentUI();
-});
-
-// Listen for custom "Other" text input changes
-document.addEventListener("input", (event) => {
-  const target = event.target as HTMLInputElement;
-  if (!target || !target.classList.contains("other-text-input")) return;
-
-  const id = target.dataset.questionId;
-  if (!id) return;
-
-  const data = getAnswers();
-  data[`${id}_other`] = target.value;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
-  // Hide error message if user provided input
-  const question = target.closest(".assessment-question");
-  if (target.value.trim().length > 0) {
-    question?.querySelector(".error-msg")?.classList.add("hidden");
+  document.addEventListener('astro:page-load', setupWizard);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setupWizard();
   }
-});
-
-window.addEventListener("syncAssessmentUI", syncAssessmentUI);
-
-window.addEventListener("leadCaptured", () => {
-  showStep(7);
-  window.dispatchEvent(new CustomEvent("renderResults"));
-});
-
-window.addEventListener("resetAssessment", () => {
-  localStorage.removeItem(STORAGE_KEY);
-  showStep(1);
-});
-
-// Initial Render
-updateProgress(1, TOTAL_STEPS);
-syncAssessmentUI();
 </script>

@@ -1,6 +1,6 @@
 export const site = {
   company: {
-    name: "RaganDynamics",
+    name: "RAGANDYNAMICS PTE. LTD.",
     tagline: "AI Solutions for Singapore SMEs",
   },
 
@@ -34,10 +34,12 @@ export const site = {
   },
 
   integrations: {
-    emailNotification: true,
-
-    notificationEmail: "sales@ragandynamics.com",
-
-    emailFrom: "contact@ragandynamics.com",
+    emailNotification: {
+      enabled: true, // Set to 'false' to disable Resend notifications globally
+      notificationEmail: "rdproducts.adm1@gmail.com",
+      //notificationEmail: "sales@ragandynamics.com",
+      //emailFrom: "contact@ragandynamics.com", // Ensure this domain is verified in your Resend Dashboard
+      emailFrom: "onboarding@resend.dev", // Ensure this domain is verified in your Resend Dashboard
+    },
   },
 };
