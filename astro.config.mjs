@@ -7,6 +7,7 @@ export default defineConfig({
 
   adapter: cloudflare({
     imageService: "compile",
+    sessionKVBindingName: undefined,
   }),
 
   vite: {
