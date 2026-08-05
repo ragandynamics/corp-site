@@ -1,486 +1,131 @@
 ---
 // src/components/assessment/AssessmentResults.astro
+
+export interface AssessmentAnswers {
+  companySize?: string;
+  industry?: string;
+  bottlenecks?: string[];
+  currentTools?: string[];
+  primaryGoal?: string;
+}
+
+export interface Props {
+  answers?: AssessmentAnswers;
+}
+
+const answers: AssessmentAnswers = Astro.props.answers ?? {};
+const industry = answers.industry || "Your Business";
 ---
 
-<section class="min-h-[70vh] bg-slate-50 py-16 px-6 sm:px-8">
-  <div class="mx-auto max-w-6xl">
+<div class="mx-auto max-w-4xl space-y-12 py-8 px-4 sm:px-6">
 
-    <!-- EMPTY STATE -->
-    <div id="empty-state" class="mx-auto max-w-xl text-center py-12">
-      <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-        </svg>
+  <!-- Hero Header -->
+  <section class="text-center space-y-4 border-b border-slate-200 pb-8">
+    <span class="inline-block rounded-full bg-blue-100 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-800">
+      Personalized Strategy Report
+    </span>
+    <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+      Your AI Transformation Opportunity
+    </h1>
+    <p class="mx-auto max-w-2xl text-base text-slate-600 leading-relaxed">
+      Based on your operational assessment for {industry}, we've mapped out where AI creates the greatest business value without operational disruption.
+    </p>
+  </section>
+
+  <!-- Qualitative Opportunity Breakdown -->
+  <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm space-y-6">
+    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">Overall Business Opportunity</h2>
+        <p class="text-xs text-slate-500">Qualitative potential based on your time-drains and tech stack.</p>
       </div>
-      <h2 class="mt-6 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-        No Assessment Data Found
+      <span class="rounded-full bg-blue-600 px-4 py-1.5 text-xs font-extrabold text-white">
+        High Potential
+      </span>
+    </div>
+
+    <!-- Star Ratings & Explanations -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 text-sm">Knowledge Management</span>
+          <span class="text-yellow-500 font-black">★★★★★</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          High impact potential. Indexing company documents and communications allows employees to query SOPs and contracts instantly.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 text-sm">Workflow Automation</span>
+          <span class="text-yellow-500 font-black">★★★★★</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          High impact potential. Connecting repetitive data-entry and email classification directly to your CRM/ERP eliminates administrative re-work.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 text-sm">Customer Experience</span>
+          <span class="text-yellow-500 font-black">★★★★☆</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Strong potential. Draft intelligent responses and route complex customer inquiries automatically.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 text-sm">Internal Productivity</span>
+          <span class="text-yellow-500 font-black">★★★★☆</span>
+        </div>
+        <p class="text-xs text-slate-600 leading-relaxed">
+          Strong potential. Deploy internal copilots for proposal drafting and meeting summaries.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Business Conversation CTA -->
+  <section class="rounded-3xl bg-slate-900 p-8 sm:p-12 text-white text-center space-y-8 shadow-xl">
+    <div class="space-y-3 max-w-2xl mx-auto">
+      <h2 class="text-2xl sm:text-4xl font-black tracking-tight">
+        Let's Discuss Your Results
       </h2>
-      <p class="mt-3 text-base text-slate-600">
-        Please complete the assessment steps to view your custom AI readiness and ROI impact analysis.
+      <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+        In a complimentary 60-minute strategy session, we will turn this assessment into a practical execution plan.
       </p>
-      <div class="mt-8">
-        <a href="/assessment" class="rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-700 transition">
-          Start Readiness Assessment
-        </a>
+    </div>
+
+    <!-- Workshop Deliverables -->
+    <div class="max-w-xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs sm:text-sm text-slate-300 bg-slate-800/80 p-6 rounded-2xl border border-slate-700">
+      <div class="flex items-center gap-2">
+        <span class="text-blue-400 font-bold">✓</span> Review your custom assessment
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-blue-400 font-bold">✓</span> Prioritize high-impact AI opportunities
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-blue-400 font-bold">✓</span> Recommend practical next steps
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-blue-400 font-bold">✓</span> Map integrations with existing tools
+      </div>
+      <div class="flex items-center gap-2 sm:col-span-2">
+        <span class="text-blue-400 font-bold">✓</span> Outline a realistic implementation roadmap
       </div>
     </div>
 
-    <!-- MAIN RESULTS DISPLAY -->
-    <div id="results-display" class="hidden space-y-12">
-
-      <!-- ==================================================================== -->
-      <!-- SECTION 1: CLIENT-FACING AI TRANSFORMATION BENEFIT DASHBOARD         -->
-      <!-- ==================================================================== -->
-      
-      <!-- HERO HEADER: SCORE & READINESS STAGE -->
-      <div class="rounded-3xl bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 p-8 text-white shadow-xl sm:p-12">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/10 pb-8">
-          <div>
-            <span class="inline-flex rounded-full bg-blue-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-300 border border-blue-400/20">
-              AI Readiness Baseline
-            </span>
-            <h1 class="mt-4 text-3xl font-extrabold sm:text-4xl text-white">Your AI Transformation Blueprint</h1>
-            <p id="description-val" class="mt-3 text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-              Based on your answers, your organization exhibits clear leverage points where automation and LLM workflows can eliminate administrative bottlenecks and accelerate output.
-            </p>
-          </div>
-
-          <div class="flex items-center gap-6 bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-sm shrink-0">
-            <div class="text-center">
-              <p class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Readiness Score</p>
-              <p id="score-val" class="text-4xl font-black text-blue-400 mt-1">68%</p>
-            </div>
-            <div class="h-10 w-px bg-white/10"></div>
-            <div>
-              <p class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Maturity Phase</p>
-              <p id="status-val" class="text-lg font-bold text-white mt-1">Piloting & Evaluation</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- CORE CLIENT BENEFIT METRICS -->
-        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          
-          <!-- Benefit 1: Labor Efficiency -->
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-            <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Time Reclaimed
-            </div>
-            <p id="metric-hours" class="mt-3 text-3xl font-black text-white">12–18 hrs</p>
-            <p class="mt-1 text-xs text-slate-300">Saved per employee / week on manual data handling & triage.</p>
-          </div>
-
-          <!-- Benefit 2: Financial Return -->
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-            <div class="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wider">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Est. Annual Benefit
-            </div>
-            <p id="metric-roi" class="mt-3 text-3xl font-black text-white">$90k–$140k</p>
-            <p class="mt-1 text-xs text-slate-300">Direct OpEx savings recalculated into growth activities.</p>
-          </div>
-
-          <!-- Benefit 3: Cycle Time Reduction -->
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-            <div class="flex items-center gap-2 text-purple-400 font-bold text-xs uppercase tracking-wider">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              Process Velocity
-            </div>
-            <p id="metric-speed" class="mt-3 text-3xl font-black text-white">3.5x Faster</p>
-            <p class="mt-1 text-xs text-slate-300">Turnaround time from query ingestion to resolution.</p>
-          </div>
-
-          <!-- Benefit 4: Error Mitigation -->
-          <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-            <div class="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              Accuracy Gain
-            </div>
-            <p id="metric-accuracy" class="mt-3 text-3xl font-black text-white">99.2%</p>
-            <p class="mt-1 text-xs text-slate-300">Data consistency across automated customer & internal pipelines.</p>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CLIENT TRANSFORMATION IMPACT BREAKDOWN -->
-      <div class="rounded-2xl bg-white p-8 shadow-sm border border-slate-200">
-        <div class="border-b border-slate-100 pb-5">
-          <span class="text-xs font-bold uppercase tracking-widest text-blue-600">Transformation Value Matrix</span>
-          <h2 class="text-2xl font-bold text-slate-900 mt-1">Operational Impact Across Key Pillars</h2>
-          <p class="text-sm text-slate-500 mt-1">Where your organization gains measurable advantages upon deploying targeted AI agents.</p>
-        </div>
-
-        <div class="mt-8 grid gap-8 md:grid-cols-3">
-          
-          <!-- Pillar 1 -->
-          <div class="space-y-3">
-            <div class="h-10 w-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">
-              1
-            </div>
-            <h3 class="text-base font-bold text-slate-900">Capacity Without Headcount</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Automate high-volume, low-complexity tasks like document classification, ticket routing, and routine reporting, allowing existing teams to handle up to 3x higher throughput.
-            </p>
-            <ul class="text-xs text-slate-500 space-y-1.5 pt-2">
-              <li class="flex items-center gap-2">
-                <span class="text-emerald-500 font-bold">✓</span> Eliminates redundant data entry
-              </li>
-              <li class="flex items-center gap-2">
-                <span class="text-emerald-500 font-bold">✓</span> Shifts staff to strategic high-value client care
-              </li>
-            </ul>
-          </div>
-
-          <!-- Pillar 2 -->
-          <div class="space-y-3">
-            <div class="h-10 w-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-lg">
-              2
-            </div>
-            <h3 class="text-base font-bold text-slate-900">Knowledge Unification</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Connect disparate company databases, SOPs, and historical data into a centralized semantic knowledge layer accessible via natural conversation.
-            </p>
-            <ul class="text-xs text-slate-500 space-y-1.5 pt-2">
-              <li class="flex items-center gap-2">
-                <span class="text-emerald-500 font-bold">✓</span> Sub-second access to complex company data
-              </li>
-              <li class="flex items-center gap-2">
-                <span class="text-emerald-500 font-bold">✓</span> Onboard new hires 50% faster
-              </li>
-            </ul>
-          </div>
-
-          <!-- Pillar 3 -->
-          <div class="space-y-3">
-            <div class="h-10 w-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-lg">
-              3
-            </div>
-            <h3 class="text-base font-bold text-slate-900">12-Month ROI Protection</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">
-              Phased implementation de-risks capital expenditure. Starting with a targeted 60-day POC validates exact time savings before enterprise rollout.
-            </p>
-            <ul class="text-xs text-slate-500 space-y-1.5 pt-2">
-              <li class="flex items-center gap-2">
-                <span class="text-emerald-500 font-bold">✓</span> Defined break-even within 6–12 months
-              </li>
-              <li class="flex items-center gap-2">
-                <span class="text-emerald-500 font-bold">✓</span> Strict capital cap based on conservative gains
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        <div class="mt-8 rounded-xl bg-slate-900 p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h4 class="text-base font-bold">Ready to validate these metrics for your team?</h4>
-            <p class="text-xs text-slate-300 mt-1">Book a 30-minute architectural discovery call to review custom deployment timelines.</p>
-          </div>
-          <a href="/contact" class="shrink-0 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 transition shadow-md">
-            Schedule Discovery Call
-          </a>
-        </div>
-      </div>
-
-      <!-- ==================================================================== -->
-      <!-- SECTION 2: BULLETED SALES & MARKETING ACTION INTELLIGENCE PANEL       -->
-      <!-- ==================================================================== -->
-      
-      <div class="rounded-2xl border-2 border-amber-300 bg-amber-50/40 p-8 shadow-md">
-        
-        <!-- HEADER & TIER BADGE -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-amber-200 pb-5 gap-4">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="inline-flex items-center rounded-md bg-amber-200/80 px-2.5 py-1 text-xs font-bold text-amber-900">
-                🔒 INTERNAL SALES & MARKETING PLAYBOOK
-              </span>
-              <span class="text-xs text-slate-500 font-medium">Lead Qualification & Action Plan</span>
-            </div>
-            <h2 class="text-2xl font-bold text-slate-900 mt-2">Opportunity Assessment & Next Steps</h2>
-          </div>
-
-          <!-- DYNAMIC LEAD BADGE -->
-          <div id="lead-tier-badge" class="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2 text-white font-bold text-sm shadow-sm">
-            <span class="h-2.5 w-2.5 rounded-full bg-white animate-pulse"></span>
-            <span id="tier-label">HOT LEAD (Score: 68%)</span>
-          </div>
-        </div>
-
-        <!-- 4-POINT LEAD QUALIFICATION SUMMARY -->
-        <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <div class="rounded-xl bg-white p-4 border border-amber-200/80 shadow-sm">
-            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Buying Urgency</p>
-            <p id="sales-urgency" class="text-base font-extrabold text-slate-900 mt-1">High (0–3 Months)</p>
-          </div>
-
-          <div class="rounded-xl bg-white p-4 border border-amber-200/80 shadow-sm">
-            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Target Budget</p>
-            <p id="sales-budget" class="text-base font-extrabold text-slate-900 mt-1">$25,000 – $50,000</p>
-          </div>
-
-          <div class="rounded-xl bg-white p-4 border border-amber-200/80 shadow-sm">
-            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Friction Risk</p>
-            <p id="sales-friction" class="text-base font-extrabold text-emerald-600 mt-1">Low (Data Ready)</p>
-          </div>
-
-          <div class="rounded-xl bg-white p-4 border border-amber-200/80 shadow-sm">
-            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">SLA Response</p>
-            <p id="sales-sla" class="text-base font-extrabold text-blue-600 mt-1">Same-Day Outreach</p>
-          </div>
-        </div>
-
-        <!-- BULLETED SUGGESTED ACTIONS FOR SALES & MARKETING -->
-        <div class="mt-6 grid gap-6 md:grid-cols-2">
-          
-          <!-- Column 1: Sales Team Actions -->
-          <div class="rounded-xl bg-white p-6 border border-amber-200/80 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                <div class="h-7 w-7 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">
-                  Sales
-                </div>
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Suggested Actions for Sales Team</h3>
-              </div>
-
-              <ul class="mt-4 space-y-3 text-xs text-slate-700 leading-relaxed">
-                <li class="flex items-start gap-2.5">
-                  <span class="text-blue-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Initiate Direct Founder/AE Outreach:</strong> Contact account within 2–24 hours referencing their specific readiness score (<span id="bullet-score" class="font-semibold text-blue-600">68%</span>) and target timeline.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-blue-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Frame Pitch Around $180k+ Waste Tax:</strong> Focus early conversation on labor hours lost in manual document triage rather than abstract technical specs.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-blue-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Propose Low-Risk 60-Day POC:</strong> Scope a fixed-fee pilot ($15k–$25k) capped within their selected budget parameter to accelerate procurement sign-off.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-blue-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Preempt Security Objections:</strong> Share SOC2 compliance documentation and local data boundary options early with technical decision-makers.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="mt-5 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
-              🎯 Goal: Convert assessment submission into a discovery call within 48 hours.
-            </div>
-          </div>
-
-          <!-- Column 2: Marketing Team Actions -->
-          <div class="rounded-xl bg-white p-6 border border-amber-200/80 shadow-sm flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                <div class="h-7 w-7 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-xs">
-                  Mktg
-                </div>
-                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Suggested Actions for Marketing Team</h3>
-              </div>
-
-              <ul class="mt-4 space-y-3 text-xs text-slate-700 leading-relaxed">
-                <li class="flex items-start gap-2.5">
-                  <span class="text-purple-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Trigger Targeted Nurture Sequence:</strong> Enroll lead into a tailored email sequence highlighting ROI case studies matching their organizational maturity phase.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-purple-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Deliver Custom Blueprint Report:</strong> Send automated PDF copy of their Assessment Results to all stakeholders listed in the submission.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-purple-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Retarget on LinkedIn:</strong> Add company domain to Account-Based Marketing (ABM) ad campaigns focusing on executive ROI and process automation.</span>
-                </li>
-                <li class="flex items-start gap-2.5">
-                  <span class="text-purple-600 font-bold text-sm shrink-0">•</span>
-                  <span><strong>Track Content Engagement:</strong> Monitor if lead visits pricing or case study pages to signal sales team for timely follow-up touches.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="mt-5 pt-3 border-t border-slate-100 text-[11px] text-slate-500 font-medium">
-              📈 Goal: Build multi-threaded consensus across decision-makers in the account.
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- CHAPTER 3: DATA AUDIT TRAIL & SUBMITTED PARAMETERS -->
-      <div id="lead-container" class="hidden rounded-2xl bg-white p-8 shadow-sm border border-slate-200">
-        <h2 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-4">Company Profile</h2>
-        <div id="lead-grid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <!-- Dynamically populated from ragan_ai_lead -->
-        </div>
-      </div>
-
-      <div class="rounded-2xl bg-white p-8 shadow-sm border border-slate-200">
-        <div class="flex items-center justify-between border-b border-slate-200 pb-5">
-          <div>
-            <h2 class="text-xl font-bold text-slate-900">Submitted Assessment Parameters</h2>
-            <p class="text-sm text-slate-500 mt-1">Detailed submission variables used to calculate these metrics.</p>
-          </div>
-          <button id="reset-btn" class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
-            Retake Assessment
-          </button>
-        </div>
-
-        <div id="answers-grid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <!-- Dynamically populated from ragan_ai_assessment -->
-        </div>
-      </div>
-
+    <div>
+      <a
+        href="/contact"
+        class="inline-block rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white shadow-lg transition hover:bg-blue-500 focus:ring-4 focus:ring-blue-400"
+      >
+        Schedule My AI Strategy Session →
+      </a>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<script>
-  import { FIELD_LABELS, formatValue } from '@/data/assessment';
-
-  function initResults() {
-    const rawAssessment = 
-      localStorage.getItem('ragan_ai_assessment') || 
-      localStorage.getItem('ragan_ai_assessmen');
-
-    const rawLead = localStorage.getItem('ragan_ai_lead');
-
-    if (!rawAssessment && !rawLead) {
-      return;
-    }
-
-    try {
-      let assessmentData: Record<string, any> = {};
-      if (rawAssessment) {
-        const parsed = JSON.parse(rawAssessment);
-        assessmentData = parsed.answers || parsed.data || parsed;
-      }
-
-      let leadData: Record<string, any> = {};
-      if (rawLead) {
-        const parsedLead = JSON.parse(rawLead);
-        leadData = parsedLead.lead || parsedLead.data || parsedLead;
-      }
-
-      // Show results layout
-      document.getElementById('empty-state')?.classList.add('hidden');
-      document.getElementById('results-display')?.classList.remove('hidden');
-
-      // ------------------------------------------------------------------
-      // DYNAMIC SALES QUALIFICATION & CALCULATION LOGIC
-      // ------------------------------------------------------------------
-      
-      let score = 50; // default baseline
-      const timeline = String(assessmentData.timeline || '').toLowerCase();
-      const budget = String(assessmentData.budget || '').toLowerCase();
-
-      if (timeline.includes('immediate') || timeline.includes('1') || timeline.includes('3')) score += 25;
-      if (budget.includes('50k') || budget.includes('100k') || budget.includes('enterprise')) score += 20;
-
-      // Update UI Scores
-      const scoreValEl = document.getElementById('score-val');
-      if (scoreValEl) scoreValEl.textContent = `${score}%`;
-
-      const bulletScoreEl = document.getElementById('bullet-score');
-      if (bulletScoreEl) bulletScoreEl.textContent = `${score}%`;
-
-      // Update Sales Tier Badge
-      const tierBadge = document.getElementById('lead-tier-badge');
-      const tierLabel = document.getElementById('tier-label');
-      const salesSla = document.getElementById('sales-sla');
-
-      if (score >= 70) {
-        if (tierBadge) tierBadge.className = "inline-flex items-center gap-2 rounded-xl bg-rose-600 px-4 py-2 text-white font-bold text-sm shadow-sm";
-        if (tierLabel) tierLabel.textContent = `🔥 HOT LEAD (Score: ${score}%)`;
-        if (salesSla) salesSla.textContent = "Immediate (< 2 Hours)";
-      } else if (score >= 45) {
-        if (tierBadge) tierBadge.className = "inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2 text-white font-bold text-sm shadow-sm";
-        if (tierLabel) tierLabel.textContent = `⚡ WARM LEAD (Score: ${score}%)`;
-        if (salesSla) salesSla.textContent = "Same-Day Outreach";
-      } else {
-        if (tierBadge) tierBadge.className = "inline-flex items-center gap-2 rounded-xl bg-slate-600 px-4 py-2 text-white font-bold text-sm shadow-sm";
-        if (tierLabel) tierLabel.textContent = `🌱 NURTURE LEAD (Score: ${score}%)`;
-        if (salesSla) salesSla.textContent = "Automated Nurture Flow";
-      }
-
-      // Populate Qualification Summary Metrics
-      const salesUrgency = document.getElementById('sales-urgency');
-      if (salesUrgency && assessmentData.timeline) {
-        salesUrgency.textContent = formatValue(String(assessmentData.timeline));
-      }
-
-      const salesBudget = document.getElementById('sales-budget');
-      if (salesBudget && assessmentData.budget) {
-        salesBudget.textContent = formatValue(String(assessmentData.budget));
-      }
-
-      // ------------------------------------------------------------------
-      // POPULATE COMPANY PROFILE & SUBMITTED PARAMETERS
-      // ------------------------------------------------------------------
-
-      // Populate Lead / Company Profile (EXCLUDING 'answers' key)
-      if (rawLead && Object.keys(leadData).length > 0) {
-        const leadContainer = document.getElementById('lead-container');
-        const leadGrid = document.getElementById('lead-grid');
-
-        const filteredLeadEntries = Object.entries(leadData).filter(
-          ([key]) => key.toLowerCase() !== 'answers'
-        );
-
-        if (filteredLeadEntries.length > 0) {
-          if (leadContainer) leadContainer.classList.remove('hidden');
-          if (leadGrid) {
-            leadGrid.innerHTML = filteredLeadEntries
-              .map(([key, value]) => `
-                <div class="rounded-xl border border-slate-200 p-4 bg-slate-50/50">
-                  <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">${FIELD_LABELS[key] || formatValue(key)}</p>
-                  <p class="text-base font-bold text-slate-800 mt-1">${formatValue(String(value))}</p>
-                </div>
-              `).join('');
-          }
-        }
-      }
-
-      // Populate Assessment Responses Grid
-      const answersGrid = document.getElementById('answers-grid');
-      if (answersGrid && Object.keys(assessmentData).length > 0) {
-        answersGrid.innerHTML = Object.entries(assessmentData)
-          .map(([key, value]) => {
-            const label = FIELD_LABELS[key] || formatValue(key);
-            const formattedVal = formatValue(String(value));
-
-            return `
-              <div class="rounded-xl border border-slate-200 p-4 bg-slate-50/50 flex flex-col justify-between">
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">${label}</p>
-                <p class="text-base font-bold text-slate-800 mt-2">${formattedVal}</p>
-              </div>
-            `;
-          }).join('');
-      }
-
-      // Retake button listener
-      document.getElementById('reset-btn')?.addEventListener('click', () => {
-        localStorage.removeItem('ragan_ai_assessment');
-        localStorage.removeItem('ragan_ai_assessmen');
-        localStorage.removeItem('ragan_ai_lead');
-        window.location.href = '/assessment';
-      });
-
-    } catch (err) {
-      console.error("Error reading or rendering assessment results:", err);
-    }
-  }
-
-  initResults();
-  document.addEventListener('astro:page-load', initResults);
-</script>
+</div>

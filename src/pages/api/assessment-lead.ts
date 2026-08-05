@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
-import { env } from "cloudflare:workers";
+import type { R2Bucket } from "@cloudflare/workers-types";
 import { site } from "../../config/site";
 
-export const prerender = true;
+// Must be FALSE so it runs on-demand at edge runtime
+export const prerender = false;
 
 interface AssessmentSubmission {
   name: string;
@@ -23,7 +24,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const body = (await request.json()) as AssessmentSubmission;
     const { name, company, email, phone, answers } = body;
 
-    if (!name || !email || !answers) {
+    if (!name?.trim() || !email?.trim() || !answers) {
       return new Response(
         JSON.stringify({ success: false, message: "Name, email, and answers are required" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
@@ -65,22 +66,23 @@ export const POST: APIRoute = async ({ request, locals }) => {
       leadTier,
       recommendedSolution,
       estimatedTimeSaved,
-      summary: `Based on your responses, ${company || 'your team'} is well-positioned for ${recommendedSolution}.`
+      summary: `Based on your responses, ${company?.trim() || 'your team'} is well-positioned for ${recommendedSolution}.`
     };
 
     // 3. Assemble Full Archive Object
     const leadRecord = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
-      leadInfo: { name, company, email, phone },
+      leadInfo: { name: name.trim(), company: company?.trim() || "", email: email.trim(), phone: phone?.trim() || "" },
       answers,
       leadScoring: { score, tier: leadTier },
       results
     };
 
-    // 4. Store in Cloudflare R2 Bucket (Astro v6 compatible)
-    // Access R2 binding directly from cloudflare:workers or locals fallback
-    const bucket = (env as Record<string, any>)?.CONTACTS || (locals as Record<string, any>)?.runtime?.env?.CONTACTS;
+    // 4. Store in Cloudflare R2 Bucket
+    const runtime = (locals as Record<string, any>)?.runtime;
+    const bucket = runtime?.env?.CONTACTS as R2Bucket | undefined;
+    const resendApiKey = runtime?.env?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
 
     if (bucket) {
       const datePath = leadRecord.createdAt.substring(0, 10);
@@ -93,21 +95,32 @@ export const POST: APIRoute = async ({ request, locals }) => {
           httpMetadata: { contentType: "application/json" },
           customMetadata: {
             email: leadRecord.leadInfo.email,
-            company: leadRecord.leadInfo.company || "",
+            company: leadRecord.leadInfo.company,
             leadTier,
             score: String(score)
           }
         }
       );
+
+      console.log(`ASSESSMENT SAVED: ${fileName} [Score: ${score} | Tier: ${leadTier}]`);
     } else {
       console.warn("R2 bucket 'CONTACTS' binding not available in current environment");
     }
 
-    // 5. Send Internal Sales Alert (Non-blocking)
-    if (site?.integrations?.emailNotification) {
-      sendSalesNotificationEmail(leadRecord).catch((err) =>
-        console.error("Failed to send sales email:", err)
-      );
+    // 5. Send Internal Email Notification via Resend (Toggled via site config)
+    const emailConfig = site?.integrations?.emailNotification;
+
+    if (emailConfig?.enabled) {
+      if (!resendApiKey) {
+        console.warn("Email notifications are enabled in site config, but 'RESEND_API_KEY' is missing in environment variables.");
+      } else {
+        // Non-blocking background call
+        sendResendSalesNotification(leadRecord, resendApiKey).catch((err) =>
+          console.error("Failed to dispatch Resend notification:", err)
+        );
+      }
+    } else {
+      console.log("Email notifications are disabled in site config — skipping dispatch.");
     }
 
     // 6. Return response to front-end results page
@@ -125,21 +138,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 };
 
-async function sendSalesNotificationEmail(leadRecord: any) {
+async function sendResendSalesNotification(leadRecord: any, apiKey: string) {
   const { leadInfo, leadScoring, answers, results } = leadRecord;
+  const config = site.integrations.emailNotification;
 
   const payload = {
-    personalizations: [{ to: [{ email: site.integrations.notificationEmail }] }],
-    from: { email: site.integrations.emailFrom, name: site.company.name },
+    from: `${site.company.name} <${config.emailFrom}>`,
+    to: [config.notificationEmail],
     subject: `[${leadScoring.tier} LEAD - ${leadScoring.score}/100] ${leadInfo.company || leadInfo.name}`,
-    content: [
-      {
-        type: "text/html",
-        value: `
+    html: `
 <h2>New AI Assessment Submission</h2>
 <p><b>Lead Quality:</b> <span style="color: ${leadScoring.tier === 'HOT' ? 'red' : 'orange'}; font-weight: bold;">${leadScoring.tier} (${leadScoring.score}/100)</span></p>
 <p><b>Name:</b> ${leadInfo.name}</p>
-<p><b>Company:</b> ${leadInfo.company}</p>
+<p><b>Company:</b> ${leadInfo.company || "N/A"}</p>
 <p><b>Email:</b> ${leadInfo.email}</p>
 <p><b>Phone:</b> ${leadInfo.phone || "N/A"}</p>
 
@@ -150,18 +161,21 @@ async function sendSalesNotificationEmail(leadRecord: any) {
 <h3>Form Answers</h3>
 <pre>${JSON.stringify(answers, null, 2)}</pre>
 `
-      }
-    ]
   };
 
-  const response = await fetch("https://api.mailchannels.net/tx/v1/send", {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify(payload)
   });
 
   if (!response.ok) {
     const errText = await response.text();
-    console.error("MailChannels error response:", response.status, errText);
+    console.error("Resend API error response:", response.status, errText);
+  } else {
+    console.log("Resend email notification sent successfully.");
   }
 }
