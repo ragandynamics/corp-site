@@ -677,18 +677,4 @@ export function calculateAssessment(
   };
 
 }
-const industryMultiplier = {
-  Manufacturing: 1.4,
-  "Professional Services": 1.2,
-  Healthcare: 1.1,
-  Retail: 1.15,
-  Technology: 1.3
-};
 
-const companySizeMultiplier = {
-  "1-10": 1,
-  "11-50": 2,
-  "51-200": 4,
-  "201-500": 7,
-  "500+": 12
-};
