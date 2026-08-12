@@ -322,7 +322,7 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 <script>
 declare global {
   interface Window {
-    turnstile?: {
+    turnstile: {
       render: (container: string | HTMLElement, options: Record<string, any>) => string;
       reset: (widgetId?: string) => void;
     };
