@@ -107,7 +107,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     */
     const id = crypto.randomUUID();
     const datePrefix = now.split("T")[0];
-    const fileName = `assessments/business-velocity/${datePrefix}_${id}.json`;
+    const fileName = `assessments/${datePrefix}_${id}.json`;
 
     await env.CONTACTS.put(fileName, JSON.stringify(lead, null, 2), {
       httpMetadata: {
