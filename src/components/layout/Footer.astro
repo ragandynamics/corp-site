@@ -193,10 +193,10 @@ const year = new Date().getFullYear();
             </div>
 
             <a
-              href={`mailto:${contact.email}`}
+              href={`mailto:${contact.email.mailto}`}
               class="mt-1 inline-block break-all hover:text-white"
             >
-              {contact.email}
+              {contact.email.display}
             </a>
 
           </div>
@@ -232,7 +232,7 @@ const year = new Date().getFullYear();
 
       <div>
 
-        © {year} {company.name}. All rights reserved.
+        © {year} {company.fullname}{company.uen ? ` (UEN: ${company.uen})` : ""}. All rights reserved.
 
       </div>
 

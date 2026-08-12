@@ -1,7 +1,9 @@
 export const site = {
   company: {
     name: "RaganDynamics",
+    fullname: "RAGANDYNAMICS SINGAPORE PTE. LTD.",
     tagline: "AI Solutions for Singapore SMEs",
+    uen: "202634898H",
   },
 
   contact: {
@@ -17,7 +19,7 @@ export const site = {
 
     email: {
       display: "contact@ragandynamics.com",
-      mailto: "mailto:contact@ragandynamics.com",
+      mailto: "contact@ragandynamics.com",
     },
 
     enquiryForm: "/contact",
