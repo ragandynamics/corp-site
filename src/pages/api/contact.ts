@@ -18,6 +18,7 @@ interface ContactForm {
   leadSource?: string;
   message?: string;
   leadScore?: number;
+  pdpaConsent?: boolean;
   "cf-turnstile-response"?: string;
 }
 
@@ -92,7 +93,7 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
 
     // 2. Extract Cloudflare Bindings & Environment Variables
     const runtime = (locals as Record<string, any>)?.runtime;
-    const bucket = runtime?.env?.CONTACTS as R2Bucket | undefined;
+    const bucket = runtime?.env?.RD_DATA as R2Bucket | undefined;
     const resendApiKey =
       runtime?.env?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
     const turnstileSecretKey =
@@ -111,7 +112,8 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
-// Allow dummy secret or bypass check in local dev
+
+    // Allow dummy secret or bypass check in local dev
     const isDev = import.meta.env.DEV;
 
     if (!turnstileSecretKey) {
@@ -120,9 +122,10 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
       );
     } else {
       // Don't pass loopback IP ('127.0.0.1') to Turnstile siteverify
-      const ipToVerify = (clientAddress && clientAddress !== "127.0.0.1" && clientAddress !== "::1") 
-        ? clientAddress 
-        : undefined;
+      const ipToVerify =
+        clientAddress && clientAddress !== "127.0.0.1" && clientAddress !== "::1"
+          ? clientAddress
+          : undefined;
 
       const turnstileResult = await verifyTurnstileToken(
         turnstileToken,
@@ -197,8 +200,13 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
       leadScore = Math.min(leadScore, 100);
     }
 
+    const now = new Date();
+    const isoTimestamp = now.toISOString();
+    const datePrefix = isoTimestamp.split("T")[0];
+    const uuid = crypto.randomUUID();
+
     const submission = {
-      id: crypto.randomUUID(),
+      id: uuid,
       name: body.name.trim(),
       email: body.email.trim(),
       company: body.company ?? "",
@@ -220,18 +228,27 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
         role: body.role ?? "",
         leadSource: body.leadSource ?? "",
       },
+      pdpaConsent: body.pdpaConsent ?? true,
       message: body.message ?? "",
-      createdAt: new Date().toISOString(),
+      createdAt: isoTimestamp,
       userIp: clientAddress || null,
     };
 
-    // 4. Store in R2 Bucket
-    if (bucket) {
-      const objectKey = `contacts/${submission.id}.json`;
+    // 4. Store in R2 Bucket (RD_DATA)
+    const objectKey = `contacts/${datePrefix}_${submission.id}.json`;
 
+    if (bucket) {
       await bucket.put(objectKey, JSON.stringify(submission, null, 2), {
         httpMetadata: {
           contentType: "application/json",
+        },
+        customMetadata: {
+          name: submission.name,
+          email: submission.email,
+          company: submission.company,
+          leadScore: String(leadScore),
+          tier: submission.qualification.tier,
+          pdpaConsent: String(submission.pdpaConsent),
         },
       });
 
@@ -242,11 +259,11 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
       );
     } else {
       console.warn(
-        "R2 bucket 'CONTACTS' is not bound. Contact record processed without persistent storage."
+        "R2 bucket 'RD_DATA' is not bound. Contact record processed without persistent storage."
       );
     }
 
-    // 5. Send Email Notification via Resend (Toggled via site config)
+    // 5. Send Email Notification via Resend
     const emailConfig = site?.integrations?.emailNotification;
 
     if (emailConfig?.enabled) {
@@ -270,7 +287,7 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
       JSON.stringify({
         success: true,
         message: "Contact received and processed successfully",
-        id: submission.id,
+        id: objectKey,
       }),
       {
         status: 200,
@@ -323,6 +340,7 @@ async function sendResendContactNotification(submission: any, apiKey: string) {
   <li><b>Budget:</b> ${submission.qualification.budget || "N/A"}</li>
   <li><b>Timeline:</b> ${submission.qualification.timeline || "N/A"}</li>
   <li><b>Lead Source:</b> ${submission.qualification.leadSource || "N/A"}</li>
+  <li><b>PDPA Consent:</b> ${submission.pdpaConsent ? "Yes" : "No"}</li>
 </ul>
 
 <h3>Message</h3>
