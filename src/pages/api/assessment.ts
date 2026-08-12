@@ -32,7 +32,7 @@ interface AssessmentRequest {
 export const prerender = false;
 
 interface RuntimeEnv {
-  CONTACTS: R2Bucket;
+  RD_DATA: R2Bucket;
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -85,8 +85,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     */
     const env = (locals as any)?.runtime?.env as RuntimeEnv;
 
-    if (!env?.CONTACTS) {
-      console.error("R2 CONTACTS binding missing");
+    if (!env?.RD_DATA) {
+      console.error("R2 RD_DATA binding missing");
 
       return new Response(
         JSON.stringify({
@@ -105,9 +105,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
       Store lead & calculated score in Cloudflare R2 Bucket
     */
     const id = crypto.randomUUID();
-    const fileName = `contacts/business-velocity/${now.split("T")[0]}_${id}.json`;
+    const fileName = `assessments/business-velocity/${now.split("T")[0]}_${id}.json`;
 
-    await env.CONTACTS.put(fileName, JSON.stringify(lead, null, 2), {
+    await env.RD_DATA.put(fileName, JSON.stringify(lead, null, 2), {
       httpMetadata: {
         contentType: "application/json",
       },
