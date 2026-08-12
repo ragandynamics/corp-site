@@ -4,9 +4,11 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 ---
 
 <MainLayout
-  title="Contact RaganDynamics | We're Here to Help"
+  title="Contact RagonDynamics | We're Here to Help"
   description="Whether you're exploring AI solutions, need technical assistance, or want to discuss an enterprise project, our team is here to help."
 >
+  <!-- Load Turnstile Script with explicit rendering -->
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 
   <section class="bg-slate-50 py-20">
     <div class="mx-auto max-w-5xl px-6">
@@ -296,6 +298,9 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
             </div>
           </div>
 
+          <!-- Turnstile Explicit Render Container -->
+          <div id="turnstile-container" class="my-4 flex justify-center"></div>
+
           <!-- Submit Button -->
           <button
             id="submit-button"
@@ -314,14 +319,37 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 
 </MainLayout>
 
-<!-- Optional UI Trigger: Place this inside your form HTML near the top/heading if you want a visible button -->
-<!-- 
-<button type="button" id="autofill-btn" class="text-xs text-blue-600 underline font-medium hover:text-blue-800">
-  ⚡ Auto-fill sample data
-</button> 
--->
-
 <script>
+  // Turnstile Widget ID tracking
+  let turnstileWidgetId: string | null = null;
+  let turnstileToken: string = "";
+
+  // Turnstile Explicit Initialization
+  const initTurnstile = () => {
+    if (window.turnstile) {
+      turnstileWidgetId = window.turnstile.render("#turnstile-container", {
+        sitekey: "0x4AAAAAAENuSMHCWxnXH9XM",
+        theme: "light",
+        callback: function (token: string) {
+          turnstileToken = token;
+        },
+        "expired-callback": function () {
+          turnstileToken = "";
+        },
+        "error-callback": function () {
+          turnstileToken = "";
+        }
+      });
+    }
+  };
+
+  // Wait for Turnstile script and DOM load
+  if (document.readyState === "complete") {
+    initTurnstile();
+  } else {
+    window.addEventListener("load", initTurnstile);
+  }
+
   // 1. Country Code Filter Logic
   const selectorBtn = document.querySelector("#country-selector-btn");
   const dropdownPanel = document.querySelector("#country-dropdown-panel");
@@ -421,7 +449,7 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       else if (orgSize === "11 - 50 employees") score += 5;
 
       const budget = data.budget as string;
-      if (budget === "Above S$100,000") score += 20;
+      if (budget === "Above S$10,000") score += 20;
       else if (budget === "S$50,001 - S$100,000") score += 16;
       else if (budget === "S$25,001 - S$50,000") score += 12;
       else if (budget === "S$10,000 - S$25,000") score += 8;
@@ -444,20 +472,17 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       if (el) el.value = value;
     };
 
-    // Text & Contact Inputs
     setInputValue("input[name='name']", "Alex Tan");
     setInputValue("input[name='email']", "alex.tan@enterprise.sg");
     setInputValue("input[name='company']", "Apex Digital Solutions");
     setInputValue("input[name='phone']", "91234567");
     setInputValue("textarea[name='message']", "We are looking to implement an enterprise AI assistant for our customer operations team and integrate Microsoft Copilot across departments.");
 
-    // Country Code Selection
     if (countryHiddenInput && selectedLabel) {
       countryHiddenInput.value = "+65";
       selectedLabel.textContent = "🇸🇬 +65";
     }
 
-    // Enquiry Checkboxes Selection (Simulate selecting AI Consulting & Copilot)
     const targetEnquiries = ["AI Consulting", "Microsoft Copilot Practice"];
     checkboxes.forEach((cb) => {
       const shouldCheck = targetEnquiries.includes(cb.value);
@@ -471,10 +496,8 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       }
     });
 
-    // Toggle sales fields
     updateSalesFieldsVisibility();
 
-    // Qualification Dropdowns
     setInputValue("select[name='role']", "VP / Director / Head of Dept");
     setInputValue("select[name='organizationSize']", "201 - 500 employees");
     setInputValue("select[name='budget']", "S$50,001 - S$100,000");
@@ -484,7 +507,7 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 
   autofillBtn?.addEventListener("click", triggerAutofill);
 
-  // 5. Form Submission with AI Assessment Link
+  // 5. Form Submission with AI Assessment Link & Turnstile Validation
   const form = document.querySelector("#contact-form") as HTMLFormElement | null;
   const result = document.querySelector("#result") as HTMLElement | null;
   const button = document.querySelector("#submit-button") as HTMLButtonElement | null;
@@ -499,6 +522,12 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 
       if (selectedEnquiries.length === 0) {
         result.innerHTML = `<span class="text-red-600 font-medium">Please select at least one enquiry topic.</span>`;
+        return;
+      }
+
+      // Check Turnstile token prior to submission
+      if (!turnstileToken) {
+        result.innerHTML = `<span class="text-red-600 font-medium">Please complete the CAPTCHA verification.</span>`;
         return;
       }
 
@@ -517,7 +546,8 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       const payload = {
         ...data,
         enquiryTypes: selectedEnquiries,
-        leadScore
+        leadScore,
+        "cf-turnstile-response": turnstileToken
       };
 
       try {
@@ -576,12 +606,24 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
           result.innerHTML = `<span class="text-red-600">${json.error ?? "Unable to submit request."}</span>`;
           button.disabled = false;
           button.textContent = "Submit Request";
+          
+          // Reset Turnstile widget on failure
+          if (turnstileWidgetId && window.turnstile) {
+            window.turnstile.reset(turnstileWidgetId);
+            turnstileToken = "";
+          }
         }
       } catch (error) {
         console.error(error);
         result.innerHTML = `<span class="text-red-600">An unexpected error occurred. Please try again.</span>`;
         button.disabled = false;
         button.textContent = "Submit Request";
+        
+        // Reset Turnstile widget on error
+        if (turnstileWidgetId && window.turnstile) {
+          window.turnstile.reset(turnstileWidgetId);
+          turnstileToken = "";
+        }
       }
     });
   }
