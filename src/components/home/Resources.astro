@@ -1,0 +1,68 @@
+---
+const resources = [
+  {
+    title: "AI Readiness Checklist",
+    description: "Assess your organisation's readiness for AI adoption.",
+    icon: "📋",
+    cta: "Download PDF",
+    link: "/resources/ai-readiness-checklist"
+  },
+  {
+    title: "AI ROI Calculator",
+    description: "Estimate the potential business value of AI.",
+    icon: "📈",
+    cta: "Calculate ROI",
+    link: "/resources/roi-calculator"
+  },
+  {
+    title: "AI Implementation Roadmap",
+    description: "Understand the typical phases of a successful AI transformation.",
+    icon: "🗺️",
+    cta: "View Guide",
+    link: "/resources/implementation-roadmap"
+  }
+];
+---
+
+<section class="section-padding bg-slate-50">
+  <div class="container mx-auto">
+    <div class="text-center">
+      <h2 class="text-4xl font-black">
+        Free AI Resources
+      </h2>
+
+      <p class="mt-6 text-xl text-slate-600">
+        Practical tools to help you plan your AI transformation.
+      </p>
+    </div>
+
+    <div class="mt-16 grid gap-8 lg:grid-cols-3">
+      {
+        resources.map(resource => (
+          <div class="rounded-3xl bg-white p-8 shadow">
+
+            <div class="text-5xl">
+              {resource.icon}
+            </div>
+
+            <h3 class="mt-6 text-2xl font-bold">
+              {resource.title}
+            </h3>
+
+            <p class="mt-4 text-slate-600">
+              {resource.description}
+            </p>
+
+            <a
+              href={resource.link}
+              class="mt-8 inline-flex rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white"
+            >
+              {resource.cta}
+            </a>
+
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

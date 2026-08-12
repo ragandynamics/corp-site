@@ -1,0 +1,9 @@
+name = "ragan-dynamics"
+compatibility_date = "2026-07-28"
+compatibility_flags = ["nodejs_compat"]
+
+pages_build_output_dir = "dist"
+
+[[r2_buckets]]
+binding = "RD_DATA"
+bucket_name = "ragan-dynamics-data"

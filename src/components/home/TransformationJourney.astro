@@ -1,0 +1,228 @@
+---
+import Container from "../ui/Container.astro";
+
+const journey = [
+
+{
+step:"01",
+title:"Discover",
+icon:"🔍",
+duration:"30 Minutes",
+description:"Understand your business objectives, operational challenges and growth plans through a complimentary AI Discovery Session.",
+deliverables:[
+"Business discussion",
+"Current challenges",
+"AI opportunity identification",
+"Initial recommendations"
+]
+},
+
+{
+step:"02",
+title:"Assess",
+icon:"📋",
+duration:"1-2 Weeks",
+description:"Evaluate your existing processes, technology landscape and data to identify the highest-value AI initiatives.",
+deliverables:[
+"AI Readiness Assessment",
+"ROI estimation",
+"Prioritised roadmap",
+"Implementation proposal"
+]
+},
+
+{
+step:"03",
+title:"Implement",
+icon:"⚙️",
+duration:"4-12 Weeks",
+description:"Deploy secure, scalable AI solutions with minimal disruption to your day-to-day business operations.",
+deliverables:[
+"AI solution deployment",
+"Integration",
+"Testing",
+"Training"
+]
+},
+
+{
+step:"04",
+title:"Optimise",
+icon:"📈",
+duration:"Continuous",
+description:"Measure business outcomes, improve AI performance and scale successful use cases across the organisation.",
+deliverables:[
+"KPI monitoring",
+"Continuous improvement",
+"New AI opportunities",
+"Ongoing support"
+]
+}
+
+];
+---
+
+<section class="section-padding bg-slate-50">
+
+<Container>
+
+<div class="text-center">
+
+<span class="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+
+Your AI Transformation Journey
+
+</span>
+
+<h2 class="mt-6 text-5xl font-black text-slate-900">
+
+A Proven Approach to AI Success
+
+</h2>
+
+<p class="mx-auto mt-8 max-w-4xl text-xl text-slate-600">
+
+We simplify AI adoption with a structured, low-risk approach that helps
+Singapore SMEs achieve measurable business outcomes quickly and cost-effectively.
+
+</p>
+
+</div>
+
+<div class="mt-20 space-y-12">
+
+{
+
+journey.map((item)=>(
+
+<div class="rounded-3xl bg-white p-10 shadow-lg">
+
+<div class="grid gap-10 lg:grid-cols-[120px_1fr]">
+
+<div class="text-center">
+
+<div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-blue-600 text-4xl text-white">
+
+{item.icon}
+
+</div>
+
+<div class="mt-4 text-sm font-bold tracking-widest text-blue-600">
+
+STEP {item.step}
+
+</div>
+
+<div class="mt-2 font-semibold text-slate-500">
+
+{item.duration}
+
+</div>
+
+</div>
+
+<div>
+
+<h3 class="text-3xl font-black text-slate-900">
+
+{item.title}
+
+</h3>
+
+<p class="mt-5 text-lg leading-8 text-slate-600">
+
+{item.description}
+
+</p>
+
+<div class="mt-8 grid gap-4 md:grid-cols-2">
+
+{
+
+item.deliverables.map((deliverable)=>(
+
+<div class="flex items-start gap-3 rounded-xl bg-slate-50 p-4">
+
+<div class="text-green-600">
+
+✓
+
+</div>
+
+<div>
+
+{deliverable}
+
+</div>
+
+</div>
+
+))
+
+}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+))
+
+}
+
+</div>
+
+<div class="mt-20 rounded-3xl bg-gradient-to-r from-blue-700 to-slate-900 p-12 text-center text-white">
+
+<h3 class="text-4xl font-black">
+
+Ready to Begin Your AI Journey?
+
+</h3>
+
+<p class="mx-auto mt-6 max-w-3xl text-xl text-blue-100">
+
+Start with a complimentary AI Discovery Session. We'll identify practical,
+high-impact opportunities tailored to your business and outline a roadmap
+for implementation.
+
+</p>
+
+<div class="mt-10 flex flex-wrap justify-center gap-5">
+
+<a
+
+href="/contact"
+
+data-analytics="journey-book"
+
+class="rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-700 hover:bg-slate-100 transition"
+
+>
+
+Book a AI Discovery Session
+
+</a>
+
+<a
+
+href="/services"
+
+class="rounded-xl border border-white px-8 py-4 text-lg font-semibold hover:bg-white hover:text-slate-900 transition"
+
+>
+
+Explore AI Services
+
+</a>
+
+</div>
+
+</div>
+
+</Container>
+
+</section>

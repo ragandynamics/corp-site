@@ -1,54 +1,56 @@
 <div
-id="mobileMenu"
-class="fixed inset-0 z-[100] hidden bg-white">
+  id="mobileMenu"
+  class="fixed inset-0 z-[100] hidden bg-white"
+>
+  <div class="flex items-center justify-between border-b p-6">
+    <h2 class="text-2xl font-bold text-slate-900">Menu</h2>
+    <button
+      id="closeMenu"
+      type="button"
+      aria-label="Close menu"
+      class="text-3xl font-light text-slate-700 hover:text-black focus:outline-none"
+    >
+      &times;
+    </button>
+  </div>
 
-<div
-class="flex items-center justify-between border-b p-6">
-
-<h2
-class="text-2xl font-bold">
-
-Menu
-
-</h2>
-
-<button
-id="closeMenu"
-class="text-3xl">
-
-×
-
-</button>
-
+  <nav class="flex flex-col text-lg font-medium text-slate-800">
+    <a href="/services" class="border-b p-6 hover:bg-slate-50">Services</a>
+    <a href="/products" class="border-b p-6 hover:bg-slate-50">Products</a>
+    <a href="/industries" class="border-b p-6 hover:bg-slate-50">Industries</a>
+    <a href="/insights" class="border-b p-6 hover:bg-slate-50">Insights</a>
+    <a href="/about" class="border-b p-6 hover:bg-slate-50">About</a>
+    <a href="/contact" class="border-b p-6 hover:bg-slate-50">Contact</a>
+  </nav>
 </div>
 
-<nav
-class="flex flex-col">
-
-<a href="/services" class="border-b p-6">Services</a>
-
-<a href="/products" class="border-b p-6">Products</a>
-
-<a href="/industries" class="border-b p-6">Industries</a>
-
-<a href="/insights" class="border-b p-6">Insights</a>
-
-<a href="/about" class="border-b p-6">About</a>
-
-<a href="/contact" class="border-b p-6">Contact</a>
-
-</nav>
-
 <script>
-const menu=document.getElementById("mobileMenu");
-const open=document.getElementById("menuButton");
-const close=document.getElementById("closeMenu");
+  const menu = document.getElementById("mobileMenu");
+  const openBtn = document.getElementById("menuButton");
+  const closeBtn = document.getElementById("closeMenu");
 
-open?.addEventListener("click",()=>{
-menu?.classList.remove("hidden");
-});
+  const toggleMenu = (show: boolean) => {
+    if (show) {
+      menu?.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    } else {
+      menu?.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+  };
 
-close?.addEventListener("click",()=>{
-menu?.classList.add("hidden");
-});
+  openBtn?.addEventListener("click", () => toggleMenu(true));
+  closeBtn?.addEventListener("click", () => toggleMenu(false));
+
+  // Close menu on Escape key press
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !menu?.classList.contains("hidden")) {
+      toggleMenu(false);
+    }
+  });
+
+  // Close menu when clicking any menu link
+  menu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => toggleMenu(false));
+  });
 </script>

@@ -1,535 +1,646 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-
+import { countryCodes } from "../data/countryCodes"; // Adjust path to where countryCodes is stored
 ---
 
 <MainLayout
-
-title="Contact Ragan Dynamics | AI Consulting & Automation"
-
-description="
-Talk to Ragan Dynamics about AI consulting,
-AI automation, AI products and enterprise AI solutions.
-"
-
+  title="Contact RagonDynamics | We're Here to Help"
+  description="Whether you're exploring AI solutions, need technical assistance, or want to discuss an enterprise project, our team is here to help."
 >
-
-
-<section
-
-class="
-bg-slate-50
-py-20
-"
-
->
-
-
-<div
-
-class="
-mx-auto
-max-w-5xl
-px-6
-"
-
->
-
-
-<div
-
-class="
-mb-12
-text-center
-"
-
->
-
-
-<h1
-
-class="
-text-4xl
-font-black
-text-slate-900
-md:text-5xl
-"
-
->
-
-Start Your AI Transformation Journey
-
-</h1>
-
-
-<p
-
-class="
-mx-auto
-mt-5
-max-w-3xl
-text-lg
-leading-8
-text-slate-600
-"
-
->
-
-Tell us about your business challenge.
-Our AI specialists will help identify
-practical and cost-effective AI solutions.
-
-</p>
-
-
-</div>
-
-
-
-<div
-
-class="
-rounded-3xl
-bg-white
-p-8
-shadow-xl
-md:p-12
-"
-
->
-
-
-<form
-
-id="contact-form"
-
-class="
-space-y-6
-"
-
-
->
-
-
-<div
-
-class="
-grid
-gap-6
-md:grid-cols-2
-"
-
->
-
-
-<input
-
-name="name"
-
-placeholder="Your Name"
-
-required
-
-class="
-w-full
-rounded-xl
-border
-border-slate-300
-px-5
-py-4
-outline-none
-focus:border-blue-600
-"
-
-/>
-
-
-<input
-
-name="email"
-
-type="email"
-
-placeholder="Email Address"
-
-required
-
-class="
-w-full
-rounded-xl
-border
-border-slate-300
-px-5
-py-4
-outline-none
-focus:border-blue-600
-"
-
-/>
-
-
-</div>
-
-
-
-
-<div
-
-class="
-grid
-gap-6
-md:grid-cols-2
-"
-
->
-
-
-<input
-
-name="company"
-
-placeholder="Company Name"
-
-class="
-w-full
-rounded-xl
-border
-border-slate-300
-px-5
-py-4
-outline-none
-focus:border-blue-600
-"
-
-/>
-
-
-<input
-
-name="phone"
-
-placeholder="Phone Number"
-
-class="
-w-full
-rounded-xl
-border
-border-slate-300
-px-5
-py-4
-outline-none
-focus:border-blue-600
-"
-
-/>
-
-
-</div>
-
-
-
-
-<select
-
-name="service"
-
-class="
-w-full
-rounded-xl
-border
-border-slate-300
-px-5
-py-4
-outline-none
-focus:border-blue-600
-"
-
->
-
-<option value="AI Consulting">
-
-AI Consulting
-
-</option>
-
-
-<option value="AI Automation">
-
-AI Automation
-
-</option>
-
-
-<option value="AI Chatbot">
-
-AI Chatbot
-
-</option>
-
-
-<option value="AI Training">
-
-AI Training
-
-</option>
-
-
-</select>
-
-
-
-
-<textarea
-
-name="message"
-
-rows="6"
-
-placeholder="Tell us about your project"
-
-required
-
-class="
-w-full
-rounded-xl
-border
-border-slate-300
-px-5
-py-4
-outline-none
-focus:border-blue-600
-"
-
-></textarea>
-
-
-
-
-<button
-
-id="submit-button"
-
-type="submit"
-
-data-analytics="contact-form-submit"
-
-class="
-w-full
-rounded-xl
-bg-blue-600
-px-8
-py-4
-font-bold
-text-white
-transition
-hover:bg-blue-700
-"
-
->
-
-Send Enquiry
-
-</button>
-
-
-
-</form>
-
-
-
-<p
-
-id="result"
-
-class="
-mt-6
-text-center
-font-semibold
-"
-
-></p>
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-<script>
-
-const form =
-document.querySelector<HTMLFormElement>(
-"#contact-form"
-);
-
-
-const result =
-document.querySelector<HTMLElement>(
-"#result"
-);
-
-
-const button =
-document.querySelector<HTMLButtonElement>(
-"#submit-button"
-);
-
-
-
-if(
-form &&
-result &&
-button
-){
-
-
-form.addEventListener(
-"submit",
-async(event)=>{
-
-
-event.preventDefault();
-
-
-button.disabled=true;
-
-button.textContent=
-"Sending...";
-
-
-
-const formData =
-new FormData(form);
-
-
-const data =
-Object.fromEntries(
-formData
-);
-
-
-
-try{
-
-
-const response =
-await fetch(
-"/api/contact",
-{
-
-method:"POST",
-
-headers:
-{
-
-"Content-Type":
-"application/json"
-
-},
-
-body:
-JSON.stringify(data)
-
-}
-);
-
-
-
-const json =
-await response.json() as {
-
-success?:boolean;
-
-error?:string;
-
-};
-
-
-
-if(json.success){
-
-
-result.textContent =
-"Thank you. We will contact you shortly.";
-
-
-result.className =
-"mt-6 text-center font-semibold text-green-600";
-
-
-form.reset();
-
-
-
-if(window.cf?.track){
-
-window.cf.track(
-"contact-form-success"
-);
-
-}
-
-
-
-}
-
-else{
-
-
-result.textContent =
-json.error ??
-"Unable to submit form.";
-
-
-}
-
-
-
-}
-
-catch(error){
-
-
-result.textContent =
-"An unexpected error occurred.";
-
-
-result.className =
-"mt-6 text-center font-semibold text-red-600";
-
-
-}
-
-
-
-finally{
-
-
-button.disabled=false;
-
-button.textContent=
-"Send Enquiry";
-
-
-}
-
-
-
-}
-
-);
-
-
-}
-
-</script>
-
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+
+  <section class="bg-slate-50 py-20">
+    <div class="mx-auto max-w-5xl px-6">
+      
+      <div class="mb-12 text-center">
+        <h1 class="text-4xl font-black text-slate-900 md:text-5xl">
+          Get in Touch
+        </h1>
+        <p class="mx-auto mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+          Whether you're exploring AI solutions, seeking technical support, or evaluating enterprise automation, our specialist teams are ready to assist.
+        </p>
+      </div>
+
+      <div class="rounded-3xl bg-white p-8 shadow-xl md:p-12">
+        <form id="contact-form" class="space-y-8">
+
+          <div>
+            <h2 class="mb-4 text-xl font-bold text-slate-900">1. Contact Information</h2>
+            
+            <div class="grid gap-6 md:grid-cols-2">
+              <div>
+                <label for="name" class="mb-2 block font-semibold text-slate-700">
+                  Full Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="e.g. Sarah Jenkins"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
+
+              <div>
+                <label for="email" class="mb-2 block font-semibold text-slate-700">
+                  Business Email Address <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="s.jenkins@company.com"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
+            </div>
+
+            <div class="mt-6 grid gap-6 md:grid-cols-2">
+              <div>
+                <label for="company" class="mb-2 block font-semibold text-slate-700">
+                  Organisation / Company Name <span class="text-red-500">*</span>
+                </label>
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  placeholder="Acme Corporation"
+                  required
+                  class="w-full rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
+
+              <div>
+                <label for="phone" class="mb-2 block font-semibold text-slate-700">
+                  Contact Number
+                </label>
+                <div class="flex gap-2">
+                  
+                  <div class="relative w-44" id="country-dropdown-container">
+                    <button
+                      type="button"
+                      id="country-selector-btn"
+                      class="flex w-full items-center justify-between rounded-xl border border-slate-300 bg-white px-3 py-4 text-left font-medium text-slate-700 outline-none focus:border-blue-600"
+                    >
+                      <span id="selected-country-label">🇸🇬 +65</span>
+                      <svg class="h-4 w-4 fill-current text-slate-500" viewBox="0 0 20 20">
+                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                      </svg>
+                    </button>
+
+                    <input type="hidden" id="countryCode" name="countryCode" value="+65" />
+
+                    <div
+                      id="country-dropdown-panel"
+                      class="absolute left-0 z-50 mt-2 hidden w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl"
+                    >
+                      <input
+                        type="text"
+                        id="country-search-input"
+                        placeholder="Search country or code..."
+                        class="mb-2 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-blue-600"
+                      />
+                      <ul id="country-list" class="max-h-56 overflow-y-auto text-sm">
+                        {countryCodes.map((c) => (
+                          <li
+                            data-code={c.code}
+                            data-country={c.country}
+                            data-flag={c.flag}
+                            class="country-option flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 hover:bg-slate-100"
+                          >
+                            <span class="truncate pr-2">{c.flag} {c.country}</span>
+                            <span class="font-mono text-xs font-bold text-slate-400">{c.code}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="9123 4567"
+                    class="flex-1 rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="border-slate-100" />
+
+          <div>
+            <div class="mb-3 flex items-center justify-between">
+              <label class="block font-bold text-slate-900">
+                2. What services or topics are you interested in? (Select all that apply) <span class="text-red-500">*</span>
+              </label>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+              {[
+                { id: "sales", value: "Sales Enquiry", label: "💼 Sales Enquiry", isSales: true },
+                { id: "consulting", value: "AI Consulting", label: "🤖 AI Consulting", isSales: true },
+                { id: "automation", value: "Business Process Automation", label: "⚡ Business Process Automation", isSales: true },
+                { id: "copilot", value: "Microsoft Copilot Practice", label: "🪟 Microsoft Copilot Practice", isSales: true },
+                { id: "training", value: "AI Training & Corporate Workshops", label: "🎓 AI Training & Corporate Workshops", isSales: true },
+                { id: "support", value: "Technical Support", label: "🛠️ Technical Support", isSales: false },
+                { id: "cs", value: "Customer Service", label: "🤝 Customer Service", isSales: false },
+                { id: "billing", value: "Billing & Accounts", label: "💳 Billing & Accounts", isSales: false },
+                { id: "partnership", value: "Partnership Opportunities", label: "🌐 Partnership Opportunities", isSales: false },
+                { id: "other", value: "General Enquiry", label: "💬 General Enquiry", isSales: false }
+              ].map((item) => (
+                <label
+                  class="enquiry-pill flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 p-4 transition-all hover:border-blue-300 hover:bg-slate-50"
+                >
+                  <input
+                    type="checkbox"
+                    name="enquiryTypes"
+                    value={item.value}
+                    data-is-sales={item.isSales ? "true" : "false"}
+                    class="enquiry-checkbox h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span class="text-sm font-semibold text-slate-700">{item.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div id="sales-qualification-fields" class="hidden space-y-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-6">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-blue-900">
+              Help Us Tailor Your Solution
+            </h3>
+
+            <div class="grid gap-6 md:grid-cols-3">
+              <div>
+                <label for="organizationSize" class="mb-2 block text-sm font-semibold text-slate-700">
+                  Organization Size (Employees)
+                </label>
+                <select
+                  id="organizationSize"
+                  name="organizationSize"
+                  class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-600"
+                >
+                  <option value="">Select organization size</option>
+                  <option value="1 - 10 employees">1 - 10 employees</option>
+                  <option value="11 - 50 employees">11 - 50 employees</option>
+                  <option value="51 - 200 employees">51 - 200 employees</option>
+                  <option value="201 - 500 employees">201 - 500 employees</option>
+                  <option value="501 - 1,000 employees">501 - 1,000 employees</option>
+                  <option value="1,000+ employees">1,000+ employees</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="budget" class="mb-2 block text-sm font-semibold text-slate-700">
+                  Estimated Investment
+                </label>
+                <select
+                  id="budget"
+                  name="budget"
+                  class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-600"
+                >
+                  <option value="">Select budget range</option>
+                  <option value="Under S$10,000">Under S$10,000</option>
+                  <option value="S$10,000 - S$25,000">S$10,000 - S$25,000</option>
+                  <option value="S$25,001 - S$50,000">S$25,001 - S$50,000</option>
+                  <option value="S$50,001 - S$100,000">S$50,001 - S$100,000</option>
+                  <option value="Above S$100,000">Above S$100,000</option>
+                  <option value="Not Yet Determined">Not Yet Determined</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="timeline" class="mb-2 block text-sm font-semibold text-slate-700">
+                  Target Implementation
+                </label>
+                <select
+                  id="timeline"
+                  name="timeline"
+                  class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-blue-600"
+                >
+                  <option value="">Select timeline</option>
+                  <option value="Immediate (< 1 month)">Immediate (&lt; 1 month)</option>
+                  <option value="1 - 3 months">1 - 3 months</option>
+                  <option value="3 - 6 months">3 - 6 months</option>
+                  <option value="Exploring Options">Exploring Options</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="grid gap-6 md:grid-cols-2">
+              <div>
+                <label for="role" class="mb-2 block font-semibold text-slate-700">
+                  Your Role / Seniority
+                </label>
+                <select
+                  id="role"
+                  name="role"
+                  class="w-full rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600"
+                >
+                  <option value="">Select your role</option>
+                  <option value="C-Suite / Founder / Board">C-Suite / Founder / Board</option>
+                  <option value="VP / Director / Head of Dept">VP / Director / Head of Dept</option>
+                  <option value="Manager / Lead">Manager / Lead</option>
+                  <option value="Individual Contributor">Individual Contributor</option>
+                  <option value="Consultant / Advisor">Consultant / Advisor</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="leadSource" class="mb-2 block font-semibold text-slate-700">
+                  How did you hear about us?
+                </label>
+                <select
+                  id="leadSource"
+                  name="leadSource"
+                  class="w-full rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600"
+                >
+                  <option value="">Select channel</option>
+                  <option value="Search Engine (Google/Bing)">Search Engine (Google/Bing)</option>
+                  <option value="LinkedIn / Social Media">LinkedIn / Social Media</option>
+                  <option value="Referral / Word of Mouth">Referral / Word of Mouth</option>
+                  <option value="Industry Event / Webinar">Industry Event / Webinar</option>
+                  <option value="News / Publication">News / Publication</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="message" class="mb-2 block font-semibold text-slate-700">
+                Tell us about your business challenge & primary goals <span class="text-red-500">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Please describe your current objective, scope, or questions so we can route your enquiry to the right specialist."
+                required
+                class="w-full rounded-xl border border-slate-300 px-5 py-4 outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600 space-y-3">
+            <p class="font-semibold text-slate-700">
+              Personal Data Protection Act (PDPA) Notice
+            </p>
+            <p>
+              By submitting this form, you consent to our collection, use, and disclosure of your personal data for the purpose of handling your enquiry, providing relevant advisory information, and contacting you regarding our solutions in accordance with our <a href="/privacy" class="text-blue-600 underline hover:text-blue-800" target="_blank">Privacy Policy</a>.
+            </p>
+
+            <label class="flex items-start gap-3 cursor-pointer pt-2">
+              <input
+                type="checkbox"
+                name="pdpaConsent"
+                id="pdpaConsent"
+                required
+                class="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span class="text-slate-700 text-xs">
+                I agree to the collection and processing of my personal data for the purposes stated above. <span class="text-red-500">*</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/80 p-4 text-sm text-blue-900">
+            <svg 
+              class="h-5 w-5 shrink-0 text-blue-600" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>
+              Our AI consultants will review your enquiry and contact you within <strong>1 to 3 working days</strong>.
+            </span>
+          </div>
+
+          <div id="turnstile-container" class="my-4 flex justify-center"></div>
+
+          <button
+            id="submit-button"
+            type="submit"
+            class="w-full rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700 disabled:opacity-50 shadow-sm"
+          >
+            Submit Request
+          </button>
+        </form>
+
+        <p id="result" class="mt-6 text-center font-semibold"></p>
+      </div>
+
+    </div>
+  </section>
 
 </MainLayout>
+
+<script>
+declare global {
+  interface Window {
+    turnstile: {
+      render: (container: string | HTMLElement, options: Record<string, any>) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
+  // Turnstile Widget ID tracking
+  let turnstileWidgetId: string | undefined;
+
+  let turnstileToken: string = "";
+
+  // Turnstile Explicit Initialization
+  const initTurnstile = () => {
+    if (window.turnstile) {
+      turnstileWidgetId = window.turnstile.render("#turnstile-container", {
+        sitekey: "0x4AAAAAAENuSMHCWxnXH9XM",
+        theme: "light",
+        callback: function (token: string) {
+          turnstileToken = token;
+        },
+        "expired-callback": function () {
+          turnstileToken = "";
+        },
+        "error-callback": function () {
+          turnstileToken = "";
+        }
+      });
+    }
+  };
+
+  // Wait for Turnstile script and DOM load
+  if (document.readyState === "complete") {
+    initTurnstile();
+  } else {
+    window.addEventListener("load", initTurnstile);
+  }
+
+  // 1. Country Code Filter Logic
+  const selectorBtn = document.querySelector("#country-selector-btn");
+  const dropdownPanel = document.querySelector("#country-dropdown-panel");
+  const searchInput = document.querySelector("#country-search-input") as HTMLInputElement | null;
+  const countryList = document.querySelector("#country-list");
+  const countryHiddenInput = document.querySelector("#countryCode") as HTMLInputElement | null;
+  const selectedLabel = document.querySelector("#selected-country-label");
+
+  selectorBtn?.addEventListener("click", () => {
+    dropdownPanel?.classList.toggle("hidden");
+    if (!dropdownPanel?.classList.contains("hidden")) {
+      searchInput?.focus();
+    }
+  });
+
+  searchInput?.addEventListener("input", (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    const options = countryList?.querySelectorAll(".country-option");
+
+    options?.forEach((opt) => {
+      const code = opt.getAttribute("data-code")?.toLowerCase() ?? "";
+      const country = opt.getAttribute("data-country")?.toLowerCase() ?? "";
+      if (code.includes(query) || country.includes(query)) {
+        (opt as HTMLElement).style.display = "flex";
+      } else {
+        (opt as HTMLElement).style.display = "none";
+      }
+    });
+  });
+
+  countryList?.addEventListener("click", (e) => {
+    const target = (e.target as HTMLElement).closest(".country-option");
+    if (target) {
+      const code = target.getAttribute("data-code");
+      const flag = target.getAttribute("data-flag") ?? "";
+
+      if (code && countryHiddenInput && selectedLabel) {
+        countryHiddenInput.value = code;
+        selectedLabel.textContent = `${flag} ${code}`;
+        dropdownPanel?.classList.add("hidden");
+      }
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const container = document.querySelector("#country-dropdown-container");
+    if (container && !container.contains(e.target as Node)) {
+      dropdownPanel?.classList.add("hidden");
+    }
+  });
+
+  // 2. Multi-Select Checkbox & Sales Fields Toggle
+  const checkboxes = document.querySelectorAll<HTMLInputElement>(".enquiry-checkbox");
+  const salesFields = document.querySelector("#sales-qualification-fields");
+
+  function updateSalesFieldsVisibility() {
+    const hasSalesSelected = Array.from(checkboxes).some(
+      (chk) => chk.checked && chk.getAttribute("data-is-sales") === "true"
+    );
+
+    if (hasSalesSelected) {
+      salesFields?.classList.remove("hidden");
+    } else {
+      salesFields?.classList.add("hidden");
+    }
+  }
+
+  checkboxes.forEach((cb) => {
+    cb.addEventListener("change", () => {
+      const parentPill = cb.closest(".enquiry-pill");
+      if (cb.checked) {
+        parentPill?.classList.add("border-blue-600", "bg-blue-50/60");
+      } else {
+        parentPill?.classList.remove("border-blue-600", "bg-blue-50/60");
+      }
+      updateSalesFieldsVisibility();
+    });
+  });
+
+  // 3. Lead Score Calculation Engine
+  function calculateLeadScore(data: Record<string, any>, isSalesSelected: boolean): number {
+    let score = 10;
+
+    const role = data.role as string;
+    if (role === "C-Suite / Founder / Board") score += 25;
+    else if (role === "VP / Director / Head of Dept") score += 20;
+    else if (role === "Manager / Lead") score += 15;
+    else if (role === "Consultant / Advisor") score += 10;
+
+    if (data.phone && data.phone.trim().length > 5) score += 10;
+
+    if (isSalesSelected) {
+      const orgSize = data.organizationSize as string;
+      if (orgSize === "1,000+ employees" || orgSize === "501 - 1,000 employees") score += 20;
+      else if (orgSize === "201 - 500 employees") score += 15;
+      else if (orgSize === "51 - 200 employees") score += 10;
+      else if (orgSize === "11 - 50 employees") score += 5;
+
+      const budget = data.budget as string;
+      if (budget === "Above S$10,000") score += 20;
+      else if (budget === "S$50,001 - S$100,000") score += 16;
+      else if (budget === "S$25,001 - S$50,000") score += 12;
+      else if (budget === "S$10,000 - S$25,000") score += 8;
+
+      const timeline = data.timeline as string;
+      if (timeline === "Immediate (< 1 month)") score += 15;
+      else if (timeline === "1 - 3 months") score += 10;
+      else if (timeline === "3 - 6 months") score += 5;
+    }
+
+    return Math.min(score, 100);
+  }
+
+  // 4. AUTOFILL FUNCTIONALITY
+  const autofillBtn = document.querySelector("#autofill-btn");
+
+  function triggerAutofill() {
+    const setInputValue = (selector: string, value: string) => {
+      const el = document.querySelector(selector) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null;
+      if (el) el.value = value;
+    };
+
+    setInputValue("input[name='name']", "Alex Tan");
+    setInputValue("input[name='email']", "alex.tan@enterprise.sg");
+    setInputValue("input[name='company']", "Apex Digital Solutions");
+    setInputValue("input[name='phone']", "91234567");
+    setInputValue("textarea[name='message']", "We are looking to implement an enterprise AI assistant for our customer operations team and integrate Microsoft Copilot across departments.");
+
+    if (countryHiddenInput && selectedLabel) {
+      countryHiddenInput.value = "+65";
+      selectedLabel.textContent = "🇸🇬 +65";
+    }
+
+    const targetEnquiries = ["AI Consulting", "Microsoft Copilot Practice"];
+    checkboxes.forEach((cb) => {
+      const shouldCheck = targetEnquiries.includes(cb.value);
+      cb.checked = shouldCheck;
+      
+      const parentPill = cb.closest(".enquiry-pill");
+      if (shouldCheck) {
+        parentPill?.classList.add("border-blue-600", "bg-blue-50/60");
+      } else {
+        parentPill?.classList.remove("border-blue-600", "bg-blue-50/60");
+      }
+    });
+
+    updateSalesFieldsVisibility();
+
+    setInputValue("select[name='role']", "VP / Director / Head of Dept");
+    setInputValue("select[name='organizationSize']", "201 - 500 employees");
+    setInputValue("select[name='budget']", "S$50,001 - S$100,000");
+    setInputValue("select[name='timeline']", "1 - 3 months");
+    setInputValue("select[name='leadSource']", "LinkedIn");
+
+    const pdpaCheckbox = document.querySelector("#pdpaConsent") as HTMLInputElement | null;
+    if (pdpaCheckbox) pdpaCheckbox.checked = true;
+  }
+
+  autofillBtn?.addEventListener("click", triggerAutofill);
+
+// Submission Handling
+const form = document.querySelector("#contact-form") as HTMLFormElement | null;
+const result = document.querySelector("#result") as HTMLElement | null;
+const button = document.querySelector("#submit-button") as HTMLButtonElement | null;
+
+if (form && result && button) {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const selectedEnquiries = Array.from(checkboxes)
+      .filter((chk) => chk.checked)
+      .map((chk) => chk.value);
+
+    if (selectedEnquiries.length === 0) {
+      result.innerHTML = `<span class="text-red-600 font-medium">Please select at least one enquiry topic.</span>`;
+      return;
+    }
+
+    const pdpaCheckbox = document.querySelector("#pdpaConsent") as HTMLInputElement | null;
+    if (!pdpaCheckbox?.checked) {
+      result.innerHTML = `<span class="text-red-600 font-medium">Please accept the PDPA notice to submit your enquiry.</span>`;
+      return;
+    }
+
+    if (!turnstileToken) {
+      result.innerHTML = `<span class="text-red-600 font-medium">Please complete the CAPTCHA verification.</span>`;
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Submitting Request...";
+
+    // 1. Single declaration of FormData
+    const formData = new FormData(form);
+    const rawData = Object.fromEntries(formData);
+    delete rawData.enquiryTypes; // Remove standard key to prevent overwriting
+
+    // 2. Check sales selection & calculate lead score if needed
+    const hasSalesSelected = Array.from(checkboxes).some(
+      (chk) => chk.checked && chk.getAttribute("data-is-sales") === "true"
+    );
+    const leadScore = calculateLeadScore(rawData, hasSalesSelected);
+
+    // 3. Assemble final payload
+    const payload = {
+      ...rawData,
+      enquiryTypes: selectedEnquiries,
+      leadScore,
+      pdpaConsent: true,
+      "cf-turnstile-response": turnstileToken
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = (await response.json()) as { success?: boolean; error?: string };
+
+      if (json.success) {
+        result.innerHTML = `
+          <div class="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-6 text-center shadow-sm">
+            <div class="mb-2 text-2xl">🎉</div>
+            <h4 class="text-xl font-bold text-emerald-950">Thank you! Your request has been received.</h4>
+            <p class="mt-2 text-sm text-emerald-800">Our team is reviewing your details and an AI consultant will contact you within 1 to 3 working days.</p>
+          </div>`;
+        form.reset();
+        checkboxes.forEach((cb) => {
+          cb.checked = false;
+          cb.closest(".enquiry-pill")?.classList.remove("border-blue-600", "bg-blue-50/60");
+        });
+        salesFields?.classList.add("hidden");
+        form.style.display = "none";
+      } else {
+        result.innerHTML = `<span class="text-red-600">${json.error ?? "Unable to submit request."}</span>`;
+        button.disabled = false;
+        button.textContent = "Submit Request";
+        if (turnstileWidgetId && window.turnstile) {
+          window.turnstile.reset(turnstileWidgetId);
+          turnstileToken = "";
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      result.innerHTML = `<span class="text-red-600">An unexpected error occurred. Please try again.</span>`;
+      button.disabled = false;
+      button.textContent = "Submit Request";
+      if (turnstileWidgetId && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetId);
+        turnstileToken = "";
+      }
+    }
+  });
+}
+</script>

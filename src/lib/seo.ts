@@ -14,13 +14,13 @@ export interface SEOProps {
 export const siteConfig = {
 
     name:
-    "Ragan Dynamics",
+    "RaganDynamics",
 
     title:
     "AI Consulting & Digital Transformation Singapore",
 
     description:
-    "Ragan Dynamics helps organisations transform with enterprise AI, automation, cloud solutions and intelligent business platforms.",
+    "RaganDynamics helps organisations transform with enterprise AI, automation, cloud solutions and intelligent business platforms.",
 
     url:
     "https://ragandynamics.com",

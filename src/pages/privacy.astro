@@ -1,0 +1,117 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { site } from "../config/site";
+
+const { company, contact } = site;
+const lastUpdated = "August 2026";
+---
+
+<MainLayout
+  title={`Privacy Policy | ${company.name}`}
+  description={`Privacy policy and PDPA compliance statement for ${company.name}.`}
+>
+  <section class="py-16 bg-slate-50">
+    <div class="mx-auto max-w-4xl px-6">
+      <div class="rounded-3xl bg-white p-8 md:p-12 shadow-sm border border-slate-200">
+        
+        <div class="border-b border-slate-200 pb-8">
+          <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+            Privacy Policy
+          </h1>
+          <p class="mt-2 text-sm text-slate-500">
+            Last Updated: {lastUpdated} | Compliance: Singapore Personal Data Protection Act (PDPA)
+          </p>
+        </div>
+
+        <div class="mt-8 space-y-8 text-slate-600 leading-relaxed text-sm md:text-base">
+          
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">1. Introduction</h2>
+            <p>
+              {company.name} {company.uen ? `(UEN: ${company.uen})` : ""} ("we", "our", or "us") is committed to protecting your personal data in accordance with Singapore's Personal Data Protection Act 2012 (PDPA). This Privacy Policy outlines how we collect, use, disclose, and store your personal data when you use our website, submit discovery assessment forms, or interact with our advisory services.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">2. Personal Data We Collect</h2>
+            <p class="mb-2">We collect information that you voluntarily provide to us when submitting assessment forms, booking consultations, or contacting us. This includes:</p>
+            <ul class="list-disc pl-6 space-y-1">
+              <li><strong>Contact Details:</strong> Full Name, Business Email Address, Designation, and Phone Number.</li>
+              <li><strong>Company Details:</strong> Company Name, Industry Sector, and Organisation Size.</li>
+              <li><strong>Operational Data:</strong> Current IT systems used, key business challenges, transformation priorities, and implementation timelines.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">3. Purpose of Collection and Use</h2>
+            <p class="mb-2">We collect and use your personal data strictly for legitimate business purposes, including:</p>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Evaluating your organisation's AI readiness and producing customized assessment reports.</li>
+              <li>Contacting you regarding your assessment inputs and providing relevant advisory services.</li>
+              <li>Communicating with you in response to your enquiries and consultation requests.</li>
+              <li>Improving our operational tools, website experience, and service offerings.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">4. Disclosure and Storage of Personal Data</h2>
+            <p>
+              We do not sell, rent, or trade your personal data to third parties. Your data is stored securely in cloud storage infrastructure (including Cloudflare R2 object storage) adhering to strict access controls and security protocols.
+            </p>
+            <p class="mt-2">
+              We may disclose personal data only when required by law or regulatory authorities in Singapore.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">5. Data Protection and Retention</h2>
+            <p>
+              We enforce appropriate technical and organizational measures to prevent unauthorized access, alteration, disclosure, or destruction of your personal data. We retain personal data only for as long as necessary to fulfill the purposes for which it was collected or as required by law.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">6. Your Rights (Access and Correction)</h2>
+            <p class="mb-2">Under the PDPA, you have the right to:</p>
+            <ul class="list-disc pl-6 space-y-1">
+              <li>Request access to personal data held about you by us.</li>
+              <li>Request corrections to any error or omission in your personal data.</li>
+              <li>Withdraw consent for the collection, use, or disclosure of your personal data at any time.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 mb-3">7. Contacting Our Data Protection Officer (DPO)</h2>
+            <p>
+              If you have any questions about this Privacy Policy or wish to exercise your rights regarding your personal data, please contact our Data Protection Officer:
+            </p>
+            <div class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <p class="font-bold text-slate-800">{company.name}</p>
+              {company.uen && <p class="text-xs text-slate-500">UEN: {company.uen}</p>}
+              <p class="mt-2">
+                <strong>Email:</strong>{" "}
+                <a href={`mailto:${contact.email.mailto || contact.email}`} class="text-blue-600 underline hover:text-blue-800">
+                  {contact.email.display || contact.email}
+                </a>
+              </p>
+              <p>
+                <strong>Phone:</strong> {contact.phone.display}
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-12 border-t border-slate-200 pt-8 text-center">
+          <a
+            href="/"
+            class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+          >
+            ← Return to Home
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</MainLayout>

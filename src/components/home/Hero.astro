@@ -1,5 +1,8 @@
 ---
 import Container from "../ui/Container.astro";
+import { site } from "../../config/site";
+
+const { company } = site;
 ---
 
 <section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-blue-900">
@@ -10,64 +13,58 @@ import Container from "../ui/Container.astro";
 
     <div class="relative grid items-center gap-16 py-24 lg:grid-cols-2">
 
+      <!-- ================================================= -->
       <!-- Left -->
+      <!-- ================================================= -->
 
       <div>
 
-        <span class="inline-flex items-center rounded-full bg-blue-600/20 px-4 py-2 text-sm font-semibold text-blue-300">
-
-          🇸🇬 Trusted AI Partner for Singapore SMEs
-
+        <span
+          class="inline-flex items-center rounded-full bg-blue-600/20 px-4 py-2 text-sm font-semibold text-blue-300"
+        >
+          🇸🇬 {company.tagline}
         </span>
 
-        <h1 class="mt-8 text-5xl font-black leading-tight text-white lg:text-6xl">
+        <h1
+          class="mt-8 text-5xl font-black leading-tight text-white lg:text-6xl"
+        >
 
-          Transform Your Business with
-          <span class="text-blue-400">
-            Practical AI
+          Practical AI Solutions
+
+          <span class="block text-blue-400">
+            That Help SMEs
           </span>
-          That Delivers
-          <span class="text-blue-300">
-            Measurable Results
+
+          <span class="block text-blue-300">
+            Work Smarter and Grow Faster
           </span>
 
         </h1>
 
         <p class="mt-8 text-xl leading-9 text-slate-300">
 
-          Reduce operating costs, automate repetitive work, improve
-          employee productivity and accelerate business growth with
-          secure, scalable and cost-effective AI solutions designed
-          specifically for Singapore SMEs.
+          We help Singapore businesses identify practical opportunities
+          to adopt Artificial Intelligence, automate repetitive work,
+          improve productivity and make better business decisions with
+          secure, scalable and cost-effective solutions.
 
         </p>
 
         <div class="mt-10 flex flex-wrap gap-4">
 
           <a
-
             href="/contact"
-
-            data-analytics="hero-discovery"
-
+            data-analytics="hero-consultation"
             class="rounded-xl bg-blue-600 px-8 py-4 text-lg font-bold text-white transition hover:bg-blue-700"
-
           >
-
-            Book a Free AI Discovery Session
-
+            Book an AI Consultation
           </a>
 
           <a
-
-            href="#services"
-
+            href="/services"
             class="rounded-xl border border-white px-8 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-slate-900"
-
           >
-
-            Explore AI Solutions
-
+            Explore Our Services
           </a>
 
         </div>
@@ -77,11 +74,11 @@ import Container from "../ui/Container.astro";
           <div>
 
             <div class="text-3xl font-black text-blue-400">
-              30%
+              AI
             </div>
 
             <p class="mt-2 text-sm text-slate-300">
-              Lower Operating Costs
+              Strategy
             </p>
 
           </div>
@@ -89,11 +86,11 @@ import Container from "../ui/Container.astro";
           <div>
 
             <div class="text-3xl font-black text-blue-400">
-              80%
+              AI
             </div>
 
             <p class="mt-2 text-sm text-slate-300">
-              Less Manual Work
+              Automation
             </p>
 
           </div>
@@ -101,11 +98,11 @@ import Container from "../ui/Container.astro";
           <div>
 
             <div class="text-3xl font-black text-blue-400">
-              24/7
+              Cloud
             </div>
 
             <p class="mt-2 text-sm text-slate-300">
-              AI Customer Support
+              Solutions
             </p>
 
           </div>
@@ -126,7 +123,9 @@ import Container from "../ui/Container.astro";
 
       </div>
 
+      <!-- ================================================= -->
       <!-- Right -->
+      <!-- ================================================= -->
 
       <div>
 
@@ -134,7 +133,7 @@ import Container from "../ui/Container.astro";
 
           <h2 class="text-3xl font-black text-slate-900">
 
-            Why SMEs Choose AI
+            Your AI Journey Starts Here
 
           </h2>
 
@@ -144,13 +143,13 @@ import Container from "../ui/Container.astro";
 
               <h3 class="font-bold text-slate-900">
 
-                Reduce Costs
+                Discover Opportunities
 
               </h3>
 
               <p class="mt-2 text-slate-600">
 
-                Eliminate repetitive manual work and optimise operations.
+                Identify practical AI use cases aligned with your business goals.
 
               </p>
 
@@ -160,13 +159,13 @@ import Container from "../ui/Container.astro";
 
               <h3 class="font-bold text-slate-900">
 
-                Increase Productivity
+                Build with Confidence
 
               </h3>
 
               <p class="mt-2 text-slate-600">
 
-                Empower employees with AI assistants and automation.
+                Implement secure, scalable solutions that integrate with your existing systems.
 
               </p>
 
@@ -176,13 +175,13 @@ import Container from "../ui/Container.astro";
 
               <h3 class="font-bold text-slate-900">
 
-                Grow Revenue
+                Deliver Measurable Value
 
               </h3>
 
               <p class="mt-2 text-slate-600">
 
-                Deliver faster customer service and better business insights.
+                Improve productivity, streamline operations and support long-term business growth.
 
               </p>
 
