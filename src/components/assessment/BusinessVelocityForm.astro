@@ -301,7 +301,7 @@ form?.addEventListener("submit", async (e) => {
     return;
   }
 
-  const data: any = {};
+  const data: Record<string, any> = {};
   fd.forEach((value, key) => {
     if (!data[key]) {
       data[key] = value;
@@ -338,7 +338,9 @@ form?.addEventListener("submit", async (e) => {
     if (response.ok) {
       window.location.href = `/assessment-success?score=${finalScore}`;
     } else {
-      const result = await response.json().catch(() => ({}));
+      // Cast response JSON to type { error?: string } to satisfy TypeScript strict mode
+      const result = (await response.json().catch(() => ({}))) as { error?: string };
+
       if (errorBox && result.error) {
         errorBox.textContent = result.error;
         errorBox.classList.remove("hidden");
@@ -350,5 +352,4 @@ form?.addEventListener("submit", async (e) => {
     window.location.href = `/assessment-success?score=${finalScore}`;
   }
 });
-
 </script>
