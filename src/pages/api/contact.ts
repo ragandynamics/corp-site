@@ -111,19 +111,26 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
     }
+// Allow dummy secret or bypass check in local dev
+    const isDev = import.meta.env.DEV;
 
     if (!turnstileSecretKey) {
       console.warn(
         "TURNSTILE_SECRET_KEY is missing in environment variables. Skipping server-side token validation."
       );
     } else {
+      // Don't pass loopback IP ('127.0.0.1') to Turnstile siteverify
+      const ipToVerify = (clientAddress && clientAddress !== "127.0.0.1" && clientAddress !== "::1") 
+        ? clientAddress 
+        : undefined;
+
       const turnstileResult = await verifyTurnstileToken(
         turnstileToken,
         turnstileSecretKey,
-        clientAddress
+        ipToVerify
       );
 
-      if (!turnstileResult.success) {
+      if (!turnstileResult.success && !isDev) {
         console.warn(
           "Turnstile verification failed:",
           turnstileResult.errorCodes
@@ -134,6 +141,11 @@ export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
             error: "Security verification failed. Please try again.",
           }),
           { status: 403, headers: { "Content-Type": "application/json" } }
+        );
+      } else if (!turnstileResult.success && isDev) {
+        console.warn(
+          "[DEV MODE] Turnstile validation returned errors, but continuing submission:",
+          turnstileResult.errorCodes
         );
       }
     }
