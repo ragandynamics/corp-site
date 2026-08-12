@@ -161,7 +161,7 @@
   </select>
 </div>
 
-<div class="border-t pt-8">
+<div class="border-t pt-8 space-y-3">
   <h2 class="text-2xl font-semibold">
     Contact Details
   </h2>
@@ -169,32 +169,74 @@
     name="name"
     placeholder="Name"
     required
-    class="mt-4 w-full rounded-lg border px-4 py-3"
+    class="w-full rounded-lg border px-4 py-3"
   />
   <input
     name="designation"
     placeholder="Designation"
-    class="mt-3 w-full rounded-lg border px-4 py-3"
+    class="w-full rounded-lg border px-4 py-3"
   />
   <input
     name="email"
     type="email"
     placeholder="Business Email"
     required
-    class="mt-3 w-full rounded-lg border px-4 py-3"
+    class="w-full rounded-lg border px-4 py-3"
   />
   <input
     name="phone"
     placeholder="Phone"
-    class="mt-3 w-full rounded-lg border px-4 py-3"
+    class="w-full rounded-lg border px-4 py-3"
   />
+</div>
+
+<div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600 space-y-3">
+  <p class="font-semibold text-slate-700">
+    Personal Data Protection Act (PDPA) Notice
+  </p>
+  <p>
+    By submitting this form, you consent to our collection, use, and disclosure of your personal data for the purpose of processing your assessment submission, preparing your customized report, and contacting you regarding our advisory services in accordance with our <a href="/privacy" class="text-blue-600 underline hover:text-blue-800" target="_blank">Privacy Policy</a>.
+  </p>
+
+  <label class="flex items-start gap-3 cursor-pointer pt-2">
+    <input
+      type="checkbox"
+      name="pdpaConsent"
+      id="pdpaConsent"
+      required
+      class="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+    />
+    <span class="text-slate-700 text-xs">
+      I agree to the collection and processing of my personal data for the purposes stated above. <span class="text-red-500">*</span>
+    </span>
+  </label>
+</div>
+
+<div class="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/80 p-4 text-sm text-blue-900">
+  <svg 
+    class="h-5 w-5 shrink-0 text-blue-600" 
+    fill="none" 
+    stroke="currentColor" 
+    viewBox="0 0 24 24" 
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+      stroke-width="2" 
+      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    ></path>
+  </svg>
+  <span>
+    Our AI consultants will review your inputs and contact you within <strong>1 to 3 working days</strong>.
+  </span>
 </div>
 
 <button
   type="submit"
-  class="w-full rounded-xl bg-blue-600 px-6 py-4 text-lg font-semibold text-white hover:bg-blue-700 transition"
+  class="w-full rounded-xl bg-blue-600 px-6 py-4 text-lg font-semibold text-white hover:bg-blue-700 transition shadow-sm"
 >
-  Click to proceed to the Assessment Results
+  Submit Discovery Assessment
 </button>
 
 </form>
@@ -217,22 +259,18 @@ form?.addEventListener("submit", async (e) => {
   data.challenges = fd.getAll("challenges").map(String);
   data.systems = fd.getAll("systems").map(String);
   data.priorities = fd.getAll("priorities").map(String);
+  data.pdpaConsent = fd.get("pdpaConsent") === "on";
 
-  // --- Dynamic Inverse Scoring (Lower Score = Higher Improvement Potential) ---
-  let currentEfficiency = 90; // Start high
-
-  // 1. More challenges reduce efficiency score (increases potential for gain)
+  // Inverted Scoring logic: Lower score = Higher potential for improvement
+  let currentEfficiency = 90;
   currentEfficiency -= data.challenges.length * 6;
 
-  // 2. Absence of modern systems lowers the score
   if (!data.systems.includes("ERP")) currentEfficiency -= 10;
   if (!data.systems.includes("CRM")) currentEfficiency -= 10;
   if (!data.systems.includes("HRMS")) currentEfficiency -= 5;
 
-  // 3. Exploring options / Long timeline suggests lower current integration
   if (data.timeline === "Exploring options") currentEfficiency -= 10;
 
-  // Ensure score stays bounded between 10 and 100
   const finalScore = Math.min(Math.max(currentEfficiency, 10), 100);
   data.score = finalScore;
 

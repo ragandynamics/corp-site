@@ -24,7 +24,8 @@ interface AssessmentRequest {
   interests?: string[];
 
   timeline?: string;
-  score?: number; // Captured from frontend calculation
+  score?: number;
+  pdpaConsent?: boolean;
 
   [key: string]: any;
 }
@@ -32,7 +33,7 @@ interface AssessmentRequest {
 export const prerender = false;
 
 interface RuntimeEnv {
-  RD_DATA: R2Bucket;
+  CONTACTS: R2Bucket;
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
@@ -42,8 +43,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     const score = typeof body.score === "number" ? body.score : 0;
 
-    // Build the stored record
-    const lead: BusinessVelocityLead & { score: number } = {
+    const lead: BusinessVelocityLead & { score: number; pdpaConsent: boolean } = {
       campaign: "business-velocity",
 
       lead: {
@@ -65,7 +65,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       interests: body.interests || [],
       timeline: body.timeline || "",
 
-      score: score, // Store computed operational efficiency score
+      score: score,
+      pdpaConsent: body.pdpaConsent ?? false,
 
       answers: body as Record<string, any>,
 
@@ -85,8 +86,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     */
     const env = (locals as any)?.runtime?.env as RuntimeEnv;
 
-    if (!env?.RD_DATA) {
-      console.error("R2 RD_DATA binding missing");
+    if (!env?.CONTACTS) {
+      console.error("R2 CONTACTS binding missing");
 
       return new Response(
         JSON.stringify({
@@ -102,12 +103,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     /*
-      Store lead & calculated score in Cloudflare R2 Bucket
+      Store lead under the separate "assessments/" folder in R2
     */
     const id = crypto.randomUUID();
-    const fileName = `assessments/business-velocity/${now.split("T")[0]}_${id}.json`;
+    const datePrefix = now.split("T")[0];
+    const fileName = `assessments/business-velocity/${datePrefix}_${id}.json`;
 
-    await env.RD_DATA.put(fileName, JSON.stringify(lead, null, 2), {
+    await env.CONTACTS.put(fileName, JSON.stringify(lead, null, 2), {
       httpMetadata: {
         contentType: "application/json",
       },
@@ -116,17 +118,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
         company: lead.lead.company,
         email: lead.lead.email,
         priority: priority,
+        pdpaConsent: String(lead.pdpaConsent),
       },
     });
 
     /*
-      Generate internal sales notification
+      Generate internal email notification
     */
     const summary = generateLeadSummary(lead as any, priority);
 
     await sendLeadNotification({
       to: site.integrations.emailNotification.notificationEmail,
-      subject: `NEW LEAD (${score}/100) | ${lead.lead.company} | ${priority}`,
+      subject: `NEW ASSESSMENT LEAD (${score}/100) | ${lead.lead.company} | ${priority}`,
       body: summary,
     });
 
