@@ -1,387 +1,161 @@
 import type { APIRoute } from "astro";
 
-import {
-  sendLeadNotification
-}
-from "../../lib/email/notification";
-
-
-import {
-  site
-}
-from "../../config/site";
-
+import { sendLeadNotification } from "../../lib/email/notification";
+import { site } from "../../config/site";
 import {
   generateLeadSummary,
-  type BusinessVelocityLead
+  type BusinessVelocityLead,
 } from "../../lib/assessment/businessVelocity";
-
-import {
-calculateLeadPriority
-}
-from "../../lib/assessment/leadPriority";
+import { calculateLeadPriority } from "../../lib/assessment/leadPriority";
 
 interface AssessmentRequest {
+  name?: string;
+  designation?: string;
+  company?: string;
+  email?: string;
+  phone?: string;
 
+  industry?: string;
+  companySize?: string;
 
-name?:string;
+  systems?: string[];
+  challenges?: string[];
+  priorities?: string[];
+  interests?: string[];
 
-designation?:string;
+  timeline?: string;
+  score?: number; // Captured from frontend calculation
 
-company?:string;
-
-email?:string;
-
-phone?:string;
-
-
-industry?:string;
-
-companySize?:string;
-
-
-systems?:string[];
-
-challenges?:string[];
-
-priorities?:string[];
-
-interests?:string[];
-
-
-timeline?:string;
-
-
-[key:string]:any;
-
+  [key: string]: any;
 }
+
 export const prerender = false;
 
-
 interface RuntimeEnv {
-
   CONTACTS: R2Bucket;
-
 }
 
-
-
 export const POST: APIRoute = async ({ request, locals }) => {
-
-
   try {
+    const body = (await request.json()) as AssessmentRequest;
+    const now = new Date().toISOString();
 
+    const score = typeof body.score === "number" ? body.score : 0;
 
-    const body =
-      await request.json() as AssessmentRequest;
-
-
-
-    const now =
-      new Date().toISOString();
-
-
-
-    const lead: BusinessVelocityLead = {
-
-
-      campaign:
-        "business-velocity",
-
-
+    // Build the stored record
+    const lead: BusinessVelocityLead & { score: number } = {
+      campaign: "business-velocity",
 
       lead: {
-
-        name:
-          body.name || "",
-
-        designation:
-          body.designation || "",
-
-        company:
-          body.company || "",
-
-        email:
-          body.email || "",
-
-        phone:
-          body.phone || ""
-
+        name: body.name || "",
+        designation: body.designation || "",
+        company: body.company || "",
+        email: body.email || "",
+        phone: body.phone || "",
       },
-
-
 
       business: {
-
-        industry:
-          body.industry || "",
-
-
-        companySize:
-          body.companySize || "",
-
-
-        systems:
-          body.systems || []
-
+        industry: body.industry || "",
+        companySize: body.companySize || "",
+        systems: body.systems || [],
       },
 
+      challenges: body.challenges || [],
+      priorities: body.priorities || [],
+      interests: body.interests || [],
+      timeline: body.timeline || "",
 
+      score: score, // Store computed operational efficiency score
 
-      challenges:
-        body.challenges || [],
+      answers: body as Record<string, any>,
 
-
-
-      priorities:
-        body.priorities || [],
-
-
-
-      interests:
-        body.interests || [],
-
-
-
-      timeline:
-        body.timeline || "",
-
-
-
-      answers:
-        body as Record<string,any>,
-
-
-
-      createdAt:
-        now,
-
-
-
-      status:
-        "NEW",
-
-
+      createdAt: now,
+      status: "NEW",
 
       source: {
-
-        page:
-          "/assessment",
-
-
-        campaign:
-          "business-velocity"
-
-      }
-
-
+        page: "/assessment",
+        campaign: "business-velocity",
+      },
     };
-const priority =
-calculateLeadPriority(
-lead
-);
 
-
-
+    const priority = calculateLeadPriority(lead as any);
 
     /*
-      Cloudflare Pages runtime binding
+      Cloudflare Pages runtime binding check
     */
-
-    const env =(locals as any)
-.runtime
-.env as RuntimeEnv;
-
+    const env = (locals as any)?.runtime?.env as RuntimeEnv;
 
     if (!env?.CONTACTS) {
-
-      console.error(
-        "R2 CONTACTS binding missing"
-      );
-
+      console.error("R2 CONTACTS binding missing");
 
       return new Response(
         JSON.stringify({
-          error:
-          "Storage unavailable"
+          error: "Storage unavailable",
         }),
         {
-          status:500
+          status: 500,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-
     }
 
+    /*
+      Store lead & calculated score in Cloudflare R2 Bucket
+    */
+    const id = crypto.randomUUID();
+    const fileName = `contacts/business-velocity/${now.split("T")[0]}_${id}.json`;
 
-
-
+    await env.CONTACTS.put(fileName, JSON.stringify(lead, null, 2), {
+      httpMetadata: {
+        contentType: "application/json",
+      },
+      customMetadata: {
+        score: String(score),
+        company: lead.lead.company,
+        email: lead.lead.email,
+        priority: priority,
+      },
+    });
 
     /*
-       Store lead in R2
-
-       Example:
-
-       contacts/
-          business-velocity/
-             2026-08-05_uuid.json
-
+      Generate internal sales notification
     */
+    const summary = generateLeadSummary(lead as any, priority);
 
-
-    const id =
-      crypto.randomUUID();
-
-
-
-    const fileName =
-      `contacts/business-velocity/${id}.json`;
-
-
-
-    await env.CONTACTS.put(
-
-      fileName,
-
-      JSON.stringify(
-        lead,
-        null,
-        2
-      ),
-
-      {
-
-        httpMetadata: {
-
-          contentType:
-          "application/json"
-
-        }
-
-      }
-
-    );
-
-
-
-
-
-    /*
-       Generate internal sales notification
-    */
-
-
-const summary =
-generateLeadSummary(
-  lead,
-  priority
-);
-
-
-
-await sendLeadNotification({
-
-  to:
-    site.integrations
-      .emailNotification
-      .notificationEmail,
-
-
-  subject:
-    `NEW SALES LEAD | ${lead.lead.company} | ${priority}`,
-
-
-  body:
-    summary
-
-});
-
-
-
-    console.log(
-      summary
-    );
-
-
-
-    /*
-      Future:
-
-      sendEmail(summary)
-
-      createCRMLead()
-
-      createTask()
-
-    */
-
-
-
-
+    await sendLeadNotification({
+      to: site.integrations.emailNotification.notificationEmail,
+      subject: `NEW LEAD (${score}/100) | ${lead.lead.company} | ${priority}`,
+      body: summary,
+    });
 
     return new Response(
-
       JSON.stringify({
-
-        success:true,
-
-        id:fileName
-
+        success: true,
+        id: fileName,
+        score: score,
       }),
-
       {
-
-        status:200,
-
-        headers:{
-
-          "Content-Type":
-          "application/json"
-
-        }
-
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-
     );
-
-
-
-  }
-
-
-  catch(error){
-
-
-    console.error(
-      "Assessment submission failed",
-      error
-    );
-
+  } catch (error) {
+    console.error("Assessment submission failed", error);
 
     return new Response(
-
       JSON.stringify({
-
-        error:
-        "Unable to process submission"
-
+        error: "Unable to process submission",
       }),
-
       {
-
-        status:500,
-
-        headers:{
-
-          "Content-Type":
-          "application/json"
-
-        }
-
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-
     );
-
   }
-
-
 };

@@ -5478,7 +5478,7 @@ const navigation = [
     href: "/industries"
   },
   {
-    label: "Get Your Free AI Readiness Assessment",
+    label: "Get Your Free AI Transformation Assessment",
     href: "/assessment"
   },
   {
