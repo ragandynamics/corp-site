@@ -1,7 +1,10 @@
 /// <reference types="astro/client" />
+/// <reference types="@types/cloudflare-turnstile" />
 
 interface Env {
-  CONTACTS: R2Bucket;
+  RD_DATA: R2Bucket;
+  TURNSTILE_SECRET_KEY?: string;
+  RESEND_API_KEY?: string;
 }
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;

@@ -10,10 +10,6 @@ const { company, contact } = site;
 
     <div class="grid gap-16 lg:grid-cols-2">
 
-      <!-- ================================================= -->
-      <!-- Left -->
-      <!-- ================================================= -->
-
       <div>
 
         <span class="text-sm font-semibold uppercase tracking-widest text-blue-600">
@@ -52,10 +48,6 @@ const { company, contact } = site;
 
       </div>
 
-      <!-- ================================================= -->
-      <!-- Right -->
-      <!-- ================================================= -->
-
       <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
 
         <h3 class="text-2xl font-bold text-slate-900">
@@ -66,9 +58,13 @@ const { company, contact } = site;
           {company.tagline}
         </p>
 
-        <div class="mt-10 space-y-8">
+        {company.uen && (
+          <p class="mt-1 text-sm text-slate-500">
+            UEN: <span class="font-medium text-slate-700">{company.uen}</span>
+          </p>
+        )}
 
-          <!-- Phone -->
+        <div class="mt-10 space-y-8">
 
           <div>
 
@@ -84,8 +80,6 @@ const { company, contact } = site;
             </a>
 
           </div>
-
-          <!-- WhatsApp -->
 
           <div>
 
@@ -104,8 +98,6 @@ const { company, contact } = site;
 
           </div>
 
-          <!-- Email -->
-
           <div>
 
             <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
@@ -113,15 +105,13 @@ const { company, contact } = site;
             </div>
 
             <a
-              href={`mailto:${contact.email}`}
+              href={`mailto:${contact.email.mailto}`}
               class="mt-2 inline-block break-all text-lg font-semibold text-blue-600 hover:underline"
             >
-              {contact.email}
+              {contact.email.display}
             </a>
 
           </div>
-
-          <!-- Business Hours -->
 
           <div>
 
@@ -135,8 +125,6 @@ const { company, contact } = site;
 
           </div>
 
-          <!-- Response -->
-
           <div>
 
             <div class="text-sm font-semibold uppercase tracking-wide text-slate-500">
@@ -148,8 +136,6 @@ const { company, contact } = site;
             </p>
 
           </div>
-
-          <!-- CTA -->
 
           <div class="pt-4">
 

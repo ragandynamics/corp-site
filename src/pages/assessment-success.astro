@@ -1,0 +1,163 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+
+// Access searchParams safely via Astro.url
+const scoreParam = Astro.url.searchParams.get("score");
+const score = scoreParam ? parseInt(scoreParam, 10) : 0;
+---
+
+<MainLayout
+  title="AI Readiness Index Results"
+  description="Your AI readiness and improvement potential results."
+>
+
+<section class="min-h-screen bg-gray-50 py-16">
+  <div class="mx-auto max-w-4xl px-6">
+    <div class="rounded-3xl bg-white p-8 shadow-xl md:p-12">
+
+      <div class="flex justify-center">
+        <div class="flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-4xl text-green-600">
+          ✓
+        </div>
+      </div>
+
+      <div class="mt-8 text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900">
+          Thank You.
+        </h1>
+        <h2 class="mt-4 text-xl font-semibold text-gray-800">
+          Your Operational Efficiency Score: {score}/100
+        </h2>
+
+        {score < 50 && (
+          <p class="mt-6 text-green-600 font-semibold text-lg">
+            High Potential: Significant opportunities exist across your operations to unlock immediate ROI through AI and targeted automation.
+          </p>
+        )}
+        {score >= 50 && score < 80 && (
+          <p class="mt-6 text-amber-600 font-semibold text-lg">
+            Moderate Potential: Targeted AI interventions can streamline key workflow bottlenecks and drive high-impact quick wins.
+          </p>
+        )}
+        {score >= 80 && (
+          <p class="mt-6 text-blue-600 font-semibold text-lg">
+            High Efficiency: Your core workflows are well-structured; focus should be on advanced custom AI integrations.
+          </p>
+        )}
+
+        <p class="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
+          Our AI team will review your inputs and contact you in <strong>1 to 3 working days</strong> with your customized report.
+        </p>
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-2xl font-bold text-gray-900 text-center">
+          Potential Impact by Business Function
+        </h3>
+        <p class="mt-2 text-center text-gray-600">
+          Estimated improvement potential and performance gains tailored to your current setup.
+        </p>
+
+        <div class="mt-8 grid gap-6 sm:grid-cols-2">
+          
+          <div class="flex flex-col justify-between rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl">⚙️</span>
+                <span class="rounded-full bg-green-100 px-3 py-1 text-sm font-bold text-green-700">
+                  {score < 50 ? "Up to 50% potential time savings" : score < 80 ? "20-35% efficiency boost" : "10-15% incremental gain"}
+                </span>
+              </div>
+              <h4 class="mt-4 text-lg font-bold text-gray-900">Operations & Workflow</h4>
+              <p class="mt-2 text-sm text-gray-600">
+                {score < 50 ? "High upside: Automating core manual processes will yield immediate reduction in operational bottlenecks." : 
+                 score < 80 ? "Streamline repetitive manual tasks and integrate intelligent document processing to speed up output." : 
+                 "Fine-tune existing automated pipelines for micro-efficiencies."}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-between rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl">📈</span>
+                <span class="rounded-full bg-blue-100 px-3 py-1 text-sm font-bold text-blue-700">
+                  {score < 50 ? "+40% pipeline speedup potential" : score < 80 ? "+15-25% sales velocity boost" : "+5-10% conversion optimization"}
+                </span>
+              </div>
+              <h4 class="mt-4 text-lg font-bold text-gray-900">Sales & Marketing</h4>
+              <p class="mt-2 text-sm text-gray-600">
+                {score < 50 ? "High opportunity: Introducing lead capture and response automation can significantly shorten sales cycles." : 
+                 score < 80 ? "Enhance content generation pipelines, lead capture forms, and basic CRM integrations." : 
+                 "Deploy hyper-personalized campaign models and predictive analytics."}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-between rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl">💬</span>
+                <span class="rounded-full bg-purple-100 px-3 py-1 text-sm font-bold text-purple-700">
+                  {score < 50 ? "Up to 60% inquiry automation" : score < 80 ? "30-40% faster response times" : "15-20% capacity expansion"}
+                </span>
+              </div>
+              <h4 class="mt-4 text-lg font-bold text-gray-900">Customer Support</h4>
+              <p class="mt-2 text-sm text-gray-600">
+                {score < 50 ? "High return: Centralizing knowledge bases and deploying basic AI chat will dramatically reduce ticket resolution times." : 
+                 score < 80 ? "Deploy smart AI assistants for tier-1 support tickets and automated FAQ handling." : 
+                 "Implement fully autonomous multi-turn agent networks."}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-between rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="text-2xl">👥</span>
+                <span class="rounded-full bg-amber-100 px-3 py-1 text-sm font-bold text-amber-700">
+                  {score < 50 ? "40% admin overhead reduction" : score < 80 ? "25% HR processing speedup" : "10% internal workflow gain"}
+                </span>
+              </div>
+              <h4 class="mt-4 text-lg font-bold text-gray-900">HR & Talent</h4>
+              <p class="mt-2 text-sm text-gray-600">
+                {score < 50 ? "High efficiency upside: Digitizing record keeping and automating onboarding communications will reduce administrative load." : 
+                 score < 80 ? "Simplify initial resume screening and automate internal employee query responses." : 
+                 "Implement AI-driven skill mapping and performance predictive modeling."}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mt-12 rounded-2xl bg-blue-50 p-6">
+        <h3 class="text-lg font-semibold text-gray-900">
+          You will receive:
+        </h3>
+        <ul class="mt-5 space-y-3 text-gray-700">
+          <li class="flex items-center gap-3"><span class="font-bold text-green-600">✓</span> Executive Summary</li>
+          <li class="flex items-center gap-3"><span class="font-bold text-green-600">✓</span> Recommended AI Opportunities</li>
+          <li class="flex items-center gap-3"><span class="font-bold text-green-600">✓</span> Potential Automation Areas</li>
+          <li class="flex items-center gap-3"><span class="font-bold text-green-600">✓</span> Estimated Business Impact</li>
+        </ul>
+      </div>
+
+      <div class="mt-12 text-center">
+        <h3 class="text-2xl font-bold text-gray-900">
+          Ready to accelerate your business?
+        </h3>
+        <p class="mt-3 text-gray-600">
+          Discuss your AI transformation opportunities with our consultants.
+        </p>
+        <a
+          href="/contact"
+          class="mt-8 inline-flex items-center justify-center rounded-xl bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition hover:bg-blue-700"
+        >
+          Schedule Executive Strategy Session
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</MainLayout>

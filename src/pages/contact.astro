@@ -4,14 +4,14 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 ---
 
 <MainLayout
-  title="Contact RaganDynamics | We're Here to Help"
+  title="Contact RagonDynamics | We're Here to Help"
   description="Whether you're exploring AI solutions, need technical assistance, or want to discuss an enterprise project, our team is here to help."
 >
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 
   <section class="bg-slate-50 py-20">
     <div class="mx-auto max-w-5xl px-6">
       
-      <!-- Header -->
       <div class="mb-12 text-center">
         <h1 class="text-4xl font-black text-slate-900 md:text-5xl">
           Get in Touch
@@ -21,11 +21,9 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
         </p>
       </div>
 
-      <!-- Form Container -->
       <div class="rounded-3xl bg-white p-8 shadow-xl md:p-12">
         <form id="contact-form" class="space-y-8">
 
-          <!-- Section 1: Contact Information -->
           <div>
             <h2 class="mb-4 text-xl font-bold text-slate-900">1. Contact Information</h2>
             
@@ -74,14 +72,12 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
                 />
               </div>
 
-              <!-- Searchable Country Code & Phone Number -->
               <div>
                 <label for="phone" class="mb-2 block font-semibold text-slate-700">
                   Contact Number
                 </label>
                 <div class="flex gap-2">
                   
-                  <!-- Searchable Country Selector Dropdown -->
                   <div class="relative w-44" id="country-dropdown-container">
                     <button
                       type="button"
@@ -94,10 +90,8 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
                       </svg>
                     </button>
 
-                    <!-- Hidden Input for Submission -->
                     <input type="hidden" id="countryCode" name="countryCode" value="+65" />
 
-                    <!-- Dropdown Panel -->
                     <div
                       id="country-dropdown-panel"
                       class="absolute left-0 z-50 mt-2 hidden w-80 rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl"
@@ -138,7 +132,6 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 
           <hr class="border-slate-100" />
 
-          <!-- Section 2: Enquiry Intent (Multi-Select) -->
           <div>
             <div class="mb-3 flex items-center justify-between">
               <label class="block font-bold text-slate-900">
@@ -146,7 +139,6 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
               </label>
             </div>
 
-            <!-- Multi-Select Checkbox Pills -->
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
               {[
                 { id: "sales", value: "Sales Enquiry", label: "💼 Sales Enquiry", isSales: true },
@@ -176,7 +168,6 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
             </div>
           </div>
 
-          <!-- Section 3: Dynamic Sales & Marketing Qualification Fields -->
           <div id="sales-qualification-fields" class="hidden space-y-6 rounded-2xl border border-blue-100 bg-blue-50/50 p-6">
             <h3 class="text-sm font-bold uppercase tracking-wider text-blue-900">
               Help Us Tailor Your Solution
@@ -240,7 +231,6 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
             </div>
           </div>
 
-          <!-- Section 4: Lead Source & Primary Message -->
           <div class="space-y-6">
             <div class="grid gap-6 md:grid-cols-2">
               <div>
@@ -296,11 +286,54 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
             </div>
           </div>
 
-          <!-- Submit Button -->
+          <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600 space-y-3">
+            <p class="font-semibold text-slate-700">
+              Personal Data Protection Act (PDPA) Notice
+            </p>
+            <p>
+              By submitting this form, you consent to our collection, use, and disclosure of your personal data for the purpose of handling your enquiry, providing relevant advisory information, and contacting you regarding our solutions in accordance with our <a href="/privacy" class="text-blue-600 underline hover:text-blue-800" target="_blank">Privacy Policy</a>.
+            </p>
+
+            <label class="flex items-start gap-3 cursor-pointer pt-2">
+              <input
+                type="checkbox"
+                name="pdpaConsent"
+                id="pdpaConsent"
+                required
+                class="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+              />
+              <span class="text-slate-700 text-xs">
+                I agree to the collection and processing of my personal data for the purposes stated above. <span class="text-red-500">*</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/80 p-4 text-sm text-blue-900">
+            <svg 
+              class="h-5 w-5 shrink-0 text-blue-600" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24" 
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                stroke-width="2" 
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span>
+              Our AI consultants will review your enquiry and contact you within <strong>1 to 3 working days</strong>.
+            </span>
+          </div>
+
+          <div id="turnstile-container" class="my-4 flex justify-center"></div>
+
           <button
             id="submit-button"
             type="submit"
-            class="w-full rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700 disabled:opacity-50"
+            class="w-full rounded-xl bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700 disabled:opacity-50 shadow-sm"
           >
             Submit Request
           </button>
@@ -314,14 +347,46 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
 
 </MainLayout>
 
-<!-- Optional UI Trigger: Place this inside your form HTML near the top/heading if you want a visible button -->
-<!-- 
-<button type="button" id="autofill-btn" class="text-xs text-blue-600 underline font-medium hover:text-blue-800">
-  ⚡ Auto-fill sample data
-</button> 
--->
-
 <script>
+declare global {
+  interface Window {
+    turnstile: {
+      render: (container: string | HTMLElement, options: Record<string, any>) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
+  // Turnstile Widget ID tracking
+  let turnstileWidgetId: string | undefined;
+
+  let turnstileToken: string = "";
+
+  // Turnstile Explicit Initialization
+  const initTurnstile = () => {
+    if (window.turnstile) {
+      turnstileWidgetId = window.turnstile.render("#turnstile-container", {
+        sitekey: "0x4AAAAAAENuSMHCWxnXH9XM",
+        theme: "light",
+        callback: function (token: string) {
+          turnstileToken = token;
+        },
+        "expired-callback": function () {
+          turnstileToken = "";
+        },
+        "error-callback": function () {
+          turnstileToken = "";
+        }
+      });
+    }
+  };
+
+  // Wait for Turnstile script and DOM load
+  if (document.readyState === "complete") {
+    initTurnstile();
+  } else {
+    window.addEventListener("load", initTurnstile);
+  }
+
   // 1. Country Code Filter Logic
   const selectorBtn = document.querySelector("#country-selector-btn");
   const dropdownPanel = document.querySelector("#country-dropdown-panel");
@@ -421,7 +486,7 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       else if (orgSize === "11 - 50 employees") score += 5;
 
       const budget = data.budget as string;
-      if (budget === "Above S$100,000") score += 20;
+      if (budget === "Above S$10,000") score += 20;
       else if (budget === "S$50,001 - S$100,000") score += 16;
       else if (budget === "S$25,001 - S$50,000") score += 12;
       else if (budget === "S$10,000 - S$25,000") score += 8;
@@ -444,20 +509,17 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       if (el) el.value = value;
     };
 
-    // Text & Contact Inputs
     setInputValue("input[name='name']", "Alex Tan");
     setInputValue("input[name='email']", "alex.tan@enterprise.sg");
     setInputValue("input[name='company']", "Apex Digital Solutions");
     setInputValue("input[name='phone']", "91234567");
     setInputValue("textarea[name='message']", "We are looking to implement an enterprise AI assistant for our customer operations team and integrate Microsoft Copilot across departments.");
 
-    // Country Code Selection
     if (countryHiddenInput && selectedLabel) {
       countryHiddenInput.value = "+65";
       selectedLabel.textContent = "🇸🇬 +65";
     }
 
-    // Enquiry Checkboxes Selection (Simulate selecting AI Consulting & Copilot)
     const targetEnquiries = ["AI Consulting", "Microsoft Copilot Practice"];
     checkboxes.forEach((cb) => {
       const shouldCheck = targetEnquiries.includes(cb.value);
@@ -471,118 +533,114 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
       }
     });
 
-    // Toggle sales fields
     updateSalesFieldsVisibility();
 
-    // Qualification Dropdowns
     setInputValue("select[name='role']", "VP / Director / Head of Dept");
     setInputValue("select[name='organizationSize']", "201 - 500 employees");
     setInputValue("select[name='budget']", "S$50,001 - S$100,000");
     setInputValue("select[name='timeline']", "1 - 3 months");
     setInputValue("select[name='leadSource']", "LinkedIn");
+
+    const pdpaCheckbox = document.querySelector("#pdpaConsent") as HTMLInputElement | null;
+    if (pdpaCheckbox) pdpaCheckbox.checked = true;
   }
 
   autofillBtn?.addEventListener("click", triggerAutofill);
 
-  // 5. Form Submission with AI Assessment Link
-  const form = document.querySelector("#contact-form") as HTMLFormElement | null;
-  const result = document.querySelector("#result") as HTMLElement | null;
-  const button = document.querySelector("#submit-button") as HTMLButtonElement | null;
+// Submission Handling
+const form = document.querySelector("#contact-form") as HTMLFormElement | null;
+const result = document.querySelector("#result") as HTMLElement | null;
+const button = document.querySelector("#submit-button") as HTMLButtonElement | null;
 
-  if (form && result && button) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+if (form && result && button) {
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-      const selectedEnquiries = Array.from(checkboxes)
-        .filter((chk) => chk.checked)
-        .map((chk) => chk.value);
+    const selectedEnquiries = Array.from(checkboxes)
+      .filter((chk) => chk.checked)
+      .map((chk) => chk.value);
 
-      if (selectedEnquiries.length === 0) {
-        result.innerHTML = `<span class="text-red-600 font-medium">Please select at least one enquiry topic.</span>`;
-        return;
-      }
+    if (selectedEnquiries.length === 0) {
+      result.innerHTML = `<span class="text-red-600 font-medium">Please select at least one enquiry topic.</span>`;
+      return;
+    }
 
-      button.disabled = true;
-      button.textContent = "Submitting Request...";
+    const pdpaCheckbox = document.querySelector("#pdpaConsent") as HTMLInputElement | null;
+    if (!pdpaCheckbox?.checked) {
+      result.innerHTML = `<span class="text-red-600 font-medium">Please accept the PDPA notice to submit your enquiry.</span>`;
+      return;
+    }
 
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
+    if (!turnstileToken) {
+      result.innerHTML = `<span class="text-red-600 font-medium">Please complete the CAPTCHA verification.</span>`;
+      return;
+    }
 
-      const hasSalesSelected = Array.from(checkboxes).some(
-        (chk) => chk.checked && chk.getAttribute("data-is-sales") === "true"
-      );
+    button.disabled = true;
+    button.textContent = "Submitting Request...";
 
-      const leadScore = calculateLeadScore(data, hasSalesSelected);
+    // 1. Single declaration of FormData
+    const formData = new FormData(form);
+    const rawData = Object.fromEntries(formData);
+    delete rawData.enquiryTypes; // Remove standard key to prevent overwriting
 
-      const payload = {
-        ...data,
-        enquiryTypes: selectedEnquiries,
-        leadScore
-      };
+    // 2. Check sales selection & calculate lead score if needed
+    const hasSalesSelected = Array.from(checkboxes).some(
+      (chk) => chk.checked && chk.getAttribute("data-is-sales") === "true"
+    );
+    const leadScore = calculateLeadScore(rawData, hasSalesSelected);
 
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+    // 3. Assemble final payload
+    const payload = {
+      ...rawData,
+      enquiryTypes: selectedEnquiries,
+      leadScore,
+      pdpaConsent: true,
+      "cf-turnstile-response": turnstileToken
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = (await response.json()) as { success?: boolean; error?: string };
+
+      if (json.success) {
+        result.innerHTML = `
+          <div class="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-6 text-center shadow-sm">
+            <div class="mb-2 text-2xl">🎉</div>
+            <h4 class="text-xl font-bold text-emerald-950">Thank you! Your request has been received.</h4>
+            <p class="mt-2 text-sm text-emerald-800">Our team is reviewing your details and an AI consultant will contact you within 1 to 3 working days.</p>
+          </div>`;
+        form.reset();
+        checkboxes.forEach((cb) => {
+          cb.checked = false;
+          cb.closest(".enquiry-pill")?.classList.remove("border-blue-600", "bg-blue-50/60");
         });
-
-        const json = (await response.json()) as { success?: boolean; error?: string };
-
-        if (json.success) {
-          result.innerHTML = `
-            <div class="mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-6 text-center shadow-sm">
-              <div class="mb-2 text-2xl">🎉</div>
-              <h4 class="text-xl font-bold text-emerald-950">
-                Thank you! Your request has been received.
-              </h4>
-              <p class="mt-2 text-sm text-emerald-800">
-                Our specialist team is reviewing your details and will get back to you shortly.
-              </p>
-              
-              <hr class="my-6 border-emerald-200" />
-              
-              <div class="rounded-xl bg-white p-5 shadow-sm border border-slate-100">
-                <span class="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800 uppercase tracking-wider mb-2">
-                  Recommended Next Step
-                </span>
-                <h5 class="text-base font-bold text-slate-900">
-                  Ready to evaluate your organization's AI Readiness?
-                </h5>
-                <p class="mt-1 text-xs text-slate-600">
-                  Take our 3-minute self-assessment to get instant insights into your automation potential.
-                </p>
-                <a
-                  href="/assessment"
-                  class="mt-4 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white transition hover:bg-blue-700 shadow-md hover:shadow-lg"
-                >
-                  <span>Start AI Transformation Assessment</span>
-                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          `;
-
-          form.reset();
-          checkboxes.forEach((cb) => {
-            cb.checked = false;
-            cb.closest(".enquiry-pill")?.classList.remove("border-blue-600", "bg-blue-50/60");
-          });
-          salesFields?.classList.add("hidden");
-          form.style.display = "none";
-        } else {
-          result.innerHTML = `<span class="text-red-600">${json.error ?? "Unable to submit request."}</span>`;
-          button.disabled = false;
-          button.textContent = "Submit Request";
-        }
-      } catch (error) {
-        console.error(error);
-        result.innerHTML = `<span class="text-red-600">An unexpected error occurred. Please try again.</span>`;
+        salesFields?.classList.add("hidden");
+        form.style.display = "none";
+      } else {
+        result.innerHTML = `<span class="text-red-600">${json.error ?? "Unable to submit request."}</span>`;
         button.disabled = false;
         button.textContent = "Submit Request";
+        if (turnstileWidgetId && window.turnstile) {
+          window.turnstile.reset(turnstileWidgetId);
+          turnstileToken = "";
+        }
       }
-    });
-  }
+    } catch (error) {
+      console.error(error);
+      result.innerHTML = `<span class="text-red-600">An unexpected error occurred. Please try again.</span>`;
+      button.disabled = false;
+      button.textContent = "Submit Request";
+      if (turnstileWidgetId && window.turnstile) {
+        window.turnstile.reset(turnstileWidgetId);
+        turnstileToken = "";
+      }
+    }
+  });
+}
 </script>

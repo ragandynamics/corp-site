@@ -1,23 +1,25 @@
 export const site = {
   company: {
-    name: "RAGANDYNAMICS PTE. LTD.",
+    name: "RaganDynamics",
+    fullname: "RAGANDYNAMICS SINGAPORE PTE. LTD.",
     tagline: "AI Solutions for Singapore SMEs",
+    uen: "202634898H",
   },
 
   contact: {
     phone: {
-      display: "+65 66xxxxxx",
-      tel: "+6566xxxxxx",
+      display: "+65 9346 4080",
+      tel: "+6593464080",
     },
 
     whatsapp: {
-      display: "Chat on WhatsApp",
-      url: "https://wa.me/6588764080",
+      display: "Chat with us on WhatsApp",
+      url: "https://wa.me/6593464080",
     },
 
     email: {
       display: "contact@ragandynamics.com",
-      mailto: "mailto:contact@ragandynamics.com",
+      mailto: "contact@ragandynamics.com",
     },
 
     enquiryForm: "/contact",

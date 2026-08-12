@@ -18,6 +18,7 @@ interface ContactForm {
   leadSource?: string;
   message?: string;
   leadScore?: number;
+  "cf-turnstile-response"?: string;
 }
 
 const TEAM_ROUTING: Record<string, string> = {
@@ -33,7 +34,48 @@ const TEAM_ROUTING: Record<string, string> = {
   "General Enquiry": "Admin",
 };
 
-export const POST: APIRoute = async ({ request, locals }) => {
+/**
+ * Validates the Turnstile token with Cloudflare Siteverify API
+ */
+async function verifyTurnstileToken(
+  token: string,
+  secretKey: string,
+  remoteIp?: string
+): Promise<{ success: boolean; errorCodes?: string[] }> {
+  try {
+    const formData = new URLSearchParams();
+    formData.append("secret", secretKey);
+    formData.append("response", token);
+    if (remoteIp) {
+      formData.append("remoteip", remoteIp);
+    }
+
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    const data = (await response.json()) as {
+      success: boolean;
+      "error-codes"?: string[];
+    };
+    return {
+      success: !!data.success,
+      errorCodes: data["error-codes"],
+    };
+  } catch (error) {
+    console.error("Turnstile verification exception:", error);
+    return { success: false };
+  }
+}
+
+export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
   try {
     const body = (await request.json()) as ContactForm;
 
@@ -46,6 +88,66 @@ export const POST: APIRoute = async ({ request, locals }) => {
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
+    }
+
+    // 2. Extract Cloudflare Bindings & Environment Variables
+    const runtime = (locals as Record<string, any>)?.runtime;
+    const bucket = runtime?.env?.CONTACTS as R2Bucket | undefined;
+    const resendApiKey =
+      runtime?.env?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
+    const turnstileSecretKey =
+      runtime?.env?.TURNSTILE_SECRET_KEY ||
+      import.meta.env.TURNSTILE_SECRET_KEY;
+
+    // 3. Turnstile Security Check
+    const turnstileToken = body["cf-turnstile-response"];
+
+    if (!turnstileToken) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "CAPTCHA verification required. Token is missing.",
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+// Allow dummy secret or bypass check in local dev
+    const isDev = import.meta.env.DEV;
+
+    if (!turnstileSecretKey) {
+      console.warn(
+        "TURNSTILE_SECRET_KEY is missing in environment variables. Skipping server-side token validation."
+      );
+    } else {
+      // Don't pass loopback IP ('127.0.0.1') to Turnstile siteverify
+      const ipToVerify = (clientAddress && clientAddress !== "127.0.0.1" && clientAddress !== "::1") 
+        ? clientAddress 
+        : undefined;
+
+      const turnstileResult = await verifyTurnstileToken(
+        turnstileToken,
+        turnstileSecretKey,
+        ipToVerify
+      );
+
+      if (!turnstileResult.success && !isDev) {
+        console.warn(
+          "Turnstile verification failed:",
+          turnstileResult.errorCodes
+        );
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: "Security verification failed. Please try again.",
+          }),
+          { status: 403, headers: { "Content-Type": "application/json" } }
+        );
+      } else if (!turnstileResult.success && isDev) {
+        console.warn(
+          "[DEV MODE] Turnstile validation returned errors, but continuing submission:",
+          turnstileResult.errorCodes
+        );
+      }
     }
 
     const enquiryTypes = body.enquiryTypes?.length
@@ -64,7 +166,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       leadScore = body.leadScore;
     } else {
       if (body.company) leadScore += 10;
-      if (body.organizationSize && body.organizationSize !== "1 - 10 employees") {
+      if (
+        body.organizationSize &&
+        body.organizationSize !== "1 - 10 employees"
+      ) {
         leadScore += 15;
       }
       if (body.role?.includes("C-Suite") || body.role?.includes("VP")) {
@@ -117,14 +222,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       },
       message: body.message ?? "",
       createdAt: new Date().toISOString(),
+      userIp: clientAddress || null,
     };
 
-    // 2. Extract Cloudflare Bindings & Environment Variables
-    const runtime = (locals as Record<string, any>)?.runtime;
-    const bucket = runtime?.env?.CONTACTS as R2Bucket | undefined;
-    const resendApiKey = runtime?.env?.RESEND_API_KEY || import.meta.env.RESEND_API_KEY;
-
-    // 3. Store in R2 Bucket
+    // 4. Store in R2 Bucket
     if (bucket) {
       const objectKey = `contacts/${submission.id}.json`;
 
@@ -145,7 +246,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    // 4. Send Email Notification via Resend (Toggled via site config)
+    // 5. Send Email Notification via Resend (Toggled via site config)
     const emailConfig = site?.integrations?.emailNotification;
 
     if (emailConfig?.enabled) {
@@ -160,7 +261,9 @@ export const POST: APIRoute = async ({ request, locals }) => {
         );
       }
     } else {
-      console.log("Email notifications are disabled in site config — skipping dispatch.");
+      console.log(
+        "Email notifications are disabled in site config — skipping dispatch."
+      );
     }
 
     return new Response(
@@ -196,10 +299,14 @@ async function sendResendContactNotification(submission: any, apiKey: string) {
   const payload = {
     from: `${site.company.name} <${config.emailFrom}>`,
     to: [config.notificationEmail],
-    subject: `[CONTACT - ${submission.qualification.tier}] ${submission.company || submission.name}`,
+    subject: `[CONTACT - ${submission.qualification.tier}] ${
+      submission.company || submission.name
+    }`,
     html: `
 <h2>New Contact Form Submission</h2>
-<p><b>Lead Quality:</b> <span style="font-weight: bold;">${submission.qualification.tier} (${submission.qualification.leadScore}/100)</span></p>
+<p><b>Lead Quality:</b> <span style="font-weight: bold;">${
+      submission.qualification.tier
+    } (${submission.qualification.leadScore}/100)</span></p>
 <p><b>Name:</b> ${submission.name}</p>
 <p><b>Email:</b> ${submission.email}</p>
 <p><b>Company:</b> ${submission.company || "N/A"}</p>
@@ -210,14 +317,18 @@ async function sendResendContactNotification(submission: any, apiKey: string) {
 <h3>Qualification Details</h3>
 <ul>
   <li><b>Role:</b> ${submission.qualification.role || "N/A"}</li>
-  <li><b>Organization Size:</b> ${submission.qualification.organizationSize || "N/A"}</li>
+  <li><b>Organization Size:</b> ${
+    submission.qualification.organizationSize || "N/A"
+  }</li>
   <li><b>Budget:</b> ${submission.qualification.budget || "N/A"}</li>
   <li><b>Timeline:</b> ${submission.qualification.timeline || "N/A"}</li>
   <li><b>Lead Source:</b> ${submission.qualification.leadSource || "N/A"}</li>
 </ul>
 
 <h3>Message</h3>
-<p style="white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 4px;">${submission.message || "No message provided"}</p>
+<p style="white-space: pre-wrap; background: #f4f4f4; padding: 10px; border-radius: 4px;">${
+      submission.message || "No message provided"
+    }</p>
 `,
   };
 

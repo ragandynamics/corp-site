@@ -1,457 +1,58 @@
 ---
-// src/pages/assessment.astro
 import MainLayout from "../layouts/MainLayout.astro";
-import AssessmentStep from "../components/assessment/AssessmentStep.astro";
-import { assessmentSections } from "../lib/assessment/questions";
+import BusinessVelocityForm from "../components/assessment/BusinessVelocityForm.astro";
 ---
 
 <MainLayout
-  title="Executive AI Opportunity Assessment | RaganDynamics"
-  description="Evaluate your organization's AI readiness and uncover high-ROI automation vectors in 5 minutes."
+  title="AI Transformation Assessment Form"
+  description="Discover AI opportunities for your business"
 >
-  <div class="bg-surface min-h-screen py-10 sm:py-16 font-body text-body">
-    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-10">
 
-      <!-- Executive Header -->
-      <header id="assessment-landing" class="text-center space-y-5 max-w-3xl mx-auto">
-        <div class="inline-flex items-center gap-2 rounded-full border border-primary-100 bg-primary-50/60 px-3.5 py-1 text-2xs font-extrabold uppercase tracking-widest text-primary-700">
-          <span class="h-1.5 w-1.5 rounded-full bg-primary-600"></span>
-          Enterprise Readiness Diagnostic
-        </div>
+<section class="py-16">
 
-        <h1 class="text-3xl sm:text-5xl font-heading font-black text-heading tracking-tight leading-tight">
-          AI Opportunity Assessment
-        </h1>
+  <div class="mx-auto max-w-5xl px-6">
 
-        <p class="text-xs sm:text-base font-medium text-slate-600 leading-relaxed max-w-2xl mx-auto">
-          An executive-level diagnostic designed to evaluate your operational stack, identify high-ROI AI automation opportunities, and deliver an actionable adoption roadmap.
-        </p>
 
-        <div class="pt-2">
-          <button
-            id="start-assessment-btn"
-            class="rounded-button bg-primary px-8 py-4 text-sm sm:text-base font-black text-white shadow-md transition hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-100 cursor-pointer"
+    <div class="mb-12 text-center">
+
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+        AI Transformation Assessment Form
+      </h1>
+
+
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+
+        Discover where AI can improve productivity,
+        reduce costs and accelerate business growth.
+
+      </p>
+
+
+      <div class="mt-6 flex justify-center">
+        <div class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50/80 px-4 py-2 text-sm font-medium text-blue-900 shadow-sm backdrop-blur-sm transition-all hover:bg-blue-100/70">
+          <svg 
+            class="h-4 w-4 text-blue-600 animate-pulse" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Begin Assessment →
-          </button>
-        </div>
-      </header>
-
-      <!-- Interactive Assessment Container -->
-      <div id="assessment-wizard" class="hidden space-y-8 max-w-5xl mx-auto">
-
-        <!-- Progress Bar Stepper Header -->
-        <div class="rounded-xl border border-slate-200/80 bg-white p-4 shadow-2xs">
-          <div class="flex items-center justify-between text-2xs font-extrabold uppercase tracking-widest text-slate-500 mb-2">
-            <span>Assessment Progress</span>
-            <span id="progress-text">Step 1 of 5</span>
-          </div>
-          <div class="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
-            <div id="progress-bar" class="h-full bg-primary transition-all duration-300 w-[20%]"></div>
-          </div>
-        </div>
-
-        <form id="assessment-form" class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          
-          <!-- Interactive Form Body -->
-          <div class="lg:col-span-2 rounded-card border border-slate-200/80 bg-white p-6 sm:p-10 shadow-2xs">
-            {assessmentSections.map((section, index) => (
-              <div
-                class={`step-container ${index === 0 ? "block" : "hidden"}`}
-                data-step={index + 1}
-              >
-                <AssessmentStep
-                  section={section}
-                  stepNumber={index + 1}
-                  totalSteps={assessmentSections.length}
-                  answers={{}}
-                />
-              </div>
-            ))}
-
-            <!-- Step 6: Executive Lead Capture Form -->
-            <div id="contact-step" class="hidden space-y-6">
-              <header class="space-y-1.5 border-b border-slate-100 pb-4">
-                <div class="flex items-center justify-between text-2xs font-extrabold uppercase tracking-widest text-slate-400">
-                  <span>Final Step</span>
-                  <span class="text-primary font-bold">Secure Delivery</span>
-                </div>
-                <h2 class="text-xl sm:text-2xl font-heading font-black text-heading tracking-tight leading-snug">
-                  Where Should We Deliver Your AI Strategy Report?
-                </h2>
-                <p class="text-xs font-body text-slate-500 leading-relaxed">
-                  Please provide your contact details so our executive team can route your customized report and benchmark findings directly to you.
-                </p>
-              </header>
-
-              <div class="space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="space-y-1">
-                    <label for="fullName" class="block text-xs font-heading font-bold text-slate-700">
-                      Full Name <span class="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      data-required="true"
-                      placeholder="e.g. Sarah Jenkins"
-                      class="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 transition"
-                    />
-                  </div>
-
-                  <div class="space-y-1">
-                    <label for="jobTitle" class="block text-xs font-heading font-bold text-slate-700">
-                      Job Title / Role <span class="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="jobTitle"
-                      name="jobTitle"
-                      data-required="true"
-                      placeholder="e.g. Managing Director / COO"
-                      class="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 transition"
-                    />
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="space-y-1">
-                    <label for="workEmail" class="block text-xs font-heading font-bold text-slate-700">
-                      Business Email Address <span class="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      id="workEmail"
-                      name="workEmail"
-                      data-required="true"
-                      placeholder="e.g. s.jenkins@company.com"
-                      class="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 transition"
-                    />
-                  </div>
-
-                  <div class="space-y-1">
-                    <label for="companyName" class="block text-xs font-heading font-bold text-slate-700">
-                      Company Name <span class="text-rose-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="companyName"
-                      name="companyName"
-                      data-required="true"
-                      placeholder="e.g. Acme Enterprises"
-                      class="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 transition"
-                    />
-                  </div>
-                </div>
-
-                <div class="space-y-1">
-                  <label for="phone" class="block text-xs font-heading font-bold text-slate-700">
-                    Phone / WhatsApp <span class="text-slate-400 font-normal">(Optional for direct priority support)</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="+65 9123 4567"
-                    class="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 transition"
-                  />
-                </div>
-              </div>
-
-              <div class="rounded-lg border border-slate-100 bg-slate-50 p-3.5 flex items-center justify-between text-2xs text-slate-500">
-                <span class="flex items-center gap-1.5 font-medium">
-                  🔒 Strictly Confidential & Non-Disclosure Protected
-                </span>
-                <span class="text-slate-400">Zero Spam Policy</span>
-              </div>
-
-              <!-- Form Navigation Buttons -->
-              <div class="flex items-center justify-between gap-4 pt-4 border-t border-slate-100">
-                <button
-                  type="button"
-                  id="back-to-pillar-5-btn"
-                  class="rounded-button border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-700 shadow-2xs transition hover:bg-slate-50 hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-200 cursor-pointer"
-                >
-                  ← Back
-                </button>
-
-                <button
-                  type="submit"
-                  id="submit-assessment-btn"
-                  class="rounded-button bg-primary px-6 py-3 text-xs font-black text-white shadow-sm transition hover:bg-primary-600 hover:shadow-md focus:outline-none focus:ring-4 focus:ring-primary-100 cursor-pointer"
-                >
-                  View My Custom AI Strategy Report →
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Executive Live Impact Summary -->
-          <div class="hidden lg:block lg:col-span-1">
-            <div class="sticky top-28 rounded-card border border-slate-200/80 bg-white p-6 shadow-2xs space-y-6">
-              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <span class="text-2xs font-black uppercase tracking-widest text-slate-400">
-                  Real-time Analysis
-                </span>
-                <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
-              </div>
-              
-              <div class="space-y-1">
-                <h3 class="text-2xs font-bold uppercase tracking-wider text-slate-500">Automation Opportunity Score</h3>
-                <div class="text-accent font-black text-2xl tracking-widest">★★★★☆</div>
-              </div>
-
-              <div class="space-y-3 border-t border-slate-100 pt-5">
-                <h4 class="text-2xs font-black uppercase tracking-widest text-slate-800">Identified Focus Vectors</h4>
-                <ul id="live-opportunities-list" class="space-y-2.5 text-xs font-semibold text-slate-700">
-                  <li class="text-slate-400 font-normal italic">Select options to reveal tailored opportunities...</li>
-                </ul>
-              </div>
-
-              <div class="rounded-lg bg-slate-50 p-3.5 text-2xs text-slate-500 space-y-1 border border-slate-100">
-                <p class="font-bold text-slate-700">🔒 Enterprise Governance</p>
-                <p>Data provided is strictly processed to construct your bespoke report.</p>
-              </div>
-            </div>
-          </div>
-
-        </form>
-      </div>
-
-      <!-- Analysis State -->
-      <div id="assessment-analyzing" class="hidden text-center py-20 space-y-6 bg-white rounded-card border border-slate-200/80 p-8 shadow-2xs max-w-2xl mx-auto">
-        <div class="mx-auto h-12 w-12 animate-spin rounded-full border-3 border-primary border-t-transparent"></div>
-        <div class="space-y-2">
-          <h2 class="text-xl font-heading font-black text-heading">Synthesizing Diagnostic Insights...</h2>
-          <p class="text-xs font-medium text-slate-500">Generating bespoke report for your executive team.</p>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>Complete this 3-minute executive discovery questionnaire.</span>
         </div>
       </div>
 
-      <!-- Results Target Container -->
-      <div id="assessment-results-container" class="hidden max-w-3xl mx-auto"></div>
 
     </div>
+
+
+    <BusinessVelocityForm />
+
+
   </div>
+
+</section>
+
+
 </MainLayout>
-
-<script>
-  let currentStep = 1;
-  const totalSteps = 5;
-
-  const landing = document.getElementById("assessment-landing");
-  const wizard = document.getElementById("assessment-wizard");
-  const startBtn = document.getElementById("start-assessment-btn");
-  const form = document.getElementById("assessment-form") as HTMLFormElement;
-  const contactStep = document.getElementById("contact-step");
-  const backToPillar5Btn = document.getElementById("back-to-pillar-5-btn");
-  const analyzing = document.getElementById("assessment-analyzing");
-  const resultsContainer = document.getElementById("assessment-results-container");
-  const oppList = document.getElementById("live-opportunities-list");
-  const progressBar = document.getElementById("progress-bar");
-  const progressText = document.getElementById("progress-text");
-
-  startBtn?.addEventListener("click", () => {
-    landing?.classList.add("hidden");
-    wizard?.classList.remove("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  // Client-Side Option Selection Logic & Arrow Indicator Update
-  document.addEventListener("click", (e) => {
-    const card = (e.target as HTMLElement).closest(".option-card");
-    if (!card) return;
-
-    const type = card.getAttribute("data-type");
-    const input = card.querySelector("input") as HTMLInputElement;
-    if (!input) return;
-
-    if (type === "select") {
-      const parentGroup = card.closest("[data-question-id]");
-      parentGroup?.querySelectorAll(".option-card").forEach((c) => {
-        c.classList.remove("border-primary", "bg-primary-50/40", "ring-1", "ring-primary");
-        c.classList.add("border-slate-200", "bg-white");
-        
-        const radioDot = c.querySelector(".radio-dot");
-        const radioIndicator = c.querySelector(".radio-indicator");
-        radioDot?.classList.add("hidden");
-        radioIndicator?.classList.remove("border-primary", "bg-primary");
-        radioIndicator?.classList.add("border-slate-300", "bg-white");
-      });
-
-      input.checked = true;
-      card.classList.remove("border-slate-200", "bg-white");
-      card.classList.add("border-primary", "bg-primary-50/40", "ring-1", "ring-primary");
-      
-      const dot = card.querySelector(".radio-dot");
-      const indicator = card.querySelector(".radio-indicator");
-      dot?.classList.remove("hidden");
-      indicator?.classList.remove("border-slate-300", "bg-white");
-      indicator?.classList.add("border-primary", "bg-primary");
-
-    } else if (type === "multiselect") {
-      input.checked = !input.checked;
-      
-      const checkIcon = card.querySelector(".check-icon");
-      const checkboxIndicator = card.querySelector(".checkbox-indicator");
-
-      if (input.checked) {
-        card.classList.remove("border-slate-200", "bg-white");
-        card.classList.add("border-primary", "bg-primary-50/40", "ring-1", "ring-primary");
-        checkIcon?.classList.remove("hidden");
-        checkboxIndicator?.classList.remove("border-slate-300", "bg-white");
-        checkboxIndicator?.classList.add("border-primary", "bg-primary");
-      } else {
-        card.classList.remove("border-primary", "bg-primary-50/40", "ring-1", "ring-primary");
-        card.classList.add("border-slate-200", "bg-white");
-        checkIcon?.classList.add("hidden");
-        checkboxIndicator?.classList.remove("border-primary", "bg-primary");
-        checkboxIndicator?.classList.add("border-slate-300", "bg-white");
-      }
-    }
-
-    // Toggle Arrow -> Checkmark badge state
-    const questionContainer = card.closest("[data-question-container]");
-    if (questionContainer) {
-      const hasChecked = questionContainer.querySelectorAll("input:checked").length > 0;
-      const badge = questionContainer.querySelector(".question-arrow-badge");
-      const arrowIcon = questionContainer.querySelector(".question-arrow-icon");
-      const checkIcon = questionContainer.querySelector(".question-check-icon");
-
-      if (hasChecked) {
-        badge?.classList.remove("bg-primary-50", "text-primary", "border-primary-100");
-        badge?.classList.add("bg-emerald-50", "border-emerald-200");
-        arrowIcon?.classList.add("hidden");
-        checkIcon?.classList.remove("hidden");
-      } else {
-        badge?.classList.remove("bg-emerald-50", "border-emerald-200");
-        badge?.classList.add("bg-primary-50", "text-primary", "border-primary-100");
-        arrowIcon?.classList.remove("hidden");
-        checkIcon?.classList.add("hidden");
-      }
-    }
-
-    form?.dispatchEvent(new Event("change"));
-  });
-
-  // Handle Back Button on Contact Step
-  backToPillar5Btn?.addEventListener("click", () => {
-    contactStep?.classList.add("hidden");
-    currentStep = 5;
-    updateStepVisibility();
-  });
-
-  // Dynamic Live Summary Updates
-  form?.addEventListener("change", () => {
-    const checkedInputs = Array.from(form.querySelectorAll("input:checked")) as HTMLInputElement[];
-    const checkedValues = checkedInputs.map((i) => i.value);
-    
-    if (oppList) {
-      oppList.innerHTML = "";
-      const opportunities = [];
-
-      if (checkedValues.some(v => ["Document Search", "Workspace", "Knowledge Base"].includes(v))) {
-        opportunities.push("✓ Knowledge & Context Retrieval Engine");
-      }
-      if (checkedValues.some(v => ["Email Handling", "CRM", "Customer Service"].includes(v))) {
-        opportunities.push("✓ Intelligent Communication Workflows");
-      }
-      if (checkedValues.some(v => ["Data Entry", "ERP", "Reporting"].includes(v))) {
-        opportunities.push("✓ Automated Document Extraction");
-      }
-
-      if (opportunities.length === 0) {
-        oppList.innerHTML = `<li class="text-slate-400 font-normal italic">Select options to reveal tailored opportunities...</li>`;
-      } else {
-        opportunities.forEach(opp => {
-          const li = document.createElement("li");
-          li.className = "flex items-center gap-1.5 text-primary-700 font-bold";
-          li.textContent = opp;
-          oppList.appendChild(li);
-        });
-      }
-    }
-  });
-
-  // Step Navigation & Form Submission Logic
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const submitter = (e as SubmitEvent).submitter as HTMLButtonElement;
-    
-    if (submitter?.getAttribute("data-action") === "prev") {
-      if (currentStep > 1) {
-        currentStep--;
-        updateStepVisibility();
-      }
-      return;
-    }
-
-    // Advance through the 5 pillars first
-    if (currentStep < totalSteps) {
-      currentStep++;
-      updateStepVisibility();
-    } else if (currentStep === totalSteps && contactStep?.classList.contains("hidden")) {
-      // Reveal the Contact Capture step
-      document.querySelectorAll(".step-container").forEach((el) => el.classList.add("hidden"));
-      contactStep?.classList.remove("hidden");
-      if (progressBar) progressBar.style.width = "100%";
-      if (progressText) progressText.textContent = "Final Step: Contact Details";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    } else {
-      // Final submit after contact form is filled
-      const fullName = (document.getElementById("fullName") as HTMLInputElement)?.value;
-      const workEmail = (document.getElementById("workEmail") as HTMLInputElement)?.value;
-      const companyName = (document.getElementById("companyName") as HTMLInputElement)?.value;
-
-      if (!fullName || !workEmail || !companyName) return;
-
-      wizard?.classList.add("hidden");
-      analyzing?.classList.remove("hidden");
-      
-      setTimeout(() => {
-        analyzing?.classList.add("hidden");
-        resultsContainer?.classList.remove("hidden");
-        if (resultsContainer) {
-          resultsContainer.innerHTML = `
-            <div class="rounded-card border border-slate-200/80 bg-white p-8 sm:p-12 text-center space-y-6 shadow-2xs">
-              <span class="inline-block rounded-full bg-primary-50 px-3.5 py-1 text-2xs font-extrabold uppercase tracking-widest text-primary-700">
-                Evaluation Complete
-              </span>
-              <h2 class="text-2xl sm:text-4xl font-heading font-black text-heading">Thank You, ${fullName}</h2>
-              <p class="text-slate-600 font-medium max-w-xl mx-auto leading-relaxed text-xs sm:text-sm">
-                Your bespoke AI Opportunity Report for <strong>${companyName}</strong> has been generated and dispatched to <strong>${workEmail}</strong>.
-              </p>
-
-              <div class="rounded-xl border border-primary-100 bg-primary-50/50 p-6 text-left max-w-lg mx-auto space-y-3">
-                <h4 class="text-xs font-black uppercase tracking-wider text-primary-700">Next Recommended Action</h4>
-                <p class="text-xs text-slate-700 font-medium leading-relaxed">
-                  Schedule a complimentary 30-minute discovery call with our AI engineers to review your report findings and map your deployment roadmap.
-                </p>
-              </div>
-
-              <div class="pt-2">
-                <a href="/contact" class="inline-block rounded-button bg-primary px-8 py-4 text-sm font-black text-white shadow-md hover:bg-primary-600 transition">
-                  Schedule Executive Strategy Briefing →
-                </a>
-              </div>
-            </div>
-          `;
-        }
-      }, 2000);
-    }
-  });
-
-  function updateStepVisibility() {
-    document.querySelectorAll(".step-container").forEach((el) => {
-      const stepNum = Number(el.getAttribute("data-step"));
-      if (stepNum === currentStep) el.classList.remove("hidden");
-      else el.classList.add("hidden");
-    });
-
-    if (progressBar) progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
-    if (progressText) progressText.textContent = `Step ${currentStep} of ${totalSteps}`;
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-</script>
