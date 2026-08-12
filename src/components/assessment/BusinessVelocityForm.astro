@@ -149,6 +149,35 @@
     </div>
   </div>
 
+  <div id="section-interests" class="rounded-xl p-4 transition-colors duration-200">
+    <h2 class="text-2xl font-semibold text-gray-900">
+      Solutions of Interest <span class="text-red-500 text-lg">*</span>
+    </h2>
+    <p class="text-sm text-gray-500 mt-1 mb-3">Select at least one solution area you would like to explore.</p>
+    <div class="grid gap-3 md:grid-cols-2">
+      {
+        [
+          "AI Consulting & Strategy",
+          "Business Process Automation",
+          "Microsoft Copilot Practice",
+          "AI Training & Workshops",
+          "Custom Software Solutions",
+          "Managed Technical Support"
+        ].map(item => (
+          <label class="flex items-center gap-3 rounded-lg border p-3 hover:bg-gray-50 cursor-pointer">
+            <input
+              type="checkbox"
+              name="interests"
+              value={item}
+              class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            <span class="text-sm">{item}</span>
+          </label>
+        ))
+      }
+    </div>
+  </div>
+
   <div>
     <label class="mb-2 block font-medium text-gray-700">
       Implementation Timeline
@@ -263,9 +292,10 @@ form?.addEventListener("submit", async (e) => {
   const challenges = fd.getAll("challenges").map(String);
   const systems = fd.getAll("systems").map(String);
   const priorities = fd.getAll("priorities").map(String);
+  const interests = fd.getAll("interests").map(String);
 
   // Reset visual error highlights
-  ["section-challenges", "section-systems", "section-priorities"].forEach((id) => {
+  ["section-challenges", "section-systems", "section-priorities", "section-interests"].forEach((id) => {
     document.getElementById(id)?.classList.remove("border-2", "border-red-500", "bg-red-50/30");
   });
 
@@ -280,6 +310,9 @@ form?.addEventListener("submit", async (e) => {
   }
   if (priorities.length === 0) {
     missingSections.push({ id: "section-priorities", title: "Business Priorities" });
+  }
+  if (interests.length === 0) {
+    missingSections.push({ id: "section-interests", title: "Solutions of Interest" });
   }
 
   if (missingSections.length > 0) {
@@ -311,15 +344,16 @@ form?.addEventListener("submit", async (e) => {
   data.challenges = challenges;
   data.systems = systems;
   data.priorities = priorities;
+  data.interests = interests;
   data.pdpaConsent = fd.get("pdpaConsent") === "on";
 
-  // Inverted Scoring logic
+  // Operational Efficiency Score calculation: Starts at 90 and deducts based on selected challenges
   let currentEfficiency = 90;
-  currentEfficiency -= data.challenges.length * 6;
+  currentEfficiency -= challenges.length * 6;
 
-  if (!data.systems.includes("ERP")) currentEfficiency -= 10;
-  if (!data.systems.includes("CRM")) currentEfficiency -= 10;
-  if (!data.systems.includes("HRMS")) currentEfficiency -= 5;
+  if (!systems.includes("ERP")) currentEfficiency -= 10;
+  if (!systems.includes("CRM")) currentEfficiency -= 10;
+  if (!systems.includes("HRMS")) currentEfficiency -= 5;
 
   if (data.timeline === "Exploring options") currentEfficiency -= 10;
 
@@ -338,7 +372,6 @@ form?.addEventListener("submit", async (e) => {
     if (response.ok) {
       window.location.href = `/assessment-success?score=${finalScore}`;
     } else {
-      // Cast response JSON to type { error?: string } to satisfy TypeScript strict mode
       const result = (await response.json().catch(() => ({}))) as { error?: string };
 
       if (errorBox && result.error) {
