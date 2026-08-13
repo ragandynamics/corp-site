@@ -33,14 +33,36 @@ interface AssessmentRequest {
 export const prerender = false;
 
 interface RuntimeEnv {
-  CONTACTS: R2Bucket;
+  RD_DATA: R2Bucket;
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const body = (await request.json()) as AssessmentRequest;
-    const now = new Date().toISOString();
 
+    // ----------------------------------------------------
+    // Validation: Ensure at least one selection per section
+    // ----------------------------------------------------
+    const missingSections: string[] = [];
+
+    if (!body.systems || body.systems.length === 0) missingSections.push("Current Systems");
+    if (!body.challenges || body.challenges.length === 0) missingSections.push("Key Challenges");
+    if (!body.priorities || body.priorities.length === 0) missingSections.push("Strategic Priorities");
+    if (!body.interests || body.interests.length === 0) missingSections.push("Solutions of Interest");
+
+    if (missingSections.length > 0) {
+      return new Response(
+        JSON.stringify({
+          error: `Please select at least one option for: ${missingSections.join(", ")}.`,
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const now = new Date().toISOString();
     const score = typeof body.score === "number" ? body.score : 0;
 
     const lead: BusinessVelocityLead & { score: number; pdpaConsent: boolean } = {
@@ -86,33 +108,27 @@ export const POST: APIRoute = async ({ request, locals }) => {
     */
     const env = (locals as any)?.runtime?.env as RuntimeEnv;
 
-    if (!env?.CONTACTS) {
-      console.error("R2 CONTACTS binding missing");
+    if (!env?.RD_DATA) {
+      console.error("R2 RD_DATA binding missing");
 
       return new Response(
-        JSON.stringify({
-          error: "Storage unavailable",
-        }),
+        JSON.stringify({ error: "Storage unavailable" }),
         {
           status: 500,
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
 
     /*
-      Store lead under the separate "assessments/" folder in R2
+      Store lead under the "assessment/" folder in R2
     */
     const id = crypto.randomUUID();
     const datePrefix = now.split("T")[0];
-    const fileName = `assessments/${datePrefix}_${id}.json`;
+    const fileName = `assessment/${datePrefix}_${id}.json`;
 
-    await env.CONTACTS.put(fileName, JSON.stringify(lead, null, 2), {
-      httpMetadata: {
-        contentType: "application/json",
-      },
+    await env.RD_DATA.put(fileName, JSON.stringify(lead, null, 2), {
+      httpMetadata: { contentType: "application/json" },
       customMetadata: {
         score: String(score),
         company: lead.lead.company,
@@ -141,23 +157,17 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }),
       {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       }
     );
   } catch (error) {
     console.error("Assessment submission failed", error);
 
     return new Response(
-      JSON.stringify({
-        error: "Unable to process submission",
-      }),
+      JSON.stringify({ error: "Unable to process submission" }),
       {
         status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       }
     );
   }
