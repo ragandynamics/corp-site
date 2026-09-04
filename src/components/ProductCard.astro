@@ -1,10 +1,11 @@
 ---
 import Badge from "./ui/Badge.astro";
+import type { Product } from "../data/products";
 
 
 export interface Props {
 
-product:any;
+product:Product;
 
 }
 
@@ -13,11 +14,17 @@ const {
 product
 }=Astro.props;
 
+const productHref = product.ctaHref ?? "/contact";
+const opensNewTab = productHref.startsWith("http");
+
 ---
 
 <div
 
+id={product.id}
+
 class="
+scroll-mt-24
 rounded-3xl
 border
 border-slate-200
@@ -278,7 +285,9 @@ text-sm
 
 <a
 
-href="/contact"
+href={productHref}
+target={opensNewTab ? "_blank" : undefined}
+rel={opensNewTab ? "noopener noreferrer" : undefined}
 
 class="
 mt-8
