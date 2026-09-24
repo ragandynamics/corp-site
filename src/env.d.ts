@@ -7,10 +7,8 @@ interface Env {
   RESEND_API_KEY?: string;
 }
 
-type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
+type CloudflareRuntime = import("@astrojs/cloudflare").Runtime<Env>;
 
 declare namespace App {
-  interface Locals {
-    runtime: Runtime;
-  }
+  interface Locals extends CloudflareRuntime {}
 }
