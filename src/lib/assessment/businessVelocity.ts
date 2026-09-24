@@ -1,3 +1,8 @@
+import {
+  calculateOperationalEfficiency,
+  type BusinessVelocitySubmission,
+} from "./businessVelocitySubmission";
+
 export interface BusinessVelocityLead {
 
 
@@ -41,9 +46,13 @@ export interface BusinessVelocityLead {
 
   timeline:string;
 
+  score:number;
+
+  pdpaConsent:boolean;
+
 
   answers:
-  Record<string,any>;
+  Record<string,unknown>;
 
 
   createdAt:string;
@@ -251,4 +260,38 @@ ${data.createdAt}
 
 `;
 
+}
+
+export function createBusinessVelocityLead(
+  submission: BusinessVelocitySubmission,
+  createdAt = new Date().toISOString()
+): BusinessVelocityLead {
+  return {
+    campaign: "business-velocity",
+    lead: {
+      name: submission.name,
+      designation: submission.designation,
+      company: submission.company,
+      email: submission.email,
+      phone: submission.phone,
+    },
+    business: {
+      industry: submission.industry,
+      companySize: submission.companySize,
+      systems: submission.systems,
+    },
+    challenges: submission.challenges,
+    priorities: submission.priorities,
+    interests: submission.interests,
+    timeline: submission.timeline,
+    score: calculateOperationalEfficiency(submission),
+    pdpaConsent: submission.pdpaConsent,
+    answers: { ...submission },
+    createdAt,
+    status: "NEW",
+    source: {
+      page: "/assessment",
+      campaign: "business-velocity",
+    },
+  };
 }

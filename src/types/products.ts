@@ -21,6 +21,8 @@ technologies:string[];
 
 cta:string;
 
+ctaHref?:string;
+
 
 featured:boolean;
 

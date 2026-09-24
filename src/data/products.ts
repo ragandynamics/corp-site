@@ -20,12 +20,46 @@ export interface Product {
 
   cta: string;
 
+  ctaHref?: string;
+
   featured: boolean;
 
 }
 
 
 export const products: Product[] = [
+
+{
+  id: "dlogicflow",
+  name: "dLogicFlow",
+  icon: "dF",
+  tagline: "One flow for every customer channel",
+  description:
+  "Unify conversations and workflows across WhatsApp, Telegram, web chat and other customer channels in one extensible platform.",
+  audience: [
+    "Customer Service Teams",
+    "Sales Teams",
+    "Operations Teams"
+  ],
+  features: [
+    "Unified Omnichannel Inbox",
+    "Cross-Channel Flow Automation",
+    "Intelligent Routing and Handover"
+  ],
+  benefits: [
+    "Manage conversations from one workspace",
+    "Deliver consistent cross-channel experiences",
+    "Reduce response time and manual coordination"
+  ],
+  technologies: [
+    "WhatsApp",
+    "Telegram",
+    "Web Chat"
+  ],
+  cta: "Explore dLogicFlow",
+  ctaHref: "https://dlogicflow.com",
+  featured: true
+},
 
 {
   id:"enterprise-knowledge-assistant",
