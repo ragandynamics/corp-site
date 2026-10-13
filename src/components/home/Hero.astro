@@ -11,7 +11,7 @@ const { company } = site;
 
   <Container>
 
-    <div class="relative grid items-center gap-16 py-24 lg:grid-cols-2">
+    <div class="relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-2 lg:gap-16 lg:py-24">
 
       <!-- ================================================= -->
       <!-- Left -->
@@ -25,39 +25,32 @@ const { company } = site;
           🇸🇬 {company.tagline}
         </span>
 
-        <h1
-          class="mt-8 text-5xl font-black leading-tight text-white lg:text-6xl"
-        >
+        <h1 class="mt-8 text-3xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
 
-          Practical AI Solutions
+          Practical AI for Singapore SMEs
 
           <span class="block text-blue-400">
-            That Help SMEs
-          </span>
-
-          <span class="block text-blue-300">
-            Work Smarter and Grow Faster
+            Work Smarter. Grow Faster.
           </span>
 
         </h1>
 
-        <p class="mt-8 text-xl leading-9 text-slate-300">
+        <p class="mt-8 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl sm:leading-9">
 
-          We help Singapore businesses identify practical opportunities
-          to adopt Artificial Intelligence, automate repetitive work,
-          improve productivity and make better business decisions with
-          secure, scalable and cost-effective solutions.
+          We help Singapore SMEs automate repetitive work, improve customer
+          service and turn business data into better decisions—with secure,
+          practical AI solutions built around measurable outcomes.
 
         </p>
 
         <div class="mt-10 flex flex-wrap gap-4">
 
           <a
-            href="/contact"
-            data-analytics="hero-consultation"
+            href="/assessment"
+            data-analytics="hero-assessment"
             class="rounded-xl bg-blue-600 px-8 py-4 text-lg font-bold text-white transition hover:bg-blue-700"
           >
-            Book an AI Consultation
+            Get Your Free AI Assessment
           </a>
 
           <a
@@ -69,16 +62,16 @@ const { company } = site;
 
         </div>
 
-        <div class="mt-12 grid grid-cols-2 gap-6 md:grid-cols-4">
+        <div class="mt-12 hidden grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid md:grid-cols-4">
 
           <div>
 
             <div class="text-3xl font-black text-blue-400">
-              AI
+              SME
             </div>
 
             <p class="mt-2 text-sm text-slate-300">
-              Strategy
+              Focused
             </p>
 
           </div>
@@ -86,11 +79,11 @@ const { company } = site;
           <div>
 
             <div class="text-3xl font-black text-blue-400">
-              AI
+              Secure
             </div>
 
             <p class="mt-2 text-sm text-slate-300">
-              Automation
+              by Design
             </p>
 
           </div>
@@ -98,11 +91,11 @@ const { company } = site;
           <div>
 
             <div class="text-3xl font-black text-blue-400">
-              Cloud
+              Practical
             </div>
 
             <p class="mt-2 text-sm text-slate-300">
-              Solutions
+              Delivery
             </p>
 
           </div>
@@ -129,65 +122,35 @@ const { company } = site;
 
       <div>
 
-        <div class="rounded-3xl bg-white p-8 shadow-2xl">
+        <div class="rounded-3xl bg-white p-8 shadow-2xl lg:p-10">
 
-          <h2 class="text-3xl font-black text-slate-900">
+          <span class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+            Free · About 3 minutes
+          </span>
 
-            Your AI Journey Starts Here
+          <h2 class="mt-5 text-3xl font-black text-slate-900">
+
+            Find Your Best AI Opportunity
 
           </h2>
 
-          <div class="mt-8 space-y-5">
+          <p class="mt-4 leading-7 text-slate-600">
+            Answer a few practical questions and receive a focused view of
+            where AI and automation could create value in your business.
+          </p>
 
-            <div class="rounded-xl bg-slate-50 p-5">
+          <ul class="mt-7 space-y-4 text-slate-700">
+            <li class="flex gap-3"><span class="font-bold text-emerald-600">✓</span> Identify high-impact use cases</li>
+            <li class="flex gap-3"><span class="font-bold text-emerald-600">✓</span> Understand your readiness level</li>
+            <li class="flex gap-3"><span class="font-bold text-emerald-600">✓</span> Receive recommended next steps</li>
+          </ul>
 
-              <h3 class="font-bold text-slate-900">
-
-                Discover Opportunities
-
-              </h3>
-
-              <p class="mt-2 text-slate-600">
-
-                Identify practical AI use cases aligned with your business goals.
-
-              </p>
-
-            </div>
-
-            <div class="rounded-xl bg-slate-50 p-5">
-
-              <h3 class="font-bold text-slate-900">
-
-                Build with Confidence
-
-              </h3>
-
-              <p class="mt-2 text-slate-600">
-
-                Implement secure, scalable solutions that integrate with your existing systems.
-
-              </p>
-
-            </div>
-
-            <div class="rounded-xl bg-slate-50 p-5">
-
-              <h3 class="font-bold text-slate-900">
-
-                Deliver Measurable Value
-
-              </h3>
-
-              <p class="mt-2 text-slate-600">
-
-                Improve productivity, streamline operations and support long-term business growth.
-
-              </p>
-
-            </div>
-
-          </div>
+          <a
+            href="/assessment"
+            class="mt-8 flex min-h-12 w-full items-center justify-center rounded-xl bg-slate-900 px-6 py-4 text-center font-bold text-white transition hover:bg-blue-700"
+          >
+            Start My Assessment
+          </a>
 
         </div>
 

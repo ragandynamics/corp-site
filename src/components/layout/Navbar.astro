@@ -1,13 +1,9 @@
 ---
 import { site } from "../../config/site";
 
-const { company, contact } = site;
+const { company } = site;
 
 const navigation = [
-  {
-    label: "Home",
-    href: "/"
-  },
   {
     label: "Services",
     href: "/services"
@@ -21,16 +17,12 @@ const navigation = [
     href: "/industries"
   },
   {
-    label: "Get Your Free AI Transformation Assessment",
-    href: "/assessment"
-  },
-  {
     label: "Insights",
     href: "/insights"
   },
   {
-    label: "Contact",
-    href: "/contact"
+    label: "About",
+    href: "/about"
   }
 ];
 
@@ -46,7 +38,8 @@ const pathname = Astro.url.pathname;
     <!-- Logo -->
     <a
       href="/"
-      class="flex items-center gap-3"
+      class="flex shrink-0 items-center gap-3 rounded-lg"
+      aria-label={`${company.name} home`}
     >
       <div
         class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white"
@@ -67,7 +60,8 @@ const pathname = Astro.url.pathname;
 
     <!-- Desktop Navigation -->
     <nav
-      class="hidden items-center gap-7 lg:flex"
+      class="hidden items-center gap-5 lg:flex xl:gap-7"
+      aria-label="Primary navigation"
     >
       {
         navigation.map((item) => (
@@ -75,7 +69,7 @@ const pathname = Astro.url.pathname;
             href={item.href}
             class:list={[
               "text-sm font-medium transition-colors",
-              pathname === item.href
+              pathname === item.href || (item.href !== "/" && pathname.startsWith(`${item.href}/`))
                 ? "text-blue-600"
                 : "text-slate-600 hover:text-blue-600"
             ]}
@@ -91,10 +85,10 @@ const pathname = Astro.url.pathname;
       class="hidden items-center gap-4 lg:flex"
     >
       <a
-        href={contact.enquiryForm}
-        class="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+        href="/assessment"
+        class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
       >
-        Book an AI Consultation
+        Free AI Assessment
       </a>
     </div>
 
@@ -103,6 +97,8 @@ const pathname = Astro.url.pathname;
       id="menuButton"
       class="rounded-lg border border-slate-300 p-2 lg:hidden text-slate-700 hover:text-slate-900"
       aria-label="Open menu"
+      aria-controls="mobileMenu"
+      aria-expanded="false"
       type="button"
     >
       <svg

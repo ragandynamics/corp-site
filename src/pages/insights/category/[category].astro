@@ -2,6 +2,8 @@
 import MainLayout from "../../../layouts/MainLayout.astro";
 import InsightCard from "../../../components/InsightCard.astro";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
 
   const categories = [

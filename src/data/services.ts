@@ -43,11 +43,11 @@ features:[
 
 {
 id:"automation",
-title:"Business Process Automation",
+title:"AI Agents & Process Automation",
 icon:"⚡",
 tagline:"Reduce manual work and operating costs.",
-description:"Automate repetitive business processes using AI and workflow automation.",
-businessValue:"Increase productivity while lowering operational costs.",
+description:"Use AI agents and connected workflows to automate repetitive, multi-step business processes.",
+businessValue:"Increase productivity, reduce hand-offs and lower operational costs.",
 cta:"Automate My Business",
 featured:true,
 features:[
@@ -56,6 +56,8 @@ features:[
 "Expense Claims",
 "HR Onboarding",
 "Document Processing",
+"Knowledge Assistants",
+"AI Agents",
 "Approval Workflows",
 "Email Automation",
 "Digital Forms"
@@ -64,7 +66,7 @@ features:[
 
 {
 id:"chatbots",
-title:"AI Customer Service",
+title:"AI Customer Service & Assistants",
 icon:"💬",
 tagline:"Support customers 24/7.",
 description:"Deploy intelligent assistants across your website and communication channels.",
@@ -75,6 +77,7 @@ features:[
 "WhatsApp AI",
 "Microsoft Teams Bot",
 "FAQ Automation",
+"Agent Assist",
 "Appointment Booking",
 "Voice AI",
 "Customer Support AI"
@@ -130,6 +133,7 @@ features:[
 "Microsoft 365 Copilot",
 "Copilot Studio",
 "AI Agents",
+"Enterprise Knowledge Assistants",
 "Power Platform",
 "Power BI",
 "Power Automate",

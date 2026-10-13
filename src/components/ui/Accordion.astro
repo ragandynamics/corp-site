@@ -52,6 +52,8 @@ hover:bg-slate-50
 "
 
 data-target={`accordion-${index}`}
+aria-controls={`accordion-${index}`}
+aria-expanded="false"
 
 >
 
@@ -158,6 +160,11 @@ return;
 
 content.classList.toggle(
 "hidden"
+);
+
+button.setAttribute(
+"aria-expanded",
+String(!content.classList.contains("hidden"))
 );
 
 

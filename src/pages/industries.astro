@@ -1,234 +1,35 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-
-import Container from "../components/ui/Container.astro";
+import Industries from "../components/home/Industries.astro";
 ---
 
 <MainLayout
-
-title="AI Solutions by Industry | RaganDynamics"
-
-description="Practical AI consulting and automation solutions for Singapore SMEs across multiple industries."
-
+  title="AI Solutions by Industry | RaganDynamics"
+  description="Practical AI consulting and automation solutions for Singapore SMEs across manufacturing, professional services, distribution, logistics, healthcare and retail."
 >
-
-
-<section class="bg-slate-50 py-20">
-
-
-<Container>
-
-
-<div class="text-center">
-
-
-<h1 class="text-5xl font-black text-slate-900">
-
-AI Solutions Across Industries
-
-</h1>
-
-
-<p class="mx-auto mt-6 max-w-3xl text-xl text-slate-600">
-
-We help Singapore SMEs adopt practical AI solutions
-that improve productivity, reduce costs and accelerate growth.
-
-</p>
-
-
-</div>
-
-
-
-
-<div class="mt-16 grid gap-8 md:grid-cols-3">
-
-
-
-<!-- Professional Services -->
-
-<div class="rounded-3xl bg-white p-8 shadow-sm">
-
-
-<h2 class="text-2xl font-bold text-slate-900">
-
-Professional Services
-
-</h2>
-
-
-<p class="mt-4 text-slate-600">
-
-AI assistants, document automation,
-knowledge management and workflow optimisation.
-
-</p>
-
-
-</div>
-
-
-
-
-<!-- Retail -->
-
-<div class="rounded-3xl bg-white p-8 shadow-sm">
-
-
-<h2 class="text-2xl font-bold text-slate-900">
-
-Retail & E-Commerce
-
-</h2>
-
-
-<p class="mt-4 text-slate-600">
-
-Customer support automation,
-personalisation and sales insights.
-
-</p>
-
-
-</div>
-
-
-
-
-<!-- Manufacturing -->
-
-<div class="rounded-3xl bg-white p-8 shadow-sm">
-
-
-<h2 class="text-2xl font-bold text-slate-900">
-
-Manufacturing
-
-</h2>
-
-
-<p class="mt-4 text-slate-600">
-
-AI-driven operations,
-predictive insights and process improvement.
-
-</p>
-
-
-</div>
-
-
-
-
-<!-- Healthcare -->
-
-<div class="rounded-3xl bg-white p-8 shadow-sm">
-
-
-<h2 class="text-2xl font-bold text-slate-900">
-
-Healthcare
-
-</h2>
-
-
-<p class="mt-4 text-slate-600">
-
-Secure AI solutions for administration,
-documentation and efficiency.
-
-</p>
-
-
-</div>
-
-
-
-
-<!-- Finance -->
-
-<div class="rounded-3xl bg-white p-8 shadow-sm">
-
-
-<h2 class="text-2xl font-bold text-slate-900">
-
-Finance & Accounting
-
-</h2>
-
-
-<p class="mt-4 text-slate-600">
-
-Automate reporting,
-analysis and repetitive workflows.
-
-</p>
-
-
-</div>
-
-
-
-
-<!-- SMEs -->
-
-<div class="rounded-3xl bg-white p-8 shadow-sm">
-
-
-<h2 class="text-2xl font-bold text-slate-900">
-
-Small & Medium Enterprises
-
-</h2>
-
-
-<p class="mt-4 text-slate-600">
-
-Affordable AI adoption strategies
-designed for SME budgets.
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-<div class="mt-16 rounded-3xl bg-slate-900 p-10 text-center">
-
-
-<h2 class="text-3xl font-bold text-white">
-
-Ready to explore AI for your industry?
-
-</h2>
-
-
-<a
-
-href="/contact"
-
-class="mt-8 inline-flex rounded-xl bg-blue-600 px-8 py-4 font-bold text-white hover:bg-blue-700"
-
->
-
-Talk to an AI Consultant
-
-</a>
-
-
-</div>
-
-
-
-</Container>
-
-
-</section>
-
-
+  <section class="relative overflow-hidden bg-slate-950 text-white">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-700/20 via-indigo-600/10 to-transparent"></div>
+    <div class="relative mx-auto max-w-7xl px-6 py-20 sm:py-24">
+      <span class="inline-flex rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-200">
+        Industry-focused transformation
+      </span>
+      <h1 class="mt-7 max-w-4xl text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
+        Practical AI Built Around the Way Your Industry Works
+      </h1>
+      <p class="mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
+        We start with the workflows, constraints and customer expectations specific
+        to your sector—then identify the AI opportunities most likely to create value.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="/assessment" class="rounded-xl bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-700">
+          Get Your Free AI Assessment
+        </a>
+        <a href="/contact" class="rounded-xl border border-white/40 px-7 py-4 font-bold text-white transition hover:bg-white hover:text-slate-950">
+          Discuss Your Industry
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Industries />
 </MainLayout>

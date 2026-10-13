@@ -172,16 +172,16 @@ The repository should be checked before creating directories that do not yet exi
 
 ## 7. Assessment Application
 
-The assessment currently consists of seven logical stages:
+The active Business Velocity assessment consists of six questionnaire stages followed by a results page:
 
 ```text
 1. Business Profile
 2. Business Challenges
 3. Technology
-4. AI Adoption
-5. Goals
+4. Business Priorities
+5. Solutions of Interest and Timeline
 6. Lead Capture
-7. Results
+7. Results page after successful submission
 ```
 
 The wizard should provide:
@@ -278,31 +278,19 @@ This avoids navigation breaking when button labels are changed.
 The current wizard uses:
 
 ```html
-.wizard-step
+[data-assessment-step]
 ```
 
 and:
 
 ```html
-data-step="1"
-data-step="2"
+data-assessment-step="1"
+data-assessment-step="2"
 ...
-data-step="7"
+data-assessment-step="6"
 ```
 
-The wizard should consistently use `.wizard-step`.
-
-Do not mix:
-
-```text
-.assessment-step
-```
-
-with:
-
-```text
-.wizard-step
-```
+The step contract is isolated inside `BusinessVelocityForm.astro` and should not be renamed without updating its navigation and persistence logic.
 
 The current wizard navigation model is:
 
@@ -329,16 +317,16 @@ step
 total
 ```
 
-Current total:
+Current questionnaire total:
 
 ```text
-7
+6
 ```
 
 The progress UI should display:
 
 ```text
-Step X of 7
+Step X of 6
 X%
 ```
 
@@ -817,26 +805,15 @@ Before renaming storage keys, API endpoints, or R2 object paths, check whether e
 
 ## 26. Immediate Development Priority
 
-The immediate priority is to stabilise the assessment application.
-
-Recommended sequence:
+The assessment now has staged navigation, per-step validation, progress indication and browser persistence. The next assessment priorities are:
 
 ```text
-1. Define canonical AssessmentAnswers type
-2. Define canonical question IDs
-3. Fix AssessmentQuestion
-4. Fix single/multiple selection
-5. Fix wizard navigation
-6. Add validation before Continue
-7. Fix localStorage persistence
-8. Fix LeadCaptureForm
-9. Fix assessment-lead API
-10. Fix Results engine
-11. Test complete assessment flow
-12. Add automated tests
+1. Add automated browser coverage for the complete funnel
+2. Generate recommendations from the submitted priorities and interests
+3. Persist or sign the server-authoritative result reference
+4. Add conversion analytics for step completion and abandonment
+5. Validate the deployed Cloudflare/R2 submission journey
 ```
-
-Only after the assessment is stable should additional assessment features be added.
 
 ---
 
@@ -942,3 +919,23 @@ The dLogicFlow catalogue CTA links to its external product website at `https://d
 The website should be optimized first for:
 
 **traffic → engagement → qualified lead → consultation → customer**
+
+## 32. Conversion and UI/UX Optimisation
+
+The primary marketing journey now prioritises the free Business Velocity assessment, with consultation as the secondary action.
+
+Implemented changes include:
+
+- consistent desktop and mobile navigation
+- an accessible mobile navigation dialog with focus management
+- a responsive typography and focus treatment baseline
+- a shorter homepage with duplicated outcome sections removed
+- five featured transformation services on the homepage
+- service-specific contact links that preselect the relevant enquiry
+- a six-step assessment with validation and persistence under `ragan_ai_assessment`
+- removal of unsupported percentage claims from service and product summary panels
+- removal of unpublished insight links from visitor-facing pages
+- a dedicated Terms of Use route and repaired footer destinations
+- a richer industry page built from the shared industry component
+
+The assessment API endpoint, submission fields, scoring function and Cloudflare R2 storage contract were not changed.
