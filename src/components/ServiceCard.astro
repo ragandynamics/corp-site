@@ -1,96 +1,51 @@
 ---
+import type { Service } from "../data/services";
 
-const {
-service
-}=Astro.props;
-
----
-
-<div
-
-class="
-rounded-3xl
-border
-border-slate-200
-bg-white
-p-8
-shadow-sm
-"
-
-
->
-
-
-<div class="text-4xl">
-
-{service.icon}
-
-</div>
-
-
-<h3
-
-class="
-mt-6
-text-2xl
-font-black
-"
-
->
-
-{service.title}
-
-</h3>
-
-
-<p class="mt-4 text-slate-600">
-
-{service.description}
-
-</p>
-
-
-
-<ul class="mt-6 space-y-2">
-
-
-{
-service.features.map(
-(feature:string)=>(
-
-<li>
-
-✓ {feature}
-
-</li>
-
-))
+export interface Props {
+  service: Service;
+  compact?: boolean;
 }
 
+const { service, compact = false } = Astro.props;
+const displayedFeatures = compact ? service.features.slice(0, 3) : service.features;
+const contactHref = `/contact?service=${encodeURIComponent(service.title)}`;
+---
 
-</ul>
-
-
-
-<a
-
-href="/contact"
-
-class="
-mt-8
-inline-block
-rounded-xl
-bg-blue-600
-px-6
-py-3
-text-white
-"
-
+<article
+  id={service.id}
+  class="scroll-mt-28 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
 >
+  <div class="text-4xl" aria-hidden="true">
+    {service.icon}
+  </div>
 
-{service.cta}
+  <h3 class="mt-6 text-2xl font-black text-slate-900">
+    {service.title}
+  </h3>
 
-</a>
+  <p class="mt-4 leading-7 text-slate-600">
+    {service.description}
+  </p>
 
+  <p class="mt-4 rounded-xl bg-blue-50 p-4 text-sm font-semibold text-blue-900">
+    {service.businessValue}
+  </p>
 
-</div>
+  <ul class="mt-6 space-y-2 text-slate-700">
+    {
+      displayedFeatures.map((feature) => (
+        <li class="flex gap-3">
+          <span class="font-bold text-emerald-600" aria-hidden="true">✓</span>
+          <span>{feature}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a
+    href={contactHref}
+    class="mt-8 inline-flex min-h-11 items-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+  >
+    {service.cta}
+  </a>
+</article>

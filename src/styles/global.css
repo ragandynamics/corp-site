@@ -51,3 +51,30 @@
         sans-serif;
 
 }
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: var(--font-body);
+    }
+
+    :focus-visible {
+        outline: 3px solid #2563eb;
+        outline-offset: 3px;
+    }
+}
+
+@layer components {
+    .section-padding {
+        padding-block: 4.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .section-padding {
+            padding-block: 6rem;
+        }
+    }
+}

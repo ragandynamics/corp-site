@@ -2,6 +2,9 @@
 import Container from "../ui/Container.astro";
 import ServiceCard from "../ServiceCard.astro";
 import { services } from "../../data/services";
+
+const featuredServiceIds = ["ai-strategy", "automation", "chatbots", "copilot", "training"];
+const featuredServices = services.filter((service) => featuredServiceIds.includes(service.id));
 ---
 
 <section id="services" class="section-padding bg-slate-50">
@@ -16,7 +19,7 @@ import { services } from "../../data/services";
 
       </span>
 
-      <h2 class="mt-6 text-5xl font-black text-slate-900">
+      <h2 class="mt-6 text-3xl font-black text-slate-900 sm:text-4xl lg:text-5xl">
 
         Practical AI Solutions That Deliver Business Value
 
@@ -37,11 +40,12 @@ import { services } from "../../data/services";
 
       {
 
-        services.map((service)=>(
+        featuredServices.map((service)=>(
 
           <ServiceCard
 
             service={service}
+            compact
 
           />
 
@@ -71,7 +75,7 @@ import { services } from "../../data/services";
 
         <a
 
-          href="/contact"
+          href="/assessment"
 
           data-analytics="services-discovery"
 
@@ -79,19 +83,19 @@ import { services } from "../../data/services";
 
         >
 
-          Book a Free AI Discovery Session
+          Get Your Free AI Assessment
 
         </a>
 
         <a
 
-          href="/contact"
+          href="/services"
 
           class="rounded-xl border border-white px-8 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-slate-900"
 
         >
 
-          Request an AI Readiness Assessment
+          Explore All AI Services
 
         </a>
 

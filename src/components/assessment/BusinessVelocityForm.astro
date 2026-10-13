@@ -1,315 +1,388 @@
 ---
 import { assessmentOptions } from "../../lib/assessment/businessVelocitySubmission";
+
+const optionCardClass =
+  "flex min-h-14 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-blue-300 hover:bg-blue-50/50 has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50 has-[:checked]:ring-1 has-[:checked]:ring-blue-600";
+const fieldClass =
+  "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
 ---
 
 <form
   id="velocity-form"
-  class="mx-auto max-w-3xl rounded-2xl bg-white p-8 shadow-lg space-y-8"
+  class="mx-auto max-w-4xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl"
+  novalidate
 >
-
-  <div>
-    <h2 class="text-2xl font-semibold text-gray-900">
-      Business Information
-    </h2>
-    <p class="mt-2 text-sm text-gray-500">
-      Tell us about your organisation.
-    </p>
-  </div>
-
-  <div>
-    <label class="mb-2 block text-sm font-medium text-gray-700">
-      Company Name <span class="text-red-500">*</span>
-    </label>
-    <input
-      name="company"
-      required
-      class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-blue-500"
-    />
-  </div>
-
-  <div>
-    <label class="mb-2 block text-sm font-medium text-gray-700">
-      Industry
-    </label>
-    <select
-      name="industry"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    >
-      {assessmentOptions.industries.map((industry) => <option value={industry}>{industry}</option>)}
-    </select>
-  </div>
-
-  <div>
-    <label class="mb-2 block text-sm font-medium text-gray-700">
-      Company Size
-    </label>
-    <select
-      name="companySize"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    >
-      {assessmentOptions.companySizes.map((size) => <option value={size}>{size}</option>)}
-    </select>
-  </div>
-
-  <div id="section-challenges" class="rounded-xl p-4 transition-colors duration-200">
-    <h2 class="text-2xl font-semibold text-gray-900">
-      Business Challenges <span class="text-red-500 text-lg">*</span>
-    </h2>
-    <p class="text-sm text-gray-500 mt-1 mb-3">Select at least one challenge affecting your business.</p>
-    <div class="grid gap-3 md:grid-cols-2">
-      {
-        assessmentOptions.challenges.map(item => (
-          <label class="flex items-center gap-3 rounded-lg border p-3 hover:bg-gray-50 cursor-pointer">
-            <input
-              type="checkbox"
-              name="challenges"
-              value={item}
-              class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span class="text-sm">{item}</span>
-          </label>
-        ))
-      }
-    </div>
-  </div>
-
-  <div id="section-systems" class="rounded-xl p-4 transition-colors duration-200">
-    <h2 class="text-2xl font-semibold text-gray-900">
-      Current Technology <span class="text-red-500 text-lg">*</span>
-    </h2>
-    <p class="text-sm text-gray-500 mt-1 mb-3">Select at least one platform or tool your organization uses.</p>
-    <div class="grid gap-3 md:grid-cols-2">
-      {
-        assessmentOptions.systems.map(item => (
-          <label class="flex items-center gap-3 rounded-lg border p-3 hover:bg-gray-50 cursor-pointer">
-            <input
-              type="checkbox"
-              name="systems"
-              value={item}
-              class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span class="text-sm">{item}</span>
-          </label>
-        ))
-      }
-    </div>
-  </div>
-
-  <div id="section-priorities" class="rounded-xl p-4 transition-colors duration-200">
-    <h2 class="text-2xl font-semibold text-gray-900">
-      Business Priorities <span class="text-red-500 text-lg">*</span>
-    </h2>
-    <p class="text-sm text-gray-500 mt-1 mb-3">Select at least one priority for your organisation.</p>
-    <div class="grid gap-3 md:grid-cols-2">
-      {
-        assessmentOptions.priorities.map(item => (
-          <label class="flex items-center gap-3 rounded-lg border p-3 hover:bg-gray-50 cursor-pointer">
-            <input
-              type="checkbox"
-              name="priorities"
-              value={item}
-              class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span class="text-sm">{item}</span>
-          </label>
-        ))
-      }
-    </div>
-  </div>
-
-  <div id="section-interests" class="rounded-xl p-4 transition-colors duration-200">
-    <h2 class="text-2xl font-semibold text-gray-900">
-      Solutions of Interest <span class="text-red-500 text-lg">*</span>
-    </h2>
-    <p class="text-sm text-gray-500 mt-1 mb-3">Select at least one solution area you would like to explore.</p>
-    <div class="grid gap-3 md:grid-cols-2">
-      {
-        assessmentOptions.interests.map(item => (
-          <label class="flex items-center gap-3 rounded-lg border p-3 hover:bg-gray-50 cursor-pointer">
-            <input
-              type="checkbox"
-              name="interests"
-              value={item}
-              class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            />
-            <span class="text-sm">{item}</span>
-          </label>
-        ))
-      }
-    </div>
-  </div>
-
-  <div>
-    <label class="mb-2 block font-medium text-gray-700">
-      Implementation Timeline
-    </label>
-    <select
-      name="timeline"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    >
-      {assessmentOptions.timelines.map((timeline) => <option value={timeline}>{timeline}</option>)}
-    </select>
-  </div>
-
-  <div class="border-t pt-8 space-y-3">
-    <h2 class="text-2xl font-semibold text-gray-900">
-      Contact Details
-    </h2>
-    <input
-      name="name"
-      placeholder="Name *"
-      required
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    />
-    <input
-      name="designation"
-      placeholder="Designation"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    />
-    <input
-      name="email"
-      type="email"
-      placeholder="Business Email *"
-      required
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    />
-    <input
-      name="phone"
-      placeholder="Phone"
-      class="w-full rounded-lg border border-gray-300 px-4 py-3"
-    />
-  </div>
-
-  <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600 space-y-3">
-    <p class="font-semibold text-slate-700">
-      Personal Data Protection Act (PDPA) Notice
-    </p>
-    <p>
-      By submitting this form, you consent to our collection, use, and disclosure of your personal data for the purpose of processing your assessment submission, preparing your customized report, and contacting you regarding our advisory services in accordance with our <a href="/privacy" class="text-blue-600 underline hover:text-blue-800" target="_blank">Privacy Policy</a>.
-    </p>
-
-    <label class="flex items-start gap-3 cursor-pointer pt-2">
-      <input
-        type="checkbox"
-        name="pdpaConsent"
-        id="pdpaConsent"
-        required
-        class="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-      />
-      <span class="text-slate-700 text-xs">
-        I agree to the collection and processing of my personal data for the purposes stated above. <span class="text-red-500">*</span>
+  <div class="border-b border-slate-200 bg-slate-50 px-6 py-6 sm:px-8">
+    <div class="flex items-center justify-between gap-4">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wider text-blue-700">Business Velocity Discovery</p>
+        <p id="assessment-step-label" class="mt-1 font-bold text-slate-900">Step 1 of 6 · Business profile</p>
+      </div>
+      <span class="shrink-0 rounded-full bg-white px-3 py-1 text-sm font-semibold text-slate-600 shadow-sm">
+        About 3 minutes
       </span>
-    </label>
-  </div>
-
-  <div class="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50/80 p-4 text-sm text-blue-900">
-    <svg 
-      class="h-5 w-5 shrink-0 text-blue-600" 
-      fill="none" 
-      stroke="currentColor" 
-      viewBox="0 0 24 24" 
-      xmlns="http://www.w3.org/2000/svg"
+    </div>
+    <div
+      class="mt-4 h-2 overflow-hidden rounded-full bg-slate-200"
+      role="progressbar"
+      aria-label="Assessment progress"
+      aria-valuemin="1"
+      aria-valuemax="6"
+      aria-valuenow="1"
     >
-      <path 
-        stroke-linecap="round" 
-        stroke-linejoin="round" 
-        stroke-width="2" 
-        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-      ></path>
-    </svg>
-    <span>
-      Our AI consultants will review your inputs and contact you within <strong>1 to 3 working days</strong>.
-    </span>
+      <div id="assessment-progress" class="h-full w-1/6 rounded-full bg-blue-600 transition-all duration-300"></div>
+    </div>
   </div>
 
-  <div id="form-error" role="alert" aria-live="polite" class="hidden rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700"></div>
+  <div class="px-6 py-8 sm:px-8 sm:py-10">
+    <fieldset data-assessment-step="1">
+      <legend class="text-2xl font-bold text-slate-900 sm:text-3xl">Tell us about your organisation</legend>
+      <p class="mt-2 text-slate-600">This helps us compare opportunities with the way your business operates today.</p>
 
-  <button
-    type="submit"
-    data-submit-button
-    class="w-full rounded-xl bg-blue-600 px-6 py-4 text-lg font-semibold text-white hover:bg-blue-700 transition shadow-sm"
-  >
-    Submit Discovery Assessment
-  </button>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
+        <div class="sm:col-span-2">
+          <label for="assessment-company" class="mb-2 block text-sm font-semibold text-slate-700">
+            Company name <span class="text-red-600">*</span>
+          </label>
+          <input id="assessment-company" name="company" required autocomplete="organization" class={fieldClass} />
+        </div>
 
+        <div>
+          <label for="assessment-industry" class="mb-2 block text-sm font-semibold text-slate-700">Industry</label>
+          <select id="assessment-industry" name="industry" class={fieldClass}>
+            {assessmentOptions.industries.map((industry) => <option value={industry}>{industry}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label for="assessment-company-size" class="mb-2 block text-sm font-semibold text-slate-700">Company size</label>
+          <select id="assessment-company-size" name="companySize" class={fieldClass}>
+            {assessmentOptions.companySizes.map((size) => <option value={size}>{size} employees</option>)}
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset data-assessment-step="2" class="hidden">
+      <legend class="text-2xl font-bold text-slate-900 sm:text-3xl">What is slowing the business down?</legend>
+      <p class="mt-2 text-slate-600">Select every challenge that currently affects your team.</p>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          assessmentOptions.challenges.map((item) => (
+            <label class={optionCardClass}>
+              <input type="checkbox" name="challenges" value={item} class="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+              <span class="text-sm font-medium text-slate-800">{item}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset data-assessment-step="3" class="hidden">
+      <legend class="text-2xl font-bold text-slate-900 sm:text-3xl">What technology do you use today?</legend>
+      <p class="mt-2 text-slate-600">Select at least one platform or business system.</p>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          assessmentOptions.systems.map((item) => (
+            <label class={optionCardClass}>
+              <input type="checkbox" name="systems" value={item} class="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+              <span class="text-sm font-medium text-slate-800">{item}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset data-assessment-step="4" class="hidden">
+      <legend class="text-2xl font-bold text-slate-900 sm:text-3xl">What outcomes matter most?</legend>
+      <p class="mt-2 text-slate-600">Choose the priorities that would create the greatest business value.</p>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          assessmentOptions.priorities.map((item) => (
+            <label class={optionCardClass}>
+              <input type="checkbox" name="priorities" value={item} class="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+              <span class="text-sm font-medium text-slate-800">{item}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset data-assessment-step="5" class="hidden">
+      <legend class="text-2xl font-bold text-slate-900 sm:text-3xl">Where would you like support?</legend>
+      <p class="mt-2 text-slate-600">Select the areas you are interested in exploring, then tell us your preferred timing.</p>
+      <div class="mt-8 grid gap-3 sm:grid-cols-2">
+        {
+          assessmentOptions.interests.map((item) => (
+            <label class={optionCardClass}>
+              <input type="checkbox" name="interests" value={item} class="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+              <span class="text-sm font-medium text-slate-800">{item}</span>
+            </label>
+          ))
+        }
+      </div>
+
+      <div class="mt-8">
+        <label for="assessment-timeline" class="mb-2 block text-sm font-semibold text-slate-700">Implementation timeline</label>
+        <select id="assessment-timeline" name="timeline" class={fieldClass}>
+          {assessmentOptions.timelines.map((timeline) => <option value={timeline}>{timeline}</option>)}
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset data-assessment-step="6" class="hidden">
+      <legend class="text-2xl font-bold text-slate-900 sm:text-3xl">Where should we send your results?</legend>
+      <p class="mt-2 text-slate-600">We will review your answers and follow up with practical recommendations.</p>
+
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
+        <div>
+          <label for="assessment-name" class="mb-2 block text-sm font-semibold text-slate-700">
+            Name <span class="text-red-600">*</span>
+          </label>
+          <input id="assessment-name" name="name" required autocomplete="name" class={fieldClass} />
+        </div>
+        <div>
+          <label for="assessment-designation" class="mb-2 block text-sm font-semibold text-slate-700">Job title</label>
+          <input id="assessment-designation" name="designation" autocomplete="organization-title" class={fieldClass} />
+        </div>
+        <div>
+          <label for="assessment-email" class="mb-2 block text-sm font-semibold text-slate-700">
+            Business email <span class="text-red-600">*</span>
+          </label>
+          <input id="assessment-email" name="email" type="email" required autocomplete="email" class={fieldClass} />
+        </div>
+        <div>
+          <label for="assessment-phone" class="mb-2 block text-sm font-semibold text-slate-700">Phone number</label>
+          <input id="assessment-phone" name="phone" type="tel" autocomplete="tel" class={fieldClass} />
+        </div>
+      </div>
+
+      <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+        <p class="font-semibold text-slate-800">Personal Data Protection Act (PDPA) notice</p>
+        <p class="mt-2 leading-6">
+          We use your details to process this assessment, prepare recommendations and contact you about relevant advisory services. See our
+          <a href="/privacy" class="font-semibold text-blue-700 underline hover:text-blue-900" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
+        </p>
+        <label class="mt-4 flex cursor-pointer items-start gap-3">
+          <input type="checkbox" name="pdpaConsent" id="pdpaConsent" required class="mt-0.5 h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+          <span class="text-slate-700">
+            I agree to the collection and processing of my personal data for the purposes stated above. <span class="text-red-600">*</span>
+          </span>
+        </label>
+      </div>
+
+      <div class="mt-6 flex items-start gap-3 rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm text-blue-950">
+        <span aria-hidden="true">ℹ️</span>
+        <span>Our AI consultants will review your inputs and contact you within <strong>1 to 3 working days</strong>.</span>
+      </div>
+    </fieldset>
+
+    <div id="form-error" role="alert" aria-live="polite" class="mt-6 hidden rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700"></div>
+  </div>
+
+  <div class="sticky bottom-0 flex items-center justify-between gap-4 border-t border-slate-200 bg-white/95 px-6 py-5 backdrop-blur sm:px-8">
+    <button
+      type="button"
+      data-action="back"
+      class="invisible min-h-12 rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+    >
+      Back
+    </button>
+    <button
+      type="button"
+      data-action="next"
+      class="min-h-12 rounded-xl bg-blue-600 px-7 py-3 font-semibold text-white transition hover:bg-blue-700"
+    >
+      Continue
+    </button>
+    <button
+      type="submit"
+      data-submit-button
+      class="hidden min-h-12 rounded-xl bg-blue-600 px-7 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+    >
+      Get My Results
+    </button>
+  </div>
 </form>
 
 <script>
 import { calculateOperationalEfficiency } from "../../lib/assessment/businessVelocitySubmission";
 
-const form = document.querySelector("#velocity-form") as HTMLFormElement | null;
-const errorBox = document.querySelector("#form-error") as HTMLElement | null;
-const submitButton = form?.querySelector<HTMLButtonElement>("[data-submit-button]") ?? null;
+const STORAGE_KEY = "ragan_ai_assessment";
+const form = document.querySelector<HTMLFormElement>("#velocity-form");
+const steps = Array.from(document.querySelectorAll<HTMLElement>("[data-assessment-step]"));
+const errorBox = document.querySelector<HTMLElement>("#form-error");
+const progress = document.querySelector<HTMLElement>("#assessment-progress");
+const progressContainer = progress?.parentElement;
+const stepLabel = document.querySelector<HTMLElement>("#assessment-step-label");
+const backButton = form?.querySelector<HTMLButtonElement>('[data-action="back"]');
+const nextButton = form?.querySelector<HTMLButtonElement>('[data-action="next"]');
+const submitButton = form?.querySelector<HTMLButtonElement>("[data-submit-button]");
+const stepTitles = ["Business profile", "Business challenges", "Current technology", "Business priorities", "Solution interests", "Contact details"];
+let currentStep = 0;
 
-form?.addEventListener("submit", async (e) => {
-  e.preventDefault();
+function showError(message: string) {
+  if (!errorBox) return;
+  errorBox.textContent = message;
+  errorBox.classList.remove("hidden");
+}
 
-  if (errorBox) {
-    errorBox.classList.add("hidden");
-    errorBox.textContent = "";
+function clearError() {
+  if (!errorBox) return;
+  errorBox.textContent = "";
+  errorBox.classList.add("hidden");
+}
+
+function renderStep() {
+  steps.forEach((step, index) => step.classList.toggle("hidden", index !== currentStep));
+  const stepNumber = currentStep + 1;
+  const percentage = (stepNumber / steps.length) * 100;
+
+  if (stepLabel) stepLabel.textContent = `Step ${stepNumber} of ${steps.length} · ${stepTitles[currentStep]}`;
+  if (progress) progress.style.width = `${percentage}%`;
+  progressContainer?.setAttribute("aria-valuenow", String(stepNumber));
+  backButton?.classList.toggle("invisible", currentStep === 0);
+  nextButton?.classList.toggle("hidden", currentStep === steps.length - 1);
+  submitButton?.classList.toggle("hidden", currentStep !== steps.length - 1);
+  clearError();
+
+  const activeStep = steps[currentStep];
+  (activeStep?.querySelector("input, select") as HTMLElement | null)?.focus({ preventScroll: true });
+}
+
+function checkedValues(name: string): string[] {
+  return Array.from(form?.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`) ?? []).map((input) => input.value);
+}
+
+function validateCurrentStep(): boolean {
+  const activeStep = steps[currentStep];
+  if (!activeStep) return false;
+
+  const requiredFields = Array.from(activeStep.querySelectorAll("[required]")) as unknown as Array<
+    HTMLInputElement | HTMLSelectElement
+  >;
+  const invalidField = requiredFields.find((field) => !field.checkValidity());
+  if (invalidField) {
+    invalidField.reportValidity();
+    invalidField.focus();
+    return false;
   }
 
-  const fd = new FormData(form);
-
-  const challenges = fd.getAll("challenges").map(String);
-  const systems = fd.getAll("systems").map(String);
-  const priorities = fd.getAll("priorities").map(String);
-  const interests = fd.getAll("interests").map(String);
-
-  // Reset visual error highlights
-  ["section-challenges", "section-systems", "section-priorities", "section-interests"].forEach((id) => {
-    document.getElementById(id)?.classList.remove("border-2", "border-red-500", "bg-red-50/30");
-  });
-
-  // Validate that each section has at least 1 checkbox selected
-  const missingSections: { id: string; title: string }[] = [];
-
-  if (challenges.length === 0) {
-    missingSections.push({ id: "section-challenges", title: "Business Challenges" });
-  }
-  if (systems.length === 0) {
-    missingSections.push({ id: "section-systems", title: "Current Technology" });
-  }
-  if (priorities.length === 0) {
-    missingSections.push({ id: "section-priorities", title: "Business Priorities" });
-  }
-  if (interests.length === 0) {
-    missingSections.push({ id: "section-interests", title: "Solutions of Interest" });
+  const requiredGroupByStep: Record<number, { name: string; label: string }> = {
+    1: { name: "challenges", label: "business challenge" },
+    2: { name: "systems", label: "current technology" },
+    3: { name: "priorities", label: "business priority" },
+    4: { name: "interests", label: "solution area" },
+  };
+  const requiredGroup = requiredGroupByStep[currentStep];
+  if (requiredGroup && checkedValues(requiredGroup.name).length === 0) {
+    showError(`Please select at least one ${requiredGroup.label} to continue.`);
+    activeStep.querySelector<HTMLInputElement>(`input[name="${requiredGroup.name}"]`)?.focus();
+    return false;
   }
 
-  if (missingSections.length > 0) {
-    // Highlight incomplete sections
-    missingSections.forEach(({ id }) => {
-      const container = document.getElementById(id);
-      container?.classList.add("border-2", "border-red-500", "bg-red-50/30");
+  return true;
+}
+
+function serialiseForm(): Record<string, string | string[]> {
+  if (!form) return {};
+  const data = new FormData(form);
+  return {
+    company: String(data.get("company") ?? ""),
+    industry: String(data.get("industry") ?? ""),
+    companySize: String(data.get("companySize") ?? ""),
+    challenges: data.getAll("challenges").map(String),
+    systems: data.getAll("systems").map(String),
+    priorities: data.getAll("priorities").map(String),
+    interests: data.getAll("interests").map(String),
+    timeline: String(data.get("timeline") ?? ""),
+    name: String(data.get("name") ?? ""),
+    designation: String(data.get("designation") ?? ""),
+    email: String(data.get("email") ?? ""),
+    phone: String(data.get("phone") ?? ""),
+  };
+}
+
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, currentStep, answers: serialiseForm() }));
+  } catch {
+    // The assessment remains usable when browser storage is unavailable.
+  }
+}
+
+function restoreProgress() {
+  if (!form) return;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw) as { currentStep?: unknown; answers?: unknown };
+    if (!parsed.answers || typeof parsed.answers !== "object" || Array.isArray(parsed.answers)) return;
+
+    Object.entries(parsed.answers as Record<string, unknown>).forEach(([name, value]) => {
+      const controls = Array.from(
+        form.querySelectorAll(`[name="${CSS.escape(name)}"]`)
+      ) as unknown as Array<HTMLInputElement | HTMLSelectElement>;
+      controls.forEach((control) => {
+        if (control instanceof HTMLInputElement && control.type === "checkbox") {
+          control.checked = Array.isArray(value) && value.includes(control.value);
+        } else if (typeof value === "string" && Array.from((control as HTMLSelectElement).options ?? []).some((option) => option.value === value)) {
+          control.value = value;
+        } else if (typeof value === "string" && control instanceof HTMLInputElement) {
+          control.value = value;
+        }
+      });
     });
 
-    // Display error notification
-    const labels = missingSections.map((s) => s.title).join(", ");
-    if (errorBox) {
-      errorBox.textContent = `Please select at least one option for: ${labels}.`;
-      errorBox.classList.remove("hidden");
+    if (typeof parsed.currentStep === "number" && Number.isInteger(parsed.currentStep)) {
+      currentStep = Math.min(Math.max(parsed.currentStep, 0), steps.length - 1);
     }
-
-    // Smooth scroll to the first missing section
-    document.getElementById(missingSections[0].id)?.scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
+  } catch {
+    localStorage.removeItem(STORAGE_KEY);
   }
+}
 
-  const data: Record<string, FormDataEntryValue | FormDataEntryValue[] | boolean | number> = {};
-  fd.forEach((value, key) => {
-    if (!data[key]) {
-      data[key] = value;
-    }
+nextButton?.addEventListener("click", () => {
+  clearError();
+  if (!validateCurrentStep()) return;
+  currentStep = Math.min(currentStep + 1, steps.length - 1);
+  saveProgress();
+  renderStep();
+  form?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+backButton?.addEventListener("click", () => {
+  currentStep = Math.max(currentStep - 1, 0);
+  saveProgress();
+  renderStep();
+  form?.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+form?.addEventListener("input", saveProgress);
+form?.addEventListener("change", saveProgress);
+
+form?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  clearError();
+  if (!validateCurrentStep() || !form) return;
+
+  const formData = new FormData(form);
+  const challenges = formData.getAll("challenges").map(String);
+  const systems = formData.getAll("systems").map(String);
+  const priorities = formData.getAll("priorities").map(String);
+  const interests = formData.getAll("interests").map(String);
+  const data: Record<string, FormDataEntryValue | FormDataEntryValue[] | boolean> = {};
+
+  formData.forEach((value, key) => {
+    if (!(key in data)) data[key] = value;
   });
-
   data.challenges = challenges;
   data.systems = systems;
   data.priorities = priorities;
   data.interests = interests;
-  data.pdpaConsent = fd.get("pdpaConsent") === "on";
+  data.pdpaConsent = formData.get("pdpaConsent") === "on";
 
-  const finalScore = calculateOperationalEfficiency({
+  const fallbackScore = calculateOperationalEfficiency({
     challenges,
     systems,
     timeline: String(data.timeline),
@@ -318,38 +391,34 @@ form?.addEventListener("submit", async (e) => {
   try {
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.textContent = "Submitting…";
+      submitButton.textContent = "Preparing results…";
     }
 
     const response = await fetch("/api/assessment", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-
     const result = (await response.json().catch(() => ({}))) as { error?: string; score?: number };
-    if (response.ok) {
-      const serverScore = typeof result.score === "number" ? result.score : finalScore;
-      window.location.href = `/assessment-success?score=${serverScore}`;
+
+    if (!response.ok) {
+      showError(result.error || "We could not submit your assessment. Please try again.");
       return;
     }
 
-    if (errorBox) {
-      errorBox.textContent = result.error || "We could not submit your assessment. Please try again.";
-      errorBox.classList.remove("hidden");
-    }
+    localStorage.removeItem(STORAGE_KEY);
+    const score = typeof result.score === "number" ? result.score : fallbackScore;
+    window.location.href = `/assessment-success?score=${score}`;
   } catch {
-    if (errorBox) {
-      errorBox.textContent = "We could not connect to the service. Please check your connection and try again.";
-      errorBox.classList.remove("hidden");
-    }
+    showError("We could not connect to the service. Please check your connection and try again.");
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
-      submitButton.textContent = "Submit Discovery Assessment";
+      submitButton.textContent = "Get My Results";
     }
   }
 });
+
+restoreProgress();
+renderStep();
 </script>
