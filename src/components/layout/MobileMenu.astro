@@ -1,6 +1,10 @@
 <div
   id="mobileMenu"
   class="fixed inset-0 z-[100] hidden bg-white"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Mobile navigation"
+  aria-hidden="true"
 >
   <div class="flex items-center justify-between border-b p-6">
     <h2 class="text-2xl font-bold text-slate-900">Menu</h2>
@@ -14,13 +18,22 @@
     </button>
   </div>
 
-  <nav class="flex flex-col text-lg font-medium text-slate-800">
+  <nav class="flex flex-col text-lg font-medium text-slate-800" aria-label="Mobile navigation">
+    <a href="/" class="border-b p-6 hover:bg-slate-50">Home</a>
     <a href="/services" class="border-b p-6 hover:bg-slate-50">Services</a>
     <a href="/products" class="border-b p-6 hover:bg-slate-50">Products</a>
     <a href="/industries" class="border-b p-6 hover:bg-slate-50">Industries</a>
     <a href="/insights" class="border-b p-6 hover:bg-slate-50">Insights</a>
     <a href="/about" class="border-b p-6 hover:bg-slate-50">About</a>
     <a href="/contact" class="border-b p-6 hover:bg-slate-50">Contact</a>
+    <div class="p-6">
+      <a
+        href="/assessment"
+        class="flex min-h-12 items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-center font-semibold text-white hover:bg-blue-700"
+      >
+        Get Your Free AI Assessment
+      </a>
+    </div>
   </nav>
 </div>
 
@@ -28,14 +41,21 @@
   const menu = document.getElementById("mobileMenu");
   const openBtn = document.getElementById("menuButton");
   const closeBtn = document.getElementById("closeMenu");
+  const focusableSelector = "a[href], button:not([disabled])";
 
   const toggleMenu = (show: boolean) => {
     if (show) {
       menu?.classList.remove("hidden");
+      menu?.setAttribute("aria-hidden", "false");
+      openBtn?.setAttribute("aria-expanded", "true");
       document.body.style.overflow = "hidden";
+      (menu?.querySelector(focusableSelector) as HTMLElement | null)?.focus();
     } else {
       menu?.classList.add("hidden");
+      menu?.setAttribute("aria-hidden", "true");
+      openBtn?.setAttribute("aria-expanded", "false");
       document.body.style.overflow = "";
+      openBtn?.focus();
     }
   };
 
@@ -46,6 +66,20 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !menu?.classList.contains("hidden")) {
       toggleMenu(false);
+    }
+
+    if (e.key === "Tab" && menu && !menu.classList.contains("hidden")) {
+      const focusableElements = Array.from(menu.querySelectorAll<HTMLElement>(focusableSelector));
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements.at(-1);
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement?.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement?.focus();
+      }
     }
   });
 
