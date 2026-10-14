@@ -78,7 +78,19 @@ async function verifyTurnstileToken(
 
 export const POST: APIRoute = async ({ request, locals, clientAddress }) => {
   try {
-    const body = (await request.json()) as ContactForm;
+    let body: ContactForm;
+
+    try {
+      body = (await request.json()) as ContactForm;
+    } catch {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Invalid JSON request body.",
+        }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
     // 1. Basic Payload Validation
     if (!body.email?.trim() || !body.name?.trim()) {
