@@ -939,3 +939,11 @@ Implemented changes include:
 - a richer industry page built from the shared industry component
 
 The assessment API endpoint, submission fields, scoring function and Cloudflare R2 storage contract were not changed.
+
+## 33. Production QA Hardening
+
+Production QA hardening adds explicit malformed-JSON handling to the contact and assessment APIs. Invalid JSON now returns HTTP 400 with predictable JSON instead of being reported as an internal server error. Successful submission payloads, R2 object paths, and stored record structures remain unchanged.
+
+The canonical site URL is configured in Astro and `@astrojs/sitemap` generates the XML sitemap during production builds. `public/robots.txt` allows crawling and points search engines to the sitemap index.
+
+The contact form result region uses an assertive-free polite status announcement so success and error messages are available to assistive technology without interrupting the user.
