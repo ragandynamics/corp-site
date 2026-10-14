@@ -19,7 +19,21 @@ interface RuntimeEnv {
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {
-    const validation = validateBusinessVelocitySubmission(await request.json());
+    let requestBody: unknown;
+
+    try {
+      requestBody = await request.json();
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "Invalid JSON request body." }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const validation = validateBusinessVelocitySubmission(requestBody);
     if (!validation.success) {
       return new Response(
         JSON.stringify({ error: validation.error }),

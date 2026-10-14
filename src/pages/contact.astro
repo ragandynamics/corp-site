@@ -344,7 +344,13 @@ import { countryCodes } from "../data/countryCodes"; // Adjust path to where cou
           </button>
         </form>
 
-        <p id="result" class="mt-6 text-center font-semibold"></p>
+        <p
+          id="result"
+          class="mt-6 text-center font-semibold"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        ></p>
       </div>
 
     </div>
